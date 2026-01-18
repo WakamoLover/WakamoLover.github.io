@@ -1,5 +1,8 @@
 # Project Guide
 
+// Project Title
+WakaMoe
+
 // Quick Start
 npm install
 npm run dev
