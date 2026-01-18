@@ -6,17 +6,34 @@
     <title>WakaMoe</title>
     <link rel="preload" as="image" href="./media/miyouji.png">
     <link rel="preload" as="image" href="./media/hero1.png">
+    <link rel="preload" as="image" href="./media/hero2.png">
+    <link rel="preload" as="image" href="./media/hero3.png">
+    <link rel="preload" as="image" href="./media/hero4.png">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./index.css">
     
     <style>
       ::-webkit-scrollbar { width: 6px; height: 6px; }
       ::-webkit-scrollbar-track { background: transparent; }
       ::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+      ::-webkit-scrollbar-thumb:hover { background: #cbd5e1; }
       .scrollbar-show { scrollbar-width: thin; scrollbar-color: #cbd5e1 transparent; }
+      .scrollbar-show::-webkit-scrollbar { display: block !important; height: 4px !important; }
+      .scrollbar-show::-webkit-scrollbar-thumb { background-color: #cbd5e1 !important; }
     </style>
+
+    <script type="importmap">
+    {
+      "imports": {
+        "react/": "https://esm.sh/react@^19.2.3/",
+        "react": "https://esm.sh/react@^19.2.3",
+        "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+        "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
+      }
+    }
+    </script>
+    <link rel="stylesheet" href="./index.css">
   </head>
   <body>
     <div id="root"></div>
