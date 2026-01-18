@@ -84,9 +84,11 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     type: ContentType.GAME,
     category: 'HyperGraph',
     gameLinks: [
-    { label: 'Official Wallpaper', url: 'https://arknights.global/fankit?type=wallpaper' },
+      { label: 'Official Wallpaper', url: 'https://arknights.global/fankit?type=wallpaper' },
       { label: 'Official Music', url: 'https://monster-siren.hypergryph.com/music' },
-      { label: 'Toolbox Archive', url: 'https://aceship.github.io/AN-EN-Tags/akgallery.html' },
+      { label: 'Story Gallery', url: 'https://arkwaifu.cc/story/main-stories' },
+      { label: 'Act Gallery', url: 'https://arkwaifu.cc/galleries' },
+      { label: 'Toolbox Archive (Order)', url: 'https://aceship.github.io/AN-EN-Tags/akgallery.html' },
       { label: 'OST Files', url: 'https://arknightsost.nbh.workers.dev/' }
     ]
   },
