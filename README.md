@@ -1,17 +1,18 @@
-# Project Guide
-
-// Project Title
-WakaMoe
-
-// Quick Start
+## Project WakaMoe
+### Quick Start
+```bash
 npm install
 npm run dev
 npm run build
-
-// Local to Git
+```
+### Local to Git
+```bash
 git add .
 git commit -m "Your message"
 git push
+```
 
-// Git to Local
+### Git to Local
+```bash
 git pull origin main
+```
