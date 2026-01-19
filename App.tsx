@@ -54,7 +54,10 @@ const App: React.FC = () => {
   const [currentView, setCurrentView] = useState('HOME');
   const [searchTerm, setSearchTerm] = useState('');
   const [currentCategory, setCurrentCategory] = useState('All');
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    // Detect browser's dark mode preference
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  });
   const [isMuted, setIsMuted] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(12);
@@ -134,7 +137,7 @@ const App: React.FC = () => {
     // 1. 페이지 뷰에 따른 필터링
     if (currentView !== 'HOME') {
       const typeMap: Record<string, ContentType> = {
-        GAME: ContentType.GAME, REF: ContentType.REF, VIDEO: ContentType.VIDEO, ARTIST: ContentType.IMAGE,
+        GAME: ContentType.GAME, REF: ContentType.REF, VIDEO: ContentType.VIDEO, WORK: ContentType.IMAGE,
       };
       if (typeMap[currentView]) {
         result = result.filter(p => p.type === typeMap[currentView]);
@@ -210,9 +213,9 @@ const App: React.FC = () => {
                 </div>
 
                 {/* 메인 콘텐츠 그리드 */}
-                <div className={`flex-1 ${(currentView === 'VIDEO' || currentView === 'ARTIST') ? 'p-4' : 'p-0'}`}>
+                <div className={`flex-1 ${(currentView === 'VIDEO' || currentView === 'WORK') ? 'p-4' : 'p-0'}`}>
                     {paginatedPosts.length > 0 ? (
-                      <div className={`grid ${currentView === 'VIDEO' ? 'grid-cols-1 sm:grid-cols-2 gap-4' : currentView === 'ARTIST' ? 'grid-cols-2 lg:grid-cols-3 gap-4' : 'grid-cols-1 gap-0'}`}>
+                      <div className={`grid ${currentView === 'VIDEO' ? 'grid-cols-1 sm:grid-cols-2 gap-4' : currentView === 'WORK' ? 'grid-cols-2 lg:grid-cols-3 gap-4' : 'grid-cols-1 gap-0'}`}>
                           {paginatedPosts.map((post: any) => (
                             <PostCard 
                               key={post.id} 

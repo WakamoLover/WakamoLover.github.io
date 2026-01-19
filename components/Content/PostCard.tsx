@@ -63,7 +63,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, isDarkMode, onVideo
   }
   
   const isVideo = post.type === ContentType.VIDEO;
-  const isArtist = viewMode === 'ARTIST' || post.type === ContentType.IMAGE;
+  const isArtist = viewMode === 'WORK' || post.type === ContentType.IMAGE;
 
   // --- 1. 리스트 레이아웃 (HOME, GAME, REF) ---
   if (viewMode === 'HOME' || viewMode === 'GAME' || viewMode === 'REF') {
@@ -101,7 +101,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, isDarkMode, onVideo
             src={imageError ? 'https://via.placeholder.com/400x225?text=Image+Failed' : displayImage} 
             alt={post.title}
             onError={() => setImageError(true)}
-            className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-105`} 
+            className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-110`} 
           />
         </div>
 
@@ -131,7 +131,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, isDarkMode, onVideo
     );
   }
 
-  // --- 2. 그리드 레이아웃 (VIDEO, ARTIST) ---
+  // --- 2. 그리드 레이아웃 (VIDEO, WORK) ---
   return (
     <div 
       className={`transition-all cursor-pointer group flex flex-col h-full border rounded-lg overflow-hidden ${
@@ -154,7 +154,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, isDarkMode, onVideo
           src={imageError ? 'https://via.placeholder.com/400x225?text=Image+Failed' : displayImage} 
           alt={post.title}
           onError={() => setImageError(true)}
-          className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 ${isVideo ? 'opacity-90 group-hover:opacity-100' : ''}`}
+          className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 ${isVideo ? 'opacity-90 group-hover:opacity-100' : ''}`}
         />
         
         {/* 비디오용 재생 아이콘 */}
