@@ -5,16 +5,28 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
 
 // --- Social ---
   {
-    title: 'X',
-    description: 'From breaking news and entertainment to sports and politics, get the full story with all the live commentary.',
+    title: {
+      en: 'X',
+      ko: 'X'
+    },
+    description: {
+      en: 'From breaking news and entertainment to sports and politics, get the full story with all the live commentary.',
+      ko: '속보부터 엔터테인먼트, 스포츠, 정치까지, 모든 실시간 코멘터리와 함께 전체 스토리를 확인하세요.'
+    },
     coverImage: 'ref/x.png',
     type: ContentType.REF,
     category: 'Social',
     externalLink: 'https://x.com/'
   } as any,
   {
-    title: 'DeviantArt',
-    description: 'Explore our archive of past community events, celebrating the incredible projects, contests, and gatherings that have brought us together.',
+    title: {
+      en: 'DeviantArt',
+      ko: 'DeviantArt'
+    },
+    description: {
+      en: 'Explore our archive of past community events, celebrating the incredible projects, contests, and gatherings that have brought us together.',
+      ko: '우리를 하나로 모은 놀라운 프로젝트, 콘테스트, 모임을 기념하는 과거 커뮤니티 이벤트 아카이브를 탐색하세요.'
+    },
     coverImage: 'ref/devianart.png',
     type: ContentType.REF,
     category: 'Social',
