@@ -168,7 +168,7 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
       </div>
 
       <div className="text-xs text-gray-400 px-2 space-y-2">
-        <p>WakaMoe is a non-profit fan database for artistic reference.</p>
+        <p>WakaMoe is a non-profit database for certain artist.</p>
         <p>All content is the trademark and copyright of certain anime game companies and their respective holders.</p>
       </div>
     </aside>
