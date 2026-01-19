@@ -1,8 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { MOCK_CAROUSEL } from '../../constants/index';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { Language, translations } from '../../constants/translations';
 
-const HeroCarousel: React.FC = () => {
+interface HeroCarouselProps {
+  language?: Language;
+}
+
+const HeroCarousel: React.FC<HeroCarouselProps> = ({ language = 'en' }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   if (!MOCK_CAROUSEL || MOCK_CAROUSEL.length === 0) return null;
@@ -19,6 +24,12 @@ const HeroCarousel: React.FC = () => {
     const interval = setInterval(nextSlide, 5000);
     return () => clearInterval(interval);
   }, [nextSlide]);
+
+  // Helper function to get localized text
+  const getLocalizedText = (text: string | { en: string; ko: string }): string => {
+    if (typeof text === 'string') return text;
+    return text[language];
+  };
 
   return (
     <div className="w-full relative h-[250px] md:h-[380px] rounded-2xl overflow-hidden group bg-gray-200 dark:bg-[#161B22] mb-6 border dark:border-gray-800 border-gray-100">
@@ -45,7 +56,7 @@ const HeroCarousel: React.FC = () => {
             >
               <img 
                 src={item.image.startsWith('http') ? item.image : `/media/${item.image}`} 
-                alt={item.title} 
+                alt={getLocalizedText(item.title)} 
                 className="w-full h-full object-cover"
                 onError={(e) => {
                   (e.target as HTMLImageElement).src = 'https://via.placeholder.com/800x400?text=Image+Not+Found';
@@ -55,7 +66,7 @@ const HeroCarousel: React.FC = () => {
               {item.title && (
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex flex-col justify-end p-6 md:p-10">
                   <h2 className="text-white text-xl md:text-3xl font-bold mb-2 drop-shadow-md">
-                    {item.title}
+                    {getLocalizedText(item.title)}
                   </h2>
                 </div>
               )}

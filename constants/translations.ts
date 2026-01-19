@@ -58,6 +58,10 @@ export interface Translations {
   results: string;
   noContentFound: string;
   show: string;
+  
+  // Footer
+  footerText1: string;
+  footerText2: string;
 }
 
 export const translations: Record<Language, Translations> = {
@@ -117,6 +121,10 @@ export const translations: Record<Language, Translations> = {
     results: 'results',
     noContentFound: 'No content found.',
     show: 'Show',
+    
+    // Footer
+    footerText1: 'WakaMoe is a non-profit database for certain artist.',
+    footerText2: 'All content is the trademark and copyright of certain anime game companies and their respective holders.',
   },
   ko: {
     // Menu items
@@ -174,6 +182,10 @@ export const translations: Record<Language, Translations> = {
     results: '결과',
     noContentFound: '콘텐츠가 없습니다.',
     show: '표시',
+    
+    // Footer
+    footerText1: 'WakaMoe는 특정 아티스트를 위한 비영리 데이터베이스입니다.',
+    footerText2: '모든 콘텐츠는 특정 애니메이션 게임 회사 및 해당 권리 보유자의 상표 및 저작권입니다.',
   },
 };
 

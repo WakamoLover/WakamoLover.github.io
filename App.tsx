@@ -331,7 +331,7 @@ const App: React.FC = () => {
       <main className="max-w-7xl mx-auto px-4 py-4 md:py-6">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
           <div className="md:col-span-8 lg:col-span-9">
-            {currentView === 'HOME' && !searchTerm && <HeroCarousel />}
+            {currentView === 'HOME' && !searchTerm && <HeroCarousel language={language} />}
             
             <div className={`rounded-xl border min-h-[500px] flex flex-col relative ${isDarkMode ? 'bg-[#161B22] border-[#30363D]' : 'bg-white border-gray-200 shadow-sm'}`}>
                 {/* 상단 탭 및 개수 설정 */}
@@ -381,7 +381,8 @@ const App: React.FC = () => {
                                   setCurrentImageUrl(imgUrl); 
                                   setIsImageModalOpen(true);
                                 }
-                              }} 
+                              }}
+                              language={language}
                             />
                           ))}
                       </div>

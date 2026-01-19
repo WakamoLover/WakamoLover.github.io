@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ContentType } from '../../types';
 import { Play, ExternalLink } from 'lucide-react';
+import { Language, translations } from '../../constants/translations';
 
 interface PostCardProps {
   post: any;
@@ -8,6 +9,7 @@ interface PostCardProps {
   isDarkMode: boolean;
   onVideoClick?: (url: string) => void;
   onImageClick?: (url: string) => void;
+  language?: Language;
 }
 
 const Chip: React.FC<{ label: string; url?: string; isDarkMode: boolean }> = ({ label, url, isDarkMode }) => {
@@ -45,8 +47,48 @@ const Chip: React.FC<{ label: string; url?: string; isDarkMode: boolean }> = ({ 
   );
 };
 
-const PostCard: React.FC<PostCardProps> = ({ post, viewMode, isDarkMode, onVideoClick, onImageClick }) => {
+const PostCard: React.FC<PostCardProps> = ({ post, viewMode, isDarkMode, onVideoClick, onImageClick, language = 'en' }) => {
   const [imageError, setImageError] = useState(false);
+  const t = translations[language];
+  
+  // Helper function to get localized text
+  const getLocalizedText = (text: string | { en: string; ko: string }): string => {
+    if (typeof text === 'string') return text;
+    return text[language];
+  };
+  
+  // Helper function to translate category names
+  const translateCategory = (category: string): string => {
+    const categoryMap: Record<string, keyof typeof t> = {
+      'Hoyoverse': 'categoryHoyoverse',
+      'HyperGraph': 'categoryHyperGraph',
+      'Nexon': 'categoryNexon',
+      'Kuro Games': 'categoryKuroGames',
+      'Shift Up': 'categoryShiftUp',
+      'Yostar': 'categoryYostar',
+      'Manjuu': 'categoryManjuu',
+      'Sega': 'categorySega',
+      'Others': 'categoryOthers',
+      'Illustrator': 'categoryIllustrator',
+      'Cosplayer': 'categoryCosplayer',
+      'Mangaka': 'categoryMangaka',
+      'Concept Artist': 'categoryConceptArtist',
+      'Designer': 'categoryDesigner',
+      'Social': 'categorySocial',
+      'Image': 'categoryImage',
+      'Pose': 'categoryPose',
+      'Color': 'categoryColor',
+      'Design': 'categoryDesign',
+      'Market': 'categoryMarket',
+      'Game Trailer': 'categoryGameTrailer',
+      'How to': 'categoryHowTo',
+      'Process': 'categoryProcess',
+      'Live Stream': 'categoryLiveStream',
+    };
+    
+    const translationKey = categoryMap[category];
+    return translationKey ? t[translationKey] : category;
+  };
   
   const displayImage = post.thumbnail || post.coverImage;
   
@@ -109,12 +151,12 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, isDarkMode, onVideo
           <h3 className={`font-bold text-sm sm:text-lg leading-tight transition-colors mb-1.5 line-clamp-1 ${
             isDarkMode ? `text-gray-100 ${isGame ? '' : 'group-hover:text-blue-400'}` : `text-gray-800 ${isGame ? '' : 'group-hover:text-blue-600'}`
           }`}>
-            {post.title}
+            {getLocalizedText(post.title)}
           </h3>
           
           <div className="mb-3">
             <p className={`text-xs sm:text-sm leading-relaxed line-clamp-2 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-              {post.description}
+              {getLocalizedText(post.description)}
             </p>
           </div>
 
@@ -123,7 +165,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, isDarkMode, onVideo
               <Chip key={`game-link-${post.id}-${idx}`} label={link.label} url={link.url} isDarkMode={isDarkMode} />
             ))}
             {!isGame && post.category && (
-              <Chip label={Array.isArray(post.category) ? post.category[0] : post.category} isDarkMode={isDarkMode} />
+              <Chip label={translateCategory(Array.isArray(post.category) ? post.category[0] : post.category)} isDarkMode={isDarkMode} />
             )}
           </div>
         </div>
@@ -152,7 +194,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, isDarkMode, onVideo
       <div className={`relative w-full overflow-hidden ${isVideo ? 'aspect-video bg-gray-900' : 'aspect-[3/4] bg-gray-100'}`}>
         <img 
           src={imageError ? 'https://via.placeholder.com/400x225?text=Image+Failed' : displayImage} 
-          alt={post.title}
+          alt={getLocalizedText(post.title)}
           onError={() => setImageError(true)}
           className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 ${isVideo ? 'opacity-90 group-hover:opacity-100' : ''}`}
         />
@@ -180,14 +222,14 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, isDarkMode, onVideo
           <h3 className={`font-bold text-sm line-clamp-1 mb-1.5 transition-colors ${
             isDarkMode ? 'text-gray-100 group-hover:text-blue-400' : 'text-gray-800 group-hover:text-blue-600'
           }`}>
-            {post.title}
+            {getLocalizedText(post.title)}
           </h3>
           <p className={`text-[11px] leading-tight line-clamp-2 mb-3 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-            {post.description}
+            {getLocalizedText(post.description)}
           </p>
           <div className="mt-auto flex items-center gap-1 overflow-x-auto scrollbar-hide">
               {post.category && (
-                <Chip label={Array.isArray(post.category) ? post.category[0] : post.category} isDarkMode={isDarkMode} />
+                <Chip label={translateCategory(Array.isArray(post.category) ? post.category[0] : post.category)} isDarkMode={isDarkMode} />
               )}
           </div>
       </div>
