@@ -47,7 +47,7 @@ const Header: React.FC<HeaderProps> = ({
         
         {/* Logo */}
         <div className="hidden md:flex items-center gap-4 cursor-pointer" onClick={() => onNavigate('HOME')}>
-          <img src="media/miyouji.png" alt="Logo" className="w-8 h-8 object-contain flex-shrink-0 rounded-lg" />
+          <img src="media/alf.png" alt="Logo" className="w-8 h-8 object-contain flex-shrink-0 rounded-lg" />
           <span className={`text-xl font-bold tracking-tight ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>
             WakaMoe
           </span>

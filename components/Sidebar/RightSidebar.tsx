@@ -26,7 +26,7 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
   const carouselItems = SIDEBAR_CAROUSEL || [];
 
   const getImageSrc = (item: any) => {
-    if (!item.image) return 'https://via.placeholder.com/300x150';
+    if (!item.image) return 'https://placehold.co/300x150';
     return item.image.startsWith('http') ? item.image : `/media/${item.image}`;
   };
 
@@ -131,7 +131,7 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
                 className="w-full h-full object-cover" 
                 onError={(e) => {
                    console.error(`이미지 로드 실패: ${getImageSrc(item)}`);
-                   (e.target as HTMLImageElement).src = 'https://via.placeholder.com/300x150?text=No+Image';
+                   (e.target as HTMLImageElement).src = 'https://placehold.co/300x150?text=No+Image';
                 }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-3">
@@ -157,7 +157,7 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
               className={`relative h-16 rounded-xl overflow-hidden group border ${isDarkMode ? 'border-gray-800' : 'border-gray-100'}`}
             >
               <img src={link.image.startsWith('http') ? link.image : `/media/${link.image}`} alt={link.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-              <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+              <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors flex items-center justify-center">
                 <span className="text-white font-bold text-sm drop-shadow-md flex items-center gap-1">
                   {link.title} <ArrowUpRight size={14} />
                 </span>

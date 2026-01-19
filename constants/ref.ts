@@ -6,7 +6,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
 // --- Social ---
   {
     title: 'X',
-    description: '',
+    description: 'From breaking news and entertainment to sports and politics, get the full story with all the live commentary.',
     coverImage: 'ref/x.png',
     type: ContentType.REF,
     category: 'Social',
@@ -14,7 +14,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'DeviantArt',
-    description: '',
+    description: 'Explore our archive of past community events, celebrating the incredible projects, contests, and gatherings that have brought us together.',
     coverImage: 'ref/devianart.png',
     type: ContentType.REF,
     category: 'Social',
@@ -22,7 +22,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'ArtStation',
-    description: '',
+    description: 'Join the leading showcase platform for art and design.',
     coverImage: 'ref/artstation.png',
     type: ContentType.REF,
     category: 'Social',
@@ -30,7 +30,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Pixiv',
-    description: '',
+    description: 'A leading domestic creative communication platform where users can post and browse illustrations, manga, and novels.',
     coverImage: 'ref/pixiv.png',
     type: ContentType.REF,
     category: 'Social',
@@ -38,7 +38,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Bluesky',
-    description: '',
+    description: 'Find your community among millions of users, unleash your creativity, and have some fun again.',
     coverImage: 'ref/bluesky.png',
     type: ContentType.REF,
     category: 'Social',
@@ -46,7 +46,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Behance',
-    description: '',
+    description: 'Help hirers and creators navigate the creative world from discovering inspiration, to connecting with one another · Popular Tools.',
     coverImage: 'ref/behance.png',
     type: ContentType.REF,
     category: 'Social',
@@ -56,7 +56,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
 // --- Image ---
   {
     title: 'Cosmos',
-    description: '',
+    description: 'Resurface your elements instantly. Find anything in your library with ease.',
     coverImage: 'ref/cosmos.png',
     type: ContentType.REF,
     category: 'Image',
@@ -72,7 +72,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'PhotoBash',
-    description: '',
+    description: 'High Quality Reference Photos & Masked PNGs for Artists & Creatives.',
     coverImage: 'ref/photobash.png',
     type: ContentType.REF,
     category: 'Image',
@@ -88,7 +88,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Pixabay',
-    description: '',
+    description: 'Stunning royalty-free images & royalty-free stock',
     coverImage: 'ref/pixabay.png',
     type: ContentType.REF,
     category: 'Image',

@@ -92,13 +92,13 @@ export const MOCK_POSTS: Post[] = [
 
 // Official Notices
 export const OFFICIAL_NOTICES: HotContentItem[] = [
-  { id: 'n1', title: 'Welcome to the WakaMoe.', category: 'Notice', image: '' },
+  { id: 'n1', title: 'Make Artist Great Again.', category: 'Notice', image: '' },
   { id: 'n2', title: 'Do not share this site with others.', category: 'Notice', image: '' },
 ];
 
 // For you Links
 export const FOR_YOU_LINKS: ExternalLinkItem[] = [
-  { id: 'p1', title: 'Hello World', image: 'miyouji.png', url: 'https://youtu.be/WsYsNoNjbaw?si=jpW7bSVO3tAnG3y8' }
+  { id: 'p1', title: '', image: 'hoyolab.png', url: 'https://www.hoyolab.com/' }
 ];
 
 // Re-export for backward compatibility
