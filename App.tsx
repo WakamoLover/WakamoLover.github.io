@@ -337,7 +337,7 @@ const App: React.FC = () => {
                 {/* 상단 탭 및 개수 설정 */}
                 <div className={`border-b z-10 px-4 py-3 md:sticky md:top-16 flex items-center justify-between rounded-t-xl ${isDarkMode ? 'bg-[#161B22]/95 backdrop-blur-md border-[#30363D]' : 'bg-white border-gray-200'}`}>
                    {tabs && !searchTerm ? (
-                      <div className="flex items-center gap-2 overflow-x-auto max-w-[75%] py-3 px-1 scrollbar-hide">
+                      <div className="flex items-center gap-2 overflow-x-auto max-w-[75%] py-3 px-1">
                         {tabs.map(tab => (
                           <button key={tab} onClick={() => handleCategorySelect(tab)} className={`px-4 py-1.5 rounded-full text-xs font-bold border transition-all whitespace-nowrap ${currentCategory === tab ? 'bg-blue-600 text-white border-blue-600' : isDarkMode ? 'bg-[#21262D] text-gray-400 border-[#30363D]' : 'bg-gray-100 text-gray-500 border-transparent'}`}>
                             {tab}

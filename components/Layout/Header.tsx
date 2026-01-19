@@ -52,7 +52,7 @@ const Header: React.FC<HeaderProps> = ({
   useEffect(() => {
     const timer = setTimeout(() => updateIndicator(currentView), 50);
     return () => clearTimeout(timer);
-  }, [currentView]);
+  }, [currentView, language]);
 
   return (
     // shadow-sm
