@@ -116,7 +116,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
   },
   {
     id: 'g10',
-    title: 'WHUTHERING WAVES',
+    title: 'WUTHERING WAVES',
     description: '',
     coverImage: 'game/ww.png',
     type: ContentType.GAME,

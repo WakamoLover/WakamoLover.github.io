@@ -21,7 +21,7 @@ const getAutoThumbnail = (url: string | undefined, coverImage?: string, imageInd
     if (coverImage.startsWith('http')) return coverImage;
     return `/media/${coverImage}`;
   }
-  if (!url) return 'https://via.placeholder.com/400x225?text=No+Link';
+  if (!url) return 'https://placehold.co/400x225?text=No+Link';
 
   const ytMatch = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
   if (ytMatch) return `https://img.youtube.com/vi/${ytMatch[1]}/maxresdefault.jpg`;
@@ -37,7 +37,7 @@ const getAutoThumbnail = (url: string | undefined, coverImage?: string, imageInd
   if (nicoMatch) return `https://nicovideo.cdn.nimg.jp/thumbnails/${nicoMatch[1]}/${nicoMatch[1]}`;
 
   if (url.includes('bilibili.com')) return 'https://archive.bilibili.com/favicon.ico';
-  return 'https://via.placeholder.com/400x225?text=Link+Preview';
+  return 'https://placehold.co/400x225?text=Link+Preview';
 };
 
 const getEmbedUrl = (url: string): string => {
@@ -193,7 +193,7 @@ const App: React.FC = () => {
                           </button>
                         ))}
                       </div>
-                   ) : (searchTerm ? <h2 className="text-sm font-bold ml-2">"{searchTerm}" 결과</h2> : <div />)}
+                   ) : (searchTerm ? <h2 className="text-sm font-bold ml-2">"{searchTerm}" results</h2> : <div />)}
 
                    <div className="relative" ref={pageSizeRef}>
                       <button onClick={() => setIsPageSizeOpen(!isPageSizeOpen)} className={`flex items-center gap-1.5 px-3 py-1.5 border rounded-lg transition-colors ${isDarkMode ? 'bg-[#21262D] border-[#30363D] hover:bg-[#2d333b]' : 'bg-white border-gray-200 hover:bg-gray-50'}`}>

@@ -64,7 +64,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'FilmGrab',
-    description: '',
+    description: 'The largest growing archive of stills from the best films ever.',
     coverImage: 'ref/filmgrab.png',
     type: ContentType.REF,
     category: 'Image',
@@ -80,7 +80,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Pinterest',
-    description: '',
+    description: 'Create boards, save Pins and make collages of all your inspiration.',
     coverImage: 'ref/pinterest.png',
     type: ContentType.REF,
     category: 'Image',
@@ -96,7 +96,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Unsplash',
-    description: '',
+    description: 'A website dedicated to proprietary stock photography.',
     coverImage: 'ref/unsplash.png',
     type: ContentType.REF,
     category: 'Image',

@@ -36,6 +36,22 @@ export const VIDEO_ITEMS: Omit<Post, 'id'>[] = [
     category: 'Game Trailer',
     videoUrl: 'https://youtu.be/CqaMyyuf-jc'
   } as any,
+  {
+    title: 'Arknights: Endfield New Horizons Trailer [The Mission]',
+    description: '"You may have forgotten these faces, but they will always remember yours."',
+    coverImage: '',
+    type: ContentType.VIDEO,
+    category: 'Game Trailer',
+    videoUrl: 'https://youtu.be/WyeCPKCe3vg'
+  } as any,
+  {
+    title: 'Resonator Showcase | Mornye — VERY FIRST STAR',
+    description: 'The stars never turned for those of us living underground. Yet one day... we will... set the entire universe in motion.',
+    coverImage: '',
+    type: ContentType.VIDEO,
+    category: 'Game Trailer',
+    videoUrl: 'https://youtu.be/IfGkvnwSbXE'
+  } as any,
 
 // --- How to ---
   {
