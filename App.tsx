@@ -75,6 +75,100 @@ const App: React.FC = () => {
 
   const t = translations[language];
 
+  // Initialize category with translated "All" on first render
+  const isInitialMount = useRef(true);
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      setCurrentCategory(t.categoryAll);
+    }
+  }, []);
+
+  // Translate current category when language changes (but not on initial mount)
+  const prevLanguageRef = useRef(language);
+  useEffect(() => {
+    if (!isInitialMount.current && prevLanguageRef.current !== language) {
+      // Get the English version of current category
+      const prevT = translations[prevLanguageRef.current];
+      const englishCategory = getEnglishCategoryFromTranslation(currentCategory, prevT);
+      
+      // Translate it to new language
+      const newTranslatedCategory = getTranslatedCategoryName(englishCategory, t);
+      setCurrentCategory(newTranslatedCategory);
+      
+      prevLanguageRef.current = language;
+    }
+  }, [language]);
+
+  // Helper to get English category from translation
+  const getEnglishCategoryFromTranslation = (translatedCat: string, translations: any): string => {
+    if (translatedCat === translations.categoryAll) return 'All';
+    
+    // Create reverse map
+    const reverseMap: Record<string, string> = {
+      [translations.categoryHoyoverse]: 'Hoyoverse',
+      [translations.categoryHyperGraph]: 'HyperGraph',
+      [translations.categoryNexon]: 'Nexon',
+      [translations.categoryKuroGames]: 'Kuro Games',
+      [translations.categoryShiftUp]: 'Shift Up',
+      [translations.categoryYostar]: 'Yostar',
+      [translations.categoryManjuu]: 'Manjuu',
+      [translations.categorySega]: 'Sega',
+      [translations.categoryOthers]: 'Others',
+      [translations.categoryIllustrator]: 'Illustrator',
+      [translations.categoryCosplayer]: 'Cosplayer',
+      [translations.categoryMangaka]: 'Mangaka',
+      [translations.categoryConceptArtist]: 'Concept Artist',
+      [translations.categoryDesigner]: 'Designer',
+      [translations.categorySocial]: 'Social',
+      [translations.categoryImage]: 'Image',
+      [translations.categoryPose]: 'Pose',
+      [translations.categoryColor]: 'Color',
+      [translations.categoryDesign]: 'Design',
+      [translations.categoryMarket]: 'Market',
+      [translations.categoryGameTrailer]: 'Game Trailer',
+      [translations.categoryHowTo]: 'How to',
+      [translations.categoryProcess]: 'Process',
+      [translations.categoryLiveStream]: 'Live Stream',
+    };
+    
+    return reverseMap[translatedCat] || translatedCat;
+  };
+
+  // Helper to get translated category name
+  const getTranslatedCategoryName = (englishCat: string, translations: any): string => {
+    if (englishCat === 'All') return translations.categoryAll;
+    
+    const categoryMap: Record<string, string> = {
+      'Hoyoverse': translations.categoryHoyoverse,
+      'HyperGraph': translations.categoryHyperGraph,
+      'Nexon': translations.categoryNexon,
+      'Kuro Games': translations.categoryKuroGames,
+      'Shift Up': translations.categoryShiftUp,
+      'Yostar': translations.categoryYostar,
+      'Manjuu': translations.categoryManjuu,
+      'Sega': translations.categorySega,
+      'Others': translations.categoryOthers,
+      'Illustrator': translations.categoryIllustrator,
+      'Cosplayer': translations.categoryCosplayer,
+      'Mangaka': translations.categoryMangaka,
+      'Concept Artist': translations.categoryConceptArtist,
+      'Designer': translations.categoryDesigner,
+      'Social': translations.categorySocial,
+      'Image': translations.categoryImage,
+      'Pose': translations.categoryPose,
+      'Color': translations.categoryColor,
+      'Design': translations.categoryDesign,
+      'Market': translations.categoryMarket,
+      'Game Trailer': translations.categoryGameTrailer,
+      'How to': translations.categoryHowTo,
+      'Process': translations.categoryProcess,
+      'Live Stream': translations.categoryLiveStream,
+    };
+    
+    return categoryMap[englishCat] || englishCat;
+  };
+
   useEffect(() => {
     document.documentElement.classList.toggle('dark', isDarkMode);
   }, [isDarkMode]);
@@ -103,11 +197,6 @@ const App: React.FC = () => {
       else playerRef.current.pauseVideo();
     }
   }, [isMuted]);
-
-  useEffect(() => {
-    // Update category to translated version when language changes
-    setCurrentCategory(t.categoryAll);
-  }, [language, t.categoryAll]);
 
   const handleNavigate = (view: string) => {
     setCurrentView(view);

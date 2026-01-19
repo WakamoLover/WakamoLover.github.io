@@ -87,7 +87,7 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
           <Settings size={16} className="text-gray-400" />
           <h3 className={`font-bold text-sm tracking-wide ${textPrimary}`}>{t.systemSettings}</h3>
         </div>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           <button 
             onClick={() => setIsDarkMode(!isDarkMode)}
             className={`flex flex-col items-center justify-center gap-2 p-3 rounded-xl border transition-all ${
