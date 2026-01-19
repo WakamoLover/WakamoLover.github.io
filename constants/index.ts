@@ -73,14 +73,14 @@ export const SIDEBAR_CAROUSEL: CarouselItem[] = [
   }
 ];
 
-export const NAV_ITEMS = ['HOME', 'GAME', 'REF', 'VIDEO', 'ARTIST'];
+export const NAV_ITEMS = ['HOME', 'GAME', 'REF', 'VIDEO', 'WORK'];
 
 // Categories for each page
 export const CATEGORY_TABS: Record<string, string[]> = {
   'GAME': ['All', 'Hoyoverse', 'HyperGraph', 'Nexon', 'Kuro Games', 'Shift Up', 'Yostar', 'Manjuu', 'Sega', 'Others'],
   'REF': ['All', 'Social', 'Image', 'Pose', 'Color', 'Design', 'Market', 'Others'],
   'VIDEO': ['All', 'Game Trailer', 'How to', 'Process', 'Live Stream'],
-  'ARTIST': ['All', 'Illustrator', 'Cosplayer', 'Mangaka', 'Concept Artist', 'Designer']
+  'WORK': ['All', 'Illustrator', 'Cosplayer', 'Mangaka', 'Concept Artist', 'Designer']
 };
 
 export const MOCK_POSTS: Post[] = [
