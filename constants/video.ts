@@ -5,16 +5,28 @@ export const VIDEO_ITEMS: Omit<Post, 'id'>[] = [
 
 // --- Game Trailer ---
   {
-    title: 'ANANTA | Teaser Trailer',
-    description: 'Hold up, what\'s the move now that we\'ve ghosted the codename? Infinite Vacay, Infinite Cash, Infinite Cola… Ugh, no time! Let\'s just go with "ANANTA"!',
+    title: {
+      en: 'ANANTA | Teaser Trailer',
+      ko: 'ANANTA | 티저 트레일러'
+    },
+    description: {
+      en: 'Hold up, what\'s the move now that we\'ve ghosted the codename? Infinite Vacay, Infinite Cash, Infinite Cola… Ugh, no time! Let\'s just go with "ANANTA"!',
+      ko: '잠깐, 코드명을 버린 지금 다음 행보는 뭐지? 무한 휴가, 무한 현금, 무한 콜라… 아, 시간 없어! 그냥 "ANANTA"로 가자!'
+    },
     coverImage: '',
     type: ContentType.VIDEO,
     category: 'Game Trailer',
     videoUrl: 'https://youtu.be/r_Ze7iJtYb0'
   } as any,
   {
-    title: 'Azur Promilia - "Set Sail Towards the Blue Beyond"',
-    description: 'Guided by shooting stars, amid the sparkling constellations, this is your very own journey. ',
+    title: {
+      en: 'Azur Promilia - "Set Sail Towards the Blue Beyond"',
+      ko: '벽람항로: 프로밀리아 - "푸른 저편을 향해 항해하다"'
+    },
+    description: {
+      en: 'Guided by shooting stars, amid the sparkling constellations, this is your very own journey.',
+      ko: '별똥별의 인도를 받으며, 반짝이는 별자리 속에서, 이것은 당신만의 여정입니다.'
+    },
     coverImage: '',
     type: ContentType.VIDEO,
     category: 'Game Trailer',

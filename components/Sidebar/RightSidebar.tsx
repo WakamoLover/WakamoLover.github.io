@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { ArrowUpRight, Bell, Sun, Moon, Volume2, VolumeX, Settings, Languages } from 'lucide-react';
 import { OFFICIAL_NOTICES, FOR_YOU_LINKS, SIDEBAR_CAROUSEL } from '../../constants/index';
 import { Language, translations } from '../../constants/translations';
+import { getLocalizedText } from '../../utils';
 
 interface RightSidebarProps {
   onNavigate?: (view: string) => void;
@@ -73,8 +74,8 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
             <div key={item.id} className={`flex items-start gap-3 group cursor-pointer pb-2 border-b last:border-0 last:pb-0 ${isDarkMode ? 'border-gray-800' : 'border-gray-50'}`}>
               <div className="w-1.5 h-1.5 rounded-full bg-red-500 mt-2 flex-shrink-0" />
               <div>
-                <h4 className={`text-sm font-medium group-hover:text-blue-500 line-clamp-2 leading-snug ${textSecondary}`}>{item.title}</h4>
-                <span className="text-[10px] text-gray-400 mt-0.5 block">{item.category}</span>
+                <h4 className={`text-sm font-medium group-hover:text-blue-500 line-clamp-2 leading-snug ${textSecondary}`}>{getLocalizedText(item.title, language)}</h4>
+                <span className="text-[10px] text-gray-400 mt-0.5 block">{getLocalizedText(item.category, language)}</span>
               </div>
             </div>
           ))}
@@ -146,7 +147,7 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
             >
               <img 
                 src={getImageSrc(item)} 
-                alt={item.title} 
+                alt={getLocalizedText(item.title, language)} 
                 className="w-full h-full object-cover" 
                 onError={(e) => {
                    console.error(`이미지 로드 실패: ${getImageSrc(item)}`);
@@ -154,7 +155,7 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
                 }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-3">
-                 <span className="text-white font-bold text-xs truncate">{item.title}</span>
+                 <span className="text-white font-bold text-xs truncate">{getLocalizedText(item.title, language)}</span>
               </div>
             </a>
           ))}
@@ -187,8 +188,8 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
       </div>
 
       <div className="text-xs text-gray-400 px-2 space-y-2">
-        <p>WakaMoe is a non-profit database for certain artist.</p>
-        <p>All content is the trademark and copyright of certain anime game companies and their respective holders.</p>
+        <p>{t.footerText1}</p>
+        <p>{t.footerText2}</p>
       </div>
     </aside>
   );

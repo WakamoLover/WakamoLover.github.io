@@ -3,8 +3,14 @@ import { ContentType, Post } from '../types';
 // Game Page Items (id는 constants/index.ts에서 자동으로 생성됨)
 export const GAME_ITEMS: Omit<Post, 'id'>[] = [
   {
-    title: 'HONKAI GAKUEN 2',
-    description: '',
+    title: {
+      en: 'HONKAI GAKUEN 2',
+      ko: '붕괴학원 2'
+    },
+    description: {
+      en: '',
+      ko: ''
+    },
     coverImage: 'game/hg2.png', 
     type: ContentType.GAME,
     category: 'Hoyoverse',
@@ -14,8 +20,14 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     ]
   } as any,
   {
-    title: 'HONKAI IMPACT 3RD',
-    description: '',
+    title: {
+      en: 'HONKAI IMPACT 3RD',
+      ko: '붕괴 3rd'
+    },
+    description: {
+      en: '',
+      ko: ''
+    },
     coverImage: 'game/hi3.png',
     type: ContentType.GAME,
     category: 'Hoyoverse',
@@ -28,8 +40,14 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     ]
   } as any,
   {
-    title: 'HONKAI: STAR RAIL',
-    description: '',
+    title: {
+      en: 'HONKAI: STAR RAIL',
+      ko: '붕괴: 스타레일'
+    },
+    description: {
+      en: '',
+      ko: ''
+    },
     coverImage: 'game/hsr.png',
     type: ContentType.GAME,
     category: 'Hoyoverse',
