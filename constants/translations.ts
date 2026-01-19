@@ -123,8 +123,8 @@ export const translations: Record<Language, Translations> = {
     home: '홈',
     game: '게임',
     library: '라이브러리',
-    reference: '참고자료',
-    video: '영상',
+    reference: '자료',
+    video: '동영상',
     
     // UI elements
     search: '검색...',
@@ -140,7 +140,7 @@ export const translations: Record<Language, Translations> = {
     categoryHoyoverse: '호요버스',
     categoryHyperGraph: '하이퍼그리프',
     categoryNexon: '넥슨',
-    categoryKuroGames: '쿠로게임즈',
+    categoryKuroGames: '쿠로 게임즈',
     categoryShiftUp: '시프트업',
     categoryYostar: '요스타',
     categoryManjuu: '만쥬',
@@ -163,13 +163,13 @@ export const translations: Record<Language, Translations> = {
     categoryMarket: '마켓',
     
     // Categories - Video
-    categoryGameTrailer: '게임 트레일러',
-    categoryHowTo: '하우투',
-    categoryProcess: '제작과정',
-    categoryLiveStream: '라이브 방송',
+    categoryGameTrailer: '트레일러',
+    categoryHowTo: '방법',
+    categoryProcess: '과정',
+    categoryLiveStream: '스트리밍',
     
     // Other
-    officialNotices: '공식 공지',
+    officialNotices: '공지사항',
     forYou: '추천',
     results: '결과',
     noContentFound: '콘텐츠가 없습니다.',

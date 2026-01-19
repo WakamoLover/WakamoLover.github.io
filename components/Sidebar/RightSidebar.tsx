@@ -121,7 +121,7 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
             }`}
           >
             <Languages size={20} />
-            <span className="text-[10px] font-bold uppercase">{language === 'en' ? 'EN' : 'KO'}</span>
+            <span className="text-[10px] font-bold uppercase">{language === 'en' ? 'EN' : 'KR'}</span>
           </button>
         </div>
       </div>
