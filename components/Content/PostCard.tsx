@@ -63,7 +63,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, isDarkMode, onVideo
   }
   
   const isVideo = post.type === ContentType.VIDEO;
-  const isArtist = viewMode === 'WORK' || post.type === ContentType.IMAGE;
+  const isArtist = viewMode === 'LIBRARY' || post.type === ContentType.IMAGE;
 
   // --- 1. 리스트 레이아웃 (HOME, GAME, REF) ---
   if (viewMode === 'HOME' || viewMode === 'GAME' || viewMode === 'REF') {
@@ -131,7 +131,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, isDarkMode, onVideo
     );
   }
 
-  // --- 2. 그리드 레이아웃 (VIDEO, WORK) ---
+  // --- 2. 그리드 레이아웃 (VIDEO, LIBRARY) ---
   return (
     <div 
       className={`transition-all cursor-pointer group flex flex-col h-full border rounded-lg overflow-hidden ${

@@ -1,7 +1,7 @@
 import { ContentType, Post } from '../types';
 
-// Artist Page Items (id는 constants/index.ts에서 자동으로 생성됨)
-export const ARTIST_ITEMS: Omit<Post, 'id'>[] = [
+// Library Page Items (id는 constants/index.ts에서 자동으로 생성됨)
+export const LIBRARY_ITEMS: Omit<Post, 'id'>[] = [
 // Illustrator
   {
     title: '',
