@@ -8,6 +8,7 @@ import ImageModal from './components/Content/ImageModal';
 import { MOCK_POSTS, CATEGORY_TABS } from './constants/index';
 import { ContentType } from './types';
 import { LayoutGrid, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Language, translations } from './constants/translations';
 
 declare global {
   interface Window {
@@ -62,6 +63,7 @@ const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(12);
   const [isPageSizeOpen, setIsPageSizeOpen] = useState(false);
+  const [language, setLanguage] = useState<Language>('en');
   
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentVideoUrl, setCurrentVideoUrl] = useState('');
@@ -70,6 +72,102 @@ const App: React.FC = () => {
 
   const playerRef = useRef<any>(null);
   const pageSizeRef = useRef<HTMLDivElement>(null);
+
+  const t = translations[language];
+
+  // Initialize category with translated "All" on first render
+  const isInitialMount = useRef(true);
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      setCurrentCategory(t.categoryAll);
+    }
+  }, []);
+
+  // Translate current category when language changes (but not on initial mount)
+  const prevLanguageRef = useRef(language);
+  useEffect(() => {
+    if (!isInitialMount.current && prevLanguageRef.current !== language) {
+      // Get the English version of current category
+      const prevT = translations[prevLanguageRef.current];
+      const englishCategory = getEnglishCategoryFromTranslation(currentCategory, prevT);
+      
+      // Translate it to new language
+      const newTranslatedCategory = getTranslatedCategoryName(englishCategory, t);
+      setCurrentCategory(newTranslatedCategory);
+      
+      prevLanguageRef.current = language;
+    }
+  }, [language]);
+
+  // Helper to get English category from translation
+  const getEnglishCategoryFromTranslation = (translatedCat: string, translations: any): string => {
+    if (translatedCat === translations.categoryAll) return 'All';
+    
+    // Create reverse map
+    const reverseMap: Record<string, string> = {
+      [translations.categoryHoyoverse]: 'Hoyoverse',
+      [translations.categoryHyperGraph]: 'HyperGraph',
+      [translations.categoryNexon]: 'Nexon',
+      [translations.categoryKuroGames]: 'Kuro Games',
+      [translations.categoryShiftUp]: 'Shift Up',
+      [translations.categoryYostar]: 'Yostar',
+      [translations.categoryManjuu]: 'Manjuu',
+      [translations.categorySega]: 'Sega',
+      [translations.categoryOthers]: 'Others',
+      [translations.categoryIllustrator]: 'Illustrator',
+      [translations.categoryCosplayer]: 'Cosplayer',
+      [translations.categoryMangaka]: 'Mangaka',
+      [translations.categoryConceptArtist]: 'Concept Artist',
+      [translations.categoryDesigner]: 'Designer',
+      [translations.categorySocial]: 'Social',
+      [translations.categoryImage]: 'Image',
+      [translations.categoryPose]: 'Pose',
+      [translations.categoryColor]: 'Color',
+      [translations.categoryDesign]: 'Design',
+      [translations.categoryMarket]: 'Market',
+      [translations.categoryGameTrailer]: 'Game Trailer',
+      [translations.categoryHowTo]: 'How to',
+      [translations.categoryProcess]: 'Process',
+      [translations.categoryLiveStream]: 'Live Stream',
+    };
+    
+    return reverseMap[translatedCat] || translatedCat;
+  };
+
+  // Helper to get translated category name
+  const getTranslatedCategoryName = (englishCat: string, translations: any): string => {
+    if (englishCat === 'All') return translations.categoryAll;
+    
+    const categoryMap: Record<string, string> = {
+      'Hoyoverse': translations.categoryHoyoverse,
+      'HyperGraph': translations.categoryHyperGraph,
+      'Nexon': translations.categoryNexon,
+      'Kuro Games': translations.categoryKuroGames,
+      'Shift Up': translations.categoryShiftUp,
+      'Yostar': translations.categoryYostar,
+      'Manjuu': translations.categoryManjuu,
+      'Sega': translations.categorySega,
+      'Others': translations.categoryOthers,
+      'Illustrator': translations.categoryIllustrator,
+      'Cosplayer': translations.categoryCosplayer,
+      'Mangaka': translations.categoryMangaka,
+      'Concept Artist': translations.categoryConceptArtist,
+      'Designer': translations.categoryDesigner,
+      'Social': translations.categorySocial,
+      'Image': translations.categoryImage,
+      'Pose': translations.categoryPose,
+      'Color': translations.categoryColor,
+      'Design': translations.categoryDesign,
+      'Market': translations.categoryMarket,
+      'Game Trailer': translations.categoryGameTrailer,
+      'How to': translations.categoryHowTo,
+      'Process': translations.categoryProcess,
+      'Live Stream': translations.categoryLiveStream,
+    };
+    
+    return categoryMap[englishCat] || englishCat;
+  };
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', isDarkMode);
@@ -102,13 +200,62 @@ const App: React.FC = () => {
 
   const handleNavigate = (view: string) => {
     setCurrentView(view);
-    setCurrentCategory('All'); 
+    setCurrentCategory(t.categoryAll); 
     setCurrentPage(1);
   };
 
   const handleCategorySelect = (category: string) => {
     setCurrentCategory(category);
     setCurrentPage(1);
+  };
+
+  // Get translated categories for current view
+  const getTranslatedCategories = (): string[] => {
+    const viewKey = currentView as keyof typeof CATEGORY_TABS;
+    const categories = CATEGORY_TABS[viewKey] || [];
+    
+    return categories.map(cat => {
+      if (cat === 'All') return t.categoryAll;
+      // Map English category names to translation keys
+      const categoryMap: Record<string, keyof typeof t> = {
+        'Hoyoverse': 'categoryHoyoverse',
+        'HyperGraph': 'categoryHyperGraph',
+        'Nexon': 'categoryNexon',
+        'Kuro Games': 'categoryKuroGames',
+        'Shift Up': 'categoryShiftUp',
+        'Yostar': 'categoryYostar',
+        'Manjuu': 'categoryManjuu',
+        'Sega': 'categorySega',
+        'Others': 'categoryOthers',
+        'Illustrator': 'categoryIllustrator',
+        'Cosplayer': 'categoryCosplayer',
+        'Mangaka': 'categoryMangaka',
+        'Concept Artist': 'categoryConceptArtist',
+        'Designer': 'categoryDesigner',
+        'Social': 'categorySocial',
+        'Image': 'categoryImage',
+        'Pose': 'categoryPose',
+        'Color': 'categoryColor',
+        'Design': 'categoryDesign',
+        'Market': 'categoryMarket',
+        'Game Trailer': 'categoryGameTrailer',
+        'How to': 'categoryHowTo',
+        'Process': 'categoryProcess',
+        'Live Stream': 'categoryLiveStream',
+      };
+      const translationKey = categoryMap[cat];
+      return translationKey ? t[translationKey] : cat;
+    });
+  };
+
+  // Get English category name from translated name
+  const getEnglishCategory = (translatedCat: string): string => {
+    if (translatedCat === t.categoryAll) return 'All';
+    const viewKey = currentView as keyof typeof CATEGORY_TABS;
+    const categories = CATEGORY_TABS[viewKey] || [];
+    const translatedCategories = getTranslatedCategories();
+    const index = translatedCategories.indexOf(translatedCat);
+    return index >= 0 ? categories[index] : translatedCat;
   };
 
   const allFilteredPosts = useMemo(() => {
@@ -137,7 +284,7 @@ const App: React.FC = () => {
     // 1. 페이지 뷰에 따른 필터링
     if (currentView !== 'HOME') {
       const typeMap: Record<string, ContentType> = {
-        GAME: ContentType.GAME, REF: ContentType.REF, VIDEO: ContentType.VIDEO, WORK: ContentType.IMAGE,
+        GAME: ContentType.GAME, REF: ContentType.REF, VIDEO: ContentType.VIDEO, LIBRARY: ContentType.IMAGE,
       };
       if (typeMap[currentView]) {
         result = result.filter(p => p.type === typeMap[currentView]);
@@ -145,12 +292,13 @@ const App: React.FC = () => {
     }
 
     // 2. 카테고리 필터링
-    if (currentCategory !== 'All') {
+    const englishCategory = getEnglishCategory(currentCategory);
+    if (englishCategory !== 'All') {
       result = result.filter(p => {
         if (Array.isArray(p.category)) {
-          return p.category.includes(currentCategory);
+          return p.category.includes(englishCategory);
         } else {
-          return p.category === currentCategory;
+          return p.category === englishCategory;
         }
       });
     }
@@ -173,12 +321,12 @@ const App: React.FC = () => {
     return allFilteredPosts.slice(start, start + pageSize);
   }, [allFilteredPosts, currentPage, pageSize]);
 
-  const tabs = CATEGORY_TABS[currentView as keyof typeof CATEGORY_TABS];
+  const tabs = getTranslatedCategories();
 
   return (
     <div className={`min-h-screen transition-colors duration-300 ${isDarkMode ? 'bg-[#0D1117] text-gray-200' : 'bg-[#F0F2F5] text-gray-900'}`}>
       <div id="bgm-player" className="hidden"></div>
-      <Header currentView={currentView} onNavigate={handleNavigate} searchTerm={searchTerm} onSearchChange={setSearchTerm} isDarkMode={isDarkMode} />
+      <Header currentView={currentView} onNavigate={handleNavigate} searchTerm={searchTerm} onSearchChange={setSearchTerm} isDarkMode={isDarkMode} language={language} />
       
       <main className="max-w-7xl mx-auto px-4 py-4 md:py-6">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
@@ -196,7 +344,7 @@ const App: React.FC = () => {
                           </button>
                         ))}
                       </div>
-                   ) : (searchTerm ? <h2 className="text-sm font-bold ml-2">"{searchTerm}" results</h2> : <div />)}
+                   ) : (searchTerm ? <h2 className="text-sm font-bold ml-2">"{searchTerm}" {t.results}</h2> : <div />)}
 
                    <div className="relative" ref={pageSizeRef}>
                       <button onClick={() => setIsPageSizeOpen(!isPageSizeOpen)} className={`flex items-center gap-1.5 px-3 py-1.5 border rounded-lg transition-colors ${isDarkMode ? 'bg-[#21262D] border-[#30363D] hover:bg-[#2d333b]' : 'bg-white border-gray-200 hover:bg-gray-50'}`}>
@@ -205,7 +353,7 @@ const App: React.FC = () => {
                       {isPageSizeOpen && (
                         <div className={`absolute right-0 top-full mt-2 w-32 border rounded-xl overflow-hidden z-[100] shadow-xl ${isDarkMode ? 'bg-[#161B22] border-[#30363D]' : 'bg-white border-gray-200'}`}>
                           {[12, 24, 36, 48].map((size) => (
-                            <button key={size} className={`w-full px-4 py-2.5 text-xs text-left hover:bg-blue-500 hover:text-white transition-colors ${pageSize === size ? 'text-blue-500 font-bold' : ''}`} onClick={() => { setPageSize(size); setIsPageSizeOpen(false); setCurrentPage(1); }}>Show {size}</button>
+                            <button key={size} className={`w-full px-4 py-2.5 text-xs text-left hover:bg-blue-500 hover:text-white transition-colors ${pageSize === size ? 'text-blue-500 font-bold' : ''}`} onClick={() => { setPageSize(size); setIsPageSizeOpen(false); setCurrentPage(1); }}>{t.show} {size}</button>
                           ))}
                         </div>
                       )}
@@ -213,9 +361,9 @@ const App: React.FC = () => {
                 </div>
 
                 {/* 메인 콘텐츠 그리드 */}
-                <div className={`flex-1 ${(currentView === 'VIDEO' || currentView === 'WORK') ? 'p-4' : 'p-0'}`}>
+                <div className={`flex-1 ${(currentView === 'VIDEO' || currentView === 'LIBRARY') ? 'p-4' : 'p-0'}`}>
                     {paginatedPosts.length > 0 ? (
-                      <div className={`grid ${currentView === 'VIDEO' ? 'grid-cols-1 sm:grid-cols-2 gap-4' : currentView === 'WORK' ? 'grid-cols-2 lg:grid-cols-3 gap-4' : 'grid-cols-1 gap-0'}`}>
+                      <div className={`grid ${currentView === 'VIDEO' ? 'grid-cols-1 sm:grid-cols-2 gap-4' : currentView === 'LIBRARY' ? 'grid-cols-2 lg:grid-cols-3 gap-4' : 'grid-cols-1 gap-0'}`}>
                           {paginatedPosts.map((post: any) => (
                             <PostCard 
                               key={post.id} 
@@ -238,7 +386,7 @@ const App: React.FC = () => {
                           ))}
                       </div>
                     ) : (
-                      <div className="py-32 text-center text-gray-500">No content found.</div>
+                      <div className="py-32 text-center text-gray-500">{t.noContentFound}</div>
                     )}
                 </div>
 
@@ -296,6 +444,8 @@ const App: React.FC = () => {
               setIsDarkMode={setIsDarkMode} 
               isMuted={isMuted} 
               setIsMuted={setIsMuted} 
+              language={language}
+              setLanguage={setLanguage}
             />
           </div>
         </div>

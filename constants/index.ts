@@ -2,7 +2,7 @@ import { ContentType, Post, CarouselItem, HotContentItem, ExternalLinkItem, User
 import { GAME_ITEMS as GAME_ITEMS_BASE } from './game';
 import { REF_ITEMS as REF_ITEMS_BASE } from './ref';
 import { VIDEO_ITEMS as VIDEO_ITEMS_BASE } from './video';
-import { ARTIST_ITEMS as ARTIST_ITEMS_BASE } from './artist';
+import { LIBRARY_ITEMS as LIBRARY_ITEMS_BASE } from './library';
 
 // 자동 id 생성 함수
 const generateIds = (items: any[], prefix: string): Post[] => {
@@ -15,7 +15,7 @@ const generateIds = (items: any[], prefix: string): Post[] => {
 const GAME_ITEMS = generateIds(GAME_ITEMS_BASE, 'g');
 const REF_ITEMS = generateIds(REF_ITEMS_BASE, 'r');
 const VIDEO_ITEMS = generateIds(VIDEO_ITEMS_BASE, 'v');
-const ARTIST_ITEMS = generateIds(ARTIST_ITEMS_BASE, 'a');
+const LIBRARY_ITEMS = generateIds(LIBRARY_ITEMS_BASE, 'l');
 
 // Mock Users
 export const MOCK_USERS: User[] = [
@@ -73,21 +73,21 @@ export const SIDEBAR_CAROUSEL: CarouselItem[] = [
   }
 ];
 
-export const NAV_ITEMS = ['HOME', 'GAME', 'REF', 'VIDEO', 'WORK'];
+export const NAV_ITEMS = ['HOME', 'GAME', 'LIBRARY', 'REF', 'VIDEO'];
 
 // Categories for each page
 export const CATEGORY_TABS: Record<string, string[]> = {
   'GAME': ['All', 'Hoyoverse', 'HyperGraph', 'Nexon', 'Kuro Games', 'Shift Up', 'Yostar', 'Manjuu', 'Sega', 'Others'],
+  'LIBRARY': ['All', 'Illustrator', 'Cosplayer', 'Mangaka', 'Concept Artist', 'Designer'],
   'REF': ['All', 'Social', 'Image', 'Pose', 'Color', 'Design', 'Market', 'Others'],
-  'VIDEO': ['All', 'Game Trailer', 'How to', 'Process', 'Live Stream'],
-  'WORK': ['All', 'Illustrator', 'Cosplayer', 'Mangaka', 'Concept Artist', 'Designer']
+  'VIDEO': ['All', 'Game Trailer', 'How to', 'Process', 'Live Stream']
 };
 
 export const MOCK_POSTS: Post[] = [
   ...GAME_ITEMS,
   ...REF_ITEMS,
   ...VIDEO_ITEMS,
-  ...ARTIST_ITEMS,
+  ...LIBRARY_ITEMS,
 ];
 
 // Official Notices

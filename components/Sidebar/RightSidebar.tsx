@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { ArrowUpRight, Bell, Sun, Moon, Volume2, VolumeX, Settings } from 'lucide-react';
+import { ArrowUpRight, Bell, Sun, Moon, Volume2, VolumeX, Settings, Languages } from 'lucide-react';
 import { OFFICIAL_NOTICES, FOR_YOU_LINKS, SIDEBAR_CAROUSEL } from '../../constants/index';
+import { Language, translations } from '../../constants/translations';
 
 interface RightSidebarProps {
   onNavigate?: (view: string) => void;
@@ -9,6 +10,8 @@ interface RightSidebarProps {
   setIsDarkMode: (val: boolean) => void;
   isMuted: boolean;
   setIsMuted: (val: boolean) => void;
+  language: Language;
+  setLanguage: (val: Language) => void;
 }
 
 const RightSidebar: React.FC<RightSidebarProps> = ({ 
@@ -17,9 +20,13 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
   isDarkMode,
   setIsDarkMode,
   isMuted,
-  setIsMuted
+  setIsMuted,
+  language,
+  setLanguage
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const t = translations[language];
 
   const notices = OFFICIAL_NOTICES || [];
   const partners = FOR_YOU_LINKS || [];
@@ -58,7 +65,7 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
         <div className="flex justify-between items-center mb-4">
           <h3 className={`font-bold flex items-center gap-2 ${textPrimary}`}>
             <Bell size={18} className="text-blue-500" />
-            Official Notices
+            {t.officialNotices}
           </h3>
         </div>
         <div className="flex flex-col gap-3">
@@ -78,9 +85,9 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
       <div className={cardStyle}>
         <div className="flex items-center gap-2 mb-4">
           <Settings size={16} className="text-gray-400" />
-          <h3 className={`font-bold text-sm tracking-wide ${textPrimary}`}>System Settings</h3>
+          <h3 className={`font-bold text-sm tracking-wide ${textPrimary}`}>{t.systemSettings}</h3>
         </div>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           <button 
             onClick={() => setIsDarkMode(!isDarkMode)}
             className={`flex flex-col items-center justify-center gap-2 p-3 rounded-xl border transition-all ${
@@ -90,7 +97,7 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
             }`}
           >
             {isDarkMode ? <Moon size={20} fill="currentColor" /> : <Sun size={20} />}
-            <span className="text-[10px] font-bold uppercase">{isDarkMode ? 'Dark' : 'Light'}</span>
+            <span className="text-[10px] font-bold uppercase">{isDarkMode ? t.darkMode : t.lightMode}</span>
           </button>
 
           <button 
@@ -102,7 +109,19 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
             }`}
           >
             {!isMuted ? <Volume2 size={20} /> : <VolumeX size={20} />}
-            <span className="text-[10px] font-bold uppercase">{!isMuted ? 'BGM On' : 'Muted'}</span>
+            <span className="text-[10px] font-bold uppercase">{!isMuted ? t.bgmOn : t.muted}</span>
+          </button>
+
+          <button 
+            onClick={() => setLanguage(language === 'en' ? 'ko' : 'en')}
+            className={`flex flex-col items-center justify-center gap-2 p-3 rounded-xl border transition-all ${
+              isDarkMode 
+              ? 'bg-gray-800 border-gray-700 text-blue-400 hover:bg-gray-700' 
+              : 'bg-gray-50 border-gray-100 text-gray-500 hover:border-blue-200 hover:bg-blue-50'
+            }`}
+          >
+            <Languages size={20} />
+            <span className="text-[10px] font-bold uppercase">{language === 'en' ? 'EN' : 'KO'}</span>
           </button>
         </div>
       </div>
@@ -145,7 +164,7 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
       {/* 4. Partner Static Links */}
       <div className={cardStyle}>
         <div className="flex justify-between items-center mb-4">
-          <h3 className={`font-bold text-sm tracking-wide ${textPrimary}`}>For you</h3>
+          <h3 className={`font-bold text-sm tracking-wide ${textPrimary}`}>{t.forYou}</h3>
         </div>
         <div className="flex flex-col gap-3">
           {partners.map(link => (
