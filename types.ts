@@ -5,11 +5,6 @@ export enum ContentType {
   GAME = 'GAME'
 }
 
-export interface LocalizedString {
-  en: string;
-  ko: string;
-}
-
 export interface GameLink {
   label: string;
   url: string;
@@ -17,8 +12,8 @@ export interface GameLink {
 
 export interface Post {
   id: string;
-  title: string | LocalizedString;
-  description: string | LocalizedString;
+  title: string;
+  description: string;
   coverImage: string;
   type: ContentType;
   category?: string;
@@ -37,14 +32,14 @@ export interface Post {
 export interface CarouselItem {
   id: string;
   image: string;
-  title: string | LocalizedString;
+  title: string;
   link: string;
 }
 
 export interface HotContentItem {
   id: string;
-  title: string | LocalizedString;
-  category: string | LocalizedString;
+  title: string;
+  category: string;
   image: string;
 }
 

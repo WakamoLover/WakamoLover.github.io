@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Search } from 'lucide-react';
 import { NAV_ITEMS } from '../../constants/index';
-import { Language, translations } from '../../constants/translations';
 
 interface HeaderProps {
   currentView: string;
@@ -9,7 +8,6 @@ interface HeaderProps {
   searchTerm: string;
   onSearchChange: (term: string) => void;
   isDarkMode: boolean;
-  language: Language;
 }
 
 const Header: React.FC<HeaderProps> = ({ 
@@ -17,25 +15,21 @@ const Header: React.FC<HeaderProps> = ({
   onNavigate, 
   searchTerm, 
   onSearchChange, 
-  isDarkMode,
-  language
+  isDarkMode
 }) => {
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0, opacity: 0 });
   const navRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
-
-  const t = translations[language];
   
-  // Map view names to translations
+  // Map view names to labels
   const getViewLabel = (view: string): string => {
-    const viewMap: Record<string, keyof typeof t> = {
-      'HOME': 'home',
-      'GAME': 'game',
-      'LIBRARY': 'library',
-      'REF': 'reference',
-      'VIDEO': 'video',
+    const viewMap: Record<string, string> = {
+      'HOME': 'Home',
+      'GAME': 'Game',
+      'LIBRARY': 'Library',
+      'REF': 'Reference',
+      'VIDEO': 'Video',
     };
-    const key = viewMap[view];
-    return key ? t[key] : view;
+    return viewMap[view] || view;
   };
 
   const updateIndicator = (itemName: string) => {
@@ -52,7 +46,7 @@ const Header: React.FC<HeaderProps> = ({
   useEffect(() => {
     const timer = setTimeout(() => updateIndicator(currentView), 50);
     return () => clearTimeout(timer);
-  }, [currentView, language]);
+  }, [currentView]);
 
   return (
     // shadow-sm
@@ -129,7 +123,7 @@ const Header: React.FC<HeaderProps> = ({
             <Search size={18} className={isDarkMode ? 'text-gray-500' : 'text-gray-400'} />
             <input 
               type="text" 
-              placeholder={t.search}
+              placeholder="Search..."
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
               className={`bg-transparent border-none outline-none text-sm ml-2 w-full md:w-48 lg:w-64 ${

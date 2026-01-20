@@ -1,14 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { MOCK_CAROUSEL } from '../../constants/index';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Language } from '../../constants/translations';
-import { getLocalizedText } from '../../utils';
 
-interface HeroCarouselProps {
-  language?: Language;
-}
-
-const HeroCarousel: React.FC<HeroCarouselProps> = ({ language = 'en' }) => {
+const HeroCarousel: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   if (!MOCK_CAROUSEL || MOCK_CAROUSEL.length === 0) return null;
@@ -51,7 +45,7 @@ const HeroCarousel: React.FC<HeroCarouselProps> = ({ language = 'en' }) => {
             >
               <img 
                 src={item.image.startsWith('http') ? item.image : `/media/${item.image}`} 
-                alt={getLocalizedText(item.title, language)} 
+                alt={item.title} 
                 className="w-full h-full object-cover"
                 onError={(e) => {
                   (e.target as HTMLImageElement).src = 'https://via.placeholder.com/800x400?text=Image+Not+Found';
@@ -61,7 +55,7 @@ const HeroCarousel: React.FC<HeroCarouselProps> = ({ language = 'en' }) => {
               {item.title && (
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex flex-col justify-end p-6 md:p-10">
                   <h2 className="text-white text-xl md:text-3xl font-bold mb-2 drop-shadow-md">
-                    {getLocalizedText(item.title, language)}
+                    {item.title}
                   </h2>
                 </div>
               )}
