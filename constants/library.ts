@@ -125,7 +125,6 @@ export const LIBRARY_ITEMS: Omit<Post, 'id'>[] = [
     category: 'Cosplayer',
     externalLink: 'https://x.com/XaiabP/media'
   },
-  },
   {
     title: '憐',
     description: '',
@@ -133,7 +132,6 @@ export const LIBRARY_ITEMS: Omit<Post, 'id'>[] = [
     type: ContentType.IMAGE,
     category: 'Cosplayer',
     externalLink: 'https://x.com/ren_neco222/media'
-  },
   },
   {
     title: 'スッキ',
