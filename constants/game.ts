@@ -3,14 +3,8 @@ import { ContentType, Post } from '../types';
 // Game Page Items (id는 constants/index.ts에서 자동으로 생성됨)
 export const GAME_ITEMS: Omit<Post, 'id'>[] = [
   {
-    title: {
-      en: 'HONKAI GAKUEN 2',
-      ko: '붕괴학원 2'
-    },
-    description: {
-      en: '',
-      ko: ''
-    },
+    title: 'HONKAI GAKUEN 2',
+    description: '',
     coverImage: 'game/hg2.png', 
     type: ContentType.GAME,
     category: 'Hoyoverse',
@@ -20,14 +14,8 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     ]
   } as any,
   {
-    title: {
-      en: 'HONKAI IMPACT 3RD',
-      ko: '붕괴 3rd'
-    },
-    description: {
-      en: '',
-      ko: ''
-    },
+    title: 'HONKAI IMPACT 3RD',
+    description: '',
     coverImage: 'game/hi3.png',
     type: ContentType.GAME,
     category: 'Hoyoverse',
@@ -40,14 +28,8 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     ]
   } as any,
   {
-    title: {
-      en: 'HONKAI: STAR RAIL',
-      ko: '붕괴: 스타레일'
-    },
-    description: {
-      en: '',
-      ko: ''
-    },
+    title: 'HONKAI: STAR RAIL',
+    description: '',
     coverImage: 'game/hsr.png',
     type: ContentType.GAME,
     category: 'Hoyoverse',
@@ -77,7 +59,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     type: ContentType.GAME,
     category: 'Hoyoverse',
     gameLinks: [
-      { label: 'Offical Cutscene', url: 'https://baike.mihoyo.com/ys/obc/channel/map/80/81?bbs_presentation_style=no_header&visit_device=pc' },
+      { label: 'Official Cutscene', url: 'https://baike.mihoyo.com/ys/obc/channel/map/80/81?bbs_presentation_style=no_header&visit_device=pc' },
       { label: 'Tumblr Archive (Older)', url: 'https://genshinresource.tumblr.com/archive' },
       { label: 'Tumblr Archive (Newer)', url: 'https://genshinimpactresources.tumblr.com/archive' },
       { label: 'Fashion 3D Archive', url: 'https://gamesfashionarchive.net/viewer/Genshin_Impact' }
@@ -91,7 +73,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     type: ContentType.GAME,
     category: 'Hoyoverse',
     gameLinks: [
-      { label: 'Offcial Wallpaper', url: 'https://baike.mihoyo.com/zzz/wiki/channel/map/13/98' }
+      { label: 'Official Wallpaper', url: 'https://baike.mihoyo.com/zzz/wiki/channel/map/13/98' }
     ]
   },
   {

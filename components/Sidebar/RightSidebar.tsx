@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { ArrowUpRight, Bell, Sun, Moon, Volume2, VolumeX, Settings, Languages } from 'lucide-react';
+import { ArrowUpRight, Bell, Sun, Moon, Volume2, VolumeX, Settings } from 'lucide-react';
 import { OFFICIAL_NOTICES, FOR_YOU_LINKS, SIDEBAR_CAROUSEL } from '../../constants/index';
-import { Language, translations } from '../../constants/translations';
-import { getLocalizedText } from '../../utils';
 
 interface RightSidebarProps {
   onNavigate?: (view: string) => void;
@@ -11,8 +9,6 @@ interface RightSidebarProps {
   setIsDarkMode: (val: boolean) => void;
   isMuted: boolean;
   setIsMuted: (val: boolean) => void;
-  language: Language;
-  setLanguage: (val: Language) => void;
 }
 
 const RightSidebar: React.FC<RightSidebarProps> = ({ 
@@ -21,13 +17,9 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
   isDarkMode,
   setIsDarkMode,
   isMuted,
-  setIsMuted,
-  language,
-  setLanguage
+  setIsMuted
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  const t = translations[language];
 
   const notices = OFFICIAL_NOTICES || [];
   const partners = FOR_YOU_LINKS || [];
@@ -66,7 +58,7 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
         <div className="flex justify-between items-center mb-4">
           <h3 className={`font-bold flex items-center gap-2 ${textPrimary}`}>
             <Bell size={18} className="text-blue-500" />
-            {t.officialNotices}
+            Official Notices
           </h3>
         </div>
         <div className="flex flex-col gap-3">
@@ -74,8 +66,8 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
             <div key={item.id} className={`flex items-start gap-3 group cursor-pointer pb-2 border-b last:border-0 last:pb-0 ${isDarkMode ? 'border-gray-800' : 'border-gray-50'}`}>
               <div className="w-1.5 h-1.5 rounded-full bg-red-500 mt-2 flex-shrink-0" />
               <div>
-                <h4 className={`text-sm font-medium group-hover:text-blue-500 line-clamp-2 leading-snug ${textSecondary}`}>{getLocalizedText(item.title, language)}</h4>
-                <span className="text-[10px] text-gray-400 mt-0.5 block">{getLocalizedText(item.category, language)}</span>
+                <h4 className={`text-sm font-medium group-hover:text-blue-500 line-clamp-2 leading-snug ${textSecondary}`}>{item.title}</h4>
+                <span className="text-[10px] text-gray-400 mt-0.5 block">{item.category}</span>
               </div>
             </div>
           ))}
@@ -86,9 +78,9 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
       <div className={cardStyle}>
         <div className="flex items-center gap-2 mb-4">
           <Settings size={16} className="text-gray-400" />
-          <h3 className={`font-bold text-sm tracking-wide ${textPrimary}`}>{t.systemSettings}</h3>
+          <h3 className={`font-bold text-sm tracking-wide ${textPrimary}`}>System Settings</h3>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+        <div className="grid grid-cols-2 gap-3">
           <button 
             onClick={() => setIsDarkMode(!isDarkMode)}
             className={`flex flex-col items-center justify-center gap-2 p-3 rounded-xl border transition-all ${
@@ -98,7 +90,7 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
             }`}
           >
             {isDarkMode ? <Moon size={20} fill="currentColor" /> : <Sun size={20} />}
-            <span className="text-[10px] font-bold uppercase">{isDarkMode ? t.darkMode : t.lightMode}</span>
+            <span className="text-[10px] font-bold uppercase">{isDarkMode ? 'Dark' : 'Light'}</span>
           </button>
 
           <button 
@@ -110,19 +102,7 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
             }`}
           >
             {!isMuted ? <Volume2 size={20} /> : <VolumeX size={20} />}
-            <span className="text-[10px] font-bold uppercase">{!isMuted ? t.bgmOn : t.muted}</span>
-          </button>
-
-          <button 
-            onClick={() => setLanguage(language === 'en' ? 'ko' : 'en')}
-            className={`flex flex-col items-center justify-center gap-2 p-3 rounded-xl border transition-all ${
-              isDarkMode 
-              ? 'bg-gray-800 border-gray-700 text-blue-400 hover:bg-gray-700' 
-              : 'bg-gray-50 border-gray-100 text-gray-500 hover:border-blue-200 hover:bg-blue-50'
-            }`}
-          >
-            <Languages size={20} />
-            <span className="text-[10px] font-bold uppercase">{language === 'en' ? 'EN' : 'KR'}</span>
+            <span className="text-[10px] font-bold uppercase">{!isMuted ? 'BGM On' : 'Muted'}</span>
           </button>
         </div>
       </div>
@@ -147,7 +127,7 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
             >
               <img 
                 src={getImageSrc(item)} 
-                alt={getLocalizedText(item.title, language)} 
+                alt={item.title} 
                 className="w-full h-full object-cover" 
                 onError={(e) => {
                    console.error(`이미지 로드 실패: ${getImageSrc(item)}`);
@@ -155,7 +135,7 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
                 }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-3">
-                 <span className="text-white font-bold text-xs truncate">{getLocalizedText(item.title, language)}</span>
+                 <span className="text-white font-bold text-xs truncate">{item.title}</span>
               </div>
             </a>
           ))}
@@ -165,7 +145,7 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
       {/* 4. Partner Static Links */}
       <div className={cardStyle}>
         <div className="flex justify-between items-center mb-4">
-          <h3 className={`font-bold text-sm tracking-wide ${textPrimary}`}>{t.forYou}</h3>
+          <h3 className={`font-bold text-sm tracking-wide ${textPrimary}`}>For you</h3>
         </div>
         <div className="flex flex-col gap-3">
           {partners.map(link => (
@@ -188,8 +168,8 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
       </div>
 
       <div className="text-xs text-gray-400 px-2 space-y-2">
-        <p>{t.footerText1}</p>
-        <p>{t.footerText2}</p>
+        <p>WakaMoe is a non-profit database for certain artist.</p>
+        <p>All content is the trademark and copyright of certain anime game companies and their respective holders.</p>
       </div>
     </aside>
   );

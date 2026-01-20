@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { ContentType } from '../../types';
 import { Play, ExternalLink } from 'lucide-react';
-import { Language } from '../../constants/translations';
-import { getLocalizedText, translateCategory } from '../../utils';
 
 interface PostCardProps {
   post: any;
@@ -10,7 +8,6 @@ interface PostCardProps {
   isDarkMode: boolean;
   onVideoClick?: (url: string) => void;
   onImageClick?: (url: string) => void;
-  language?: Language;
 }
 
 const Chip: React.FC<{ label: string; url?: string; isDarkMode: boolean }> = ({ label, url, isDarkMode }) => {
@@ -48,7 +45,7 @@ const Chip: React.FC<{ label: string; url?: string; isDarkMode: boolean }> = ({ 
   );
 };
 
-const PostCard: React.FC<PostCardProps> = ({ post, viewMode, isDarkMode, onVideoClick, onImageClick, language = 'en' }) => {
+const PostCard: React.FC<PostCardProps> = ({ post, viewMode, isDarkMode, onVideoClick, onImageClick }) => {
   const [imageError, setImageError] = useState(false);
   
   const displayImage = post.thumbnail || post.coverImage;
@@ -112,12 +109,12 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, isDarkMode, onVideo
           <h3 className={`font-bold text-sm sm:text-lg leading-tight transition-colors mb-1.5 line-clamp-1 ${
             isDarkMode ? `text-gray-100 ${isGame ? '' : 'group-hover:text-blue-400'}` : `text-gray-800 ${isGame ? '' : 'group-hover:text-blue-600'}`
           }`}>
-            {getLocalizedText(post.title, language)}
+            {post.title}
           </h3>
           
           <div className="mb-3">
             <p className={`text-xs sm:text-sm leading-relaxed line-clamp-2 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-              {getLocalizedText(post.description, language)}
+              {post.description}
             </p>
           </div>
 
@@ -126,7 +123,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, isDarkMode, onVideo
               <Chip key={`game-link-${post.id}-${idx}`} label={link.label} url={link.url} isDarkMode={isDarkMode} />
             ))}
             {!isGame && post.category && (
-              <Chip label={translateCategory(Array.isArray(post.category) ? post.category[0] : post.category, language)} isDarkMode={isDarkMode} />
+              <Chip label={Array.isArray(post.category) ? post.category[0] : post.category} isDarkMode={isDarkMode} />
             )}
           </div>
         </div>
@@ -155,7 +152,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, isDarkMode, onVideo
       <div className={`relative w-full overflow-hidden ${isVideo ? 'aspect-video bg-gray-900' : 'aspect-[3/4] bg-gray-100'}`}>
         <img 
           src={imageError ? 'https://via.placeholder.com/400x225?text=Image+Failed' : displayImage} 
-          alt={getLocalizedText(post.title, language)}
+          alt={post.title}
           onError={() => setImageError(true)}
           className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 ${isVideo ? 'opacity-90 group-hover:opacity-100' : ''}`}
         />
@@ -183,14 +180,14 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, isDarkMode, onVideo
           <h3 className={`font-bold text-sm line-clamp-1 mb-1.5 transition-colors ${
             isDarkMode ? 'text-gray-100 group-hover:text-blue-400' : 'text-gray-800 group-hover:text-blue-600'
           }`}>
-            {getLocalizedText(post.title, language)}
+            {post.title}
           </h3>
           <p className={`text-[11px] leading-tight line-clamp-2 mb-3 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-            {getLocalizedText(post.description, language)}
+            {post.description}
           </p>
           <div className="mt-auto flex items-center gap-1 overflow-x-auto scrollbar-hide">
               {post.category && (
-                <Chip label={translateCategory(Array.isArray(post.category) ? post.category[0] : post.category, language)} isDarkMode={isDarkMode} />
+                <Chip label={Array.isArray(post.category) ? post.category[0] : post.category} isDarkMode={isDarkMode} />
               )}
           </div>
       </div>
