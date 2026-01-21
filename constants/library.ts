@@ -44,14 +44,6 @@ export const LIBRARY_ITEMS: Omit<Post, 'id'>[] = [
     externalLink: 'https://x.com/jeonghee1414'
   },
   {
-    title: 'イコモチ',
-    description: '',
-    coverImage: 'https://pbs.twimg.com/media/GxJ4pzSaQAEDcgO?format=jpg&name=medium',
-    type: ContentType.IMAGE,
-    category: 'Illustrator',
-    externalLink: 'https://x.com/rswxx/media'
-  },
-  {
     title: '憂姫はぐれ',
     description: '',
     coverImage: 'https://pbs.twimg.com/media/G-iFpOvbQAMxThf?format=jpg&name=medium',
@@ -146,6 +138,14 @@ export const LIBRARY_ITEMS: Omit<Post, 'id'>[] = [
     type: ContentType.IMAGE,
     category: 'Illustrator',
     externalLink: 'https://x.com/LightRia_/media'
+  },
+  {
+    title: '竜崎いち',
+    description: '',
+    coverImage: 'https://pbs.twimg.com/media/Gbc8gM3bEAAG7Pj?format=jpg&name=medium',
+    type: ContentType.IMAGE,
+    category: 'Illustrator',
+    externalLink: 'https://x.com/ryuzakiichi/media'
   },
   
 // Cosplpayer
@@ -338,12 +338,20 @@ export const LIBRARY_ITEMS: Omit<Post, 'id'>[] = [
     externalLink: 'https://x.com/dlgeria/media'
   },
   {
-    title: 'yu-ri',
+    title: '温泉瓜',
     description: '',
-    coverImage: 'https://pbs.twimg.com/media/G9eC0PNaYAM3eFb?format=jpg&name=4096x4096',
+    coverImage: 'https://pbs.twimg.com/media/G-oNaqIa4AEgXjd?format=jpg&name=4096x4096',
     type: ContentType.IMAGE,
     category: 'Concept Artist',
-    externalLink: 'https://x.com/00x0044/media'
+    externalLink: 'https://x.com/sg080915/media'
+  },
+  {
+    title: '幻像黒兎',
+    description: '',
+    coverImage: 'https://pbs.twimg.com/media/EZbIPqiU8AERkDC?format=jpg&name=large',
+    type: ContentType.IMAGE,
+    category: 'Concept Artist',
+    externalLink: 'https://x.com/coneyrivard/media'
   },
 
 // Designer
