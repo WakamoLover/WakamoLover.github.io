@@ -46,7 +46,7 @@ export const LIBRARY_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'イコモチ',
     description: '',
-    coverImage: 'https://pbs.twimg.com/media/G81HprhagAM2ZRZ?format=jpg&name=large',
+    coverImage: 'https://pbs.twimg.com/media/GxJ4pzSaQAEDcgO?format=jpg&name=medium',
     type: ContentType.IMAGE,
     category: 'Illustrator',
     externalLink: 'https://x.com/rswxx/media'
@@ -340,7 +340,7 @@ export const LIBRARY_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'yu-ri',
     description: '',
-    coverImage: 'https://pbs.twimg.com/media/G8GC7rGakAAvEZ0?format=jpg&name=4096x4096',
+    coverImage: 'https://pbs.twimg.com/media/G9eC0PNaYAM3eFb?format=jpg&name=4096x4096',
     type: ContentType.IMAGE,
     category: 'Concept Artist',
     externalLink: 'https://x.com/00x0044/media'
