@@ -92,14 +92,6 @@ export const LIBRARY_ITEMS: Omit<Post, 'id'>[] = [
     externalLink: 'https://x.com/Bibi_suka/media'
   },
   {
-    title: '',
-    description: '',
-    coverImage: '',
-    type: ContentType.IMAGE,
-    category: 'Illustrator',
-    externalLink: ''
-  },
-  {
     title: '荻pote',
     description: '',
     coverImage: 'https://pbs.twimg.com/media/G8XZdHEa4AAi5cH?format=jpg&name=4096x4096',
