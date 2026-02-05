@@ -100,7 +100,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     type: ContentType.GAME,
     category: 'HyperGraph',
     gameLinks: [
-      { label: '', url: '' }
+      { label: 'Official Theme', url: 'https://endfield.gryphline.com/special/over-the-frontier' }
     ]
   },
   {
