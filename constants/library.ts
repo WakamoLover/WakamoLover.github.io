@@ -28,6 +28,38 @@ export const LIBRARY_ITEMS: Omit<Post, 'id'>[] = [
     externalLink: 'https://x.com/roro046/media'
   },
   {
+    title: 'Sjoop',
+    description: '',
+    coverImage: 'https://pbs.twimg.com/media/GmUET3UaEAARK7l?format=jpg&name=4096x4096',
+    type: ContentType.IMAGE,
+    category: 'Illustrator',
+    externalLink: 'https://x.com/shycocoa/media'
+  },
+  {
+    title: '玩具店老板',
+    description: '',
+    coverImage: 'https://pbs.twimg.com/media/GhlYGQ2bMAAkb6u?format=jpg&name=large',
+    type: ContentType.IMAGE,
+    category: 'Illustrator',
+    externalLink: 'https://x.com/Bushiyulu/media'
+  },
+  {
+    title: 'alzimi',
+    description: '',
+    coverImage: 'https://pbs.twimg.com/media/Gn1jT43XAAAc7Hm?format=jpg&name=large',
+    type: ContentType.IMAGE,
+    category: 'Illustrator',
+    externalLink: 'https://x.com/ALumizky/media'
+  },
+  {
+    title: 'LM7',
+    description: '',
+    coverImage: 'https://pbs.twimg.com/media/Gy3VtY6aUAAAgYm?format=jpg&name=4096x4096',
+    type: ContentType.IMAGE,
+    category: 'Illustrator',
+    externalLink: 'https://x.com/__LM7__/media'
+  },
+  {
     title: '𝘧𝘳𝘦𝘯𝘨',
     description: '',
     coverImage: 'https://pbs.twimg.com/media/GPdg8s6bEAAYoIm?format=jpg&name=4096x4096',
@@ -42,6 +74,22 @@ export const LIBRARY_ITEMS: Omit<Post, 'id'>[] = [
     type: ContentType.IMAGE,
     category: 'Illustrator',
     externalLink: 'https://x.com/jeonghee1414'
+  },
+  {
+    title: '朝日川日和',
+    description: '',
+    coverImage: 'https://pbs.twimg.com/media/HBBrGAua4AAtWH-?format=jpg&name=large',
+    type: ContentType.IMAGE,
+    category: 'Illustrator',
+    externalLink: 'https://x.com/asahikawa33/media'
+  },
+  {
+    title: 'liduke',
+    description: '',
+    coverImage: 'https://pbs.twimg.com/media/ETKf0mQU0AAVRtI?format=jpg&name=large',
+    type: ContentType.IMAGE,
+    category: 'Illustrator',
+    externalLink: 'https://x.com/lidukelaya/media'
   },
   {
     title: '憂姫はぐれ',
@@ -82,6 +130,14 @@ export const LIBRARY_ITEMS: Omit<Post, 'id'>[] = [
     type: ContentType.IMAGE,
     category: 'Illustrator',
     externalLink: 'https://x.com/Bibi_suka/media'
+  },
+  {
+    title: '臼',
+    description: '',
+    coverImage: 'https://pbs.twimg.com/media/G_O7RoUaIAADBHv?format=jpg&name=large',
+    type: ContentType.IMAGE,
+    category: 'Illustrator',
+    externalLink: 'https://x.com/9619Usu/media'
   },
   {
     title: '荻pote',
