@@ -62,7 +62,7 @@ export const SIDEBAR_CAROUSEL: CarouselItem[] = [
   {
     id: 's2',
     image: 'mini2.png',
-    title: 'Tangtang: Supreme Chief',
+    title: 'Tangtang: Supreme Chief, Supreme Presence',
     link: 'https://youtu.be/AOcUXl2SjNA'
   },
   {
