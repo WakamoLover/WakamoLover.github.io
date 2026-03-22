@@ -28,8 +28,8 @@ export const MOCK_CAROUSEL: CarouselItem[] = [
   {
     id: '1',
     image: 'hero1.png',
-    title: 'ARKNIGHT: END FIELD',
-    link: 'https://endfield.gryphline.com/en-us#home'
+    title: 'AZUR PROMILIA',
+    link: 'https://azurpromilia.com/en/home/'
   },
   {
     id: '2',
@@ -56,20 +56,20 @@ export const SIDEBAR_CAROUSEL: CarouselItem[] = [
   {
     id: 's1',
     image: 'mini1.png',
-    title: 'Zhao EP - "Tiny Giant"',
-    link: 'https://youtu.be/TU5Bt8MLPjk?si=eSlI48w6OQ8TOh8n'
+    title: 'Sparxie Character Trailer — "Ravings"',
+    link: 'https://youtu.be/NU6J88t4luM'
   },
   {
     id: 's2',
     image: 'mini2.png',
-    title: 'Operator Combat Demo - Ardelia',
-    link: 'https://youtu.be/5HbgNb1XmbE?si=QHYav3Uh69UeZpCx'
+    title: 'Tangtang: Supreme Chief',
+    link: 'https://youtu.be/AOcUXl2SjNA'
   },
   {
     id: 's3',
     image: 'mini3.png',
-    title: '"Columbina: To Where She Flies"',
-    link: 'https://youtu.be/WsYsNoNjbaw?si=BWgXUGvWlwTj1Q7G'
+    title: '"Zibai: Mortal Flesh to Kindred Earth"',
+    link: 'https://youtu.be/t4xEbesXXtg'
   }
 ];
 
