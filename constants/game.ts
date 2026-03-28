@@ -136,6 +136,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
       { label: 'Official Wallpaper', url: 'https://bluearchive.jp/fankit' },
       { label: 'Google Drive Memorial', url: 'https://drive.google.com/drive/folders/1BULaKnOcP0u90RpWJ5QUQfpIsU89pUzc' },
       { label: 'Google Drive Spine', url: 'https://drive.google.com/drive/folders/1nlfhqo-laGOEbbPHDhG43fw8mQQZ1iHF' },
+      { label: 'Viewer', url: 'https://ba.svdex.moe/' },
       { label: 'Mega Archive', url: 'https://mega.nz/folder/0Bo1ABwB#bB3lAAQ0q8CSzi20Rff_CQ' },
       { label: 'Artist Forum', url: 'https://m.gamer.com.tw/forum/C.php?bsn=38898&page=&snA=4856&last=' }
     ]
