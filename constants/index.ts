@@ -51,28 +51,6 @@ export const MOCK_CAROUSEL: CarouselItem[] = [
   }
 ];
 
-// Sidebar Mini Carousel
-export const SIDEBAR_CAROUSEL: CarouselItem[] = [
-  {
-    id: 's1',
-    image: 'mini1.png',
-    title: 'Sparxie Character Trailer — "Ravings"',
-    link: 'https://youtu.be/NU6J88t4luM'
-  },
-  {
-    id: 's2',
-    image: 'mini2.png',
-    title: 'Tangtang: Supreme Chief, Supreme Presence',
-    link: 'https://youtu.be/AOcUXl2SjNA'
-  },
-  {
-    id: 's3',
-    image: 'mini3.png',
-    title: '"Zibai: Mortal Flesh to Kindred Earth"',
-    link: 'https://youtu.be/t4xEbesXXtg'
-  }
-];
-
 export const NAV_ITEMS = ['HOME', 'GAME', 'LIBRARY', 'REF', 'VIDEO'];
 
 // Categories for each page
@@ -80,7 +58,7 @@ export const CATEGORY_TABS: Record<string, string[]> = {
   'GAME': ['All', 'Hoyoverse', 'HyperGraph', 'Nexon', 'Kuro Games', 'Shift Up', 'Yostar', 'Manjuu', 'Sega', 'Others'],
   'LIBRARY': ['All', 'Illustrator', 'Cosplayer', 'Mangaka', 'Concept Artist', 'Designer'],
   'REF': ['All', 'Social', 'Image', 'Pose', 'Color', 'Design', 'Market', 'Others'],
-  'VIDEO': ['All', 'Game Trailer', 'How to', 'Process', 'Live Stream']
+  'VIDEO': ['All', 'YouTube', 'Bilibili', 'Niconico']
 };
 
 export const MOCK_POSTS: Post[] = [

@@ -1,135 +1,94 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Search } from 'lucide-react';
 import { NAV_ITEMS } from '../../constants/index';
 
 interface HeaderProps {
   currentView: string;
   onNavigate: (view: string) => void;
-  searchTerm: string;
-  onSearchChange: (term: string) => void;
   isDarkMode: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ 
-  currentView, 
-  onNavigate, 
-  searchTerm, 
-  onSearchChange, 
-  isDarkMode
-}) => {
+const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, isDarkMode }) => {
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0, opacity: 0 });
   const navRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
-  
-  // Map view names to labels
+  const navContainerRef = useRef<HTMLDivElement | null>(null);
+
   const getViewLabel = (view: string): string => {
     const viewMap: Record<string, string> = {
-      'HOME': 'Home',
-      'GAME': 'Game',
-      'LIBRARY': 'Library',
-      'REF': 'Reference',
-      'VIDEO': 'Video',
+      HOME: 'Home',
+      GAME: 'Game',
+      LIBRARY: 'Library',
+      REF: 'Reference',
+      VIDEO: 'Video',
     };
     return viewMap[view] || view;
   };
 
   const updateIndicator = (itemName: string) => {
     const target = navRefs.current.get(itemName);
-    if (target) {
-      setIndicatorStyle({
-        left: target.offsetLeft,
-        width: target.offsetWidth,
-        opacity: 1
-      });
+    const container = navContainerRef.current;
+    if (target && container) {
+      const left = target.offsetLeft - container.offsetLeft;
+      setIndicatorStyle({ left, width: target.offsetWidth, opacity: 1 });
     }
   };
 
   useEffect(() => {
-    const timer = setTimeout(() => updateIndicator(currentView), 50);
-    return () => clearTimeout(timer);
+    const onResize = () => updateIndicator(currentView);
+    window.addEventListener('resize', onResize);
+    const t = setTimeout(() => updateIndicator(currentView), 50);
+    return () => { window.removeEventListener('resize', onResize); clearTimeout(t); };
   }, [currentView]);
 
   return (
-    // shadow-sm
-    <header className={`sticky top-0 z-50 w-full transition-colors duration-300 border-b backdrop-blur-md ${
-      isDarkMode 
-        ? 'bg-[#161B22]/90 border-[#30363D]' 
-        : 'bg-white/95 border-gray-200'
-    }`}>
-      <div className="max-w-7xl mx-auto px-4 py-3 md:py-0 md:h-16 flex flex-col md:flex-row items-center justify-between gap-3 md:gap-8">
-        
-        {/* Logo */}
-        <div className="hidden md:flex items-center gap-4 cursor-pointer" onClick={() => onNavigate('HOME')}>
-          <img src="media/alf.png" alt="Logo" className="w-8 h-8 object-contain flex-shrink-0 rounded-lg" />
-          <span className={`text-xl font-bold tracking-tight ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>
-            WakaMoe
-          </span>
-        </div>
-          
-        {/* Navigation */}
-        <nav 
-          className={`relative w-full md:w-auto overflow-x-auto scrollbar-hide flex items-center gap-1 md:gap-4 border-b md:border-b-0 pb-2 md:pb-0 ${
-            isDarkMode ? 'border-gray-800' : 'border-gray-50'
-          }`}
-          onMouseLeave={() => updateIndicator(currentView)}
-        >
-          {NAV_ITEMS.map((item) => {
-            const isActive = currentView === item;
-            return (
-              <button
-                key={item}
-                ref={(el) => {
-                  if (el) navRefs.current.set(item, el);
-                  else navRefs.current.delete(item);
-                }}
-                onClick={() => onNavigate(item)}
-                onMouseEnter={() => updateIndicator(item)}
-                className={`
-                  relative px-3 py-2 md:py-5 text-sm font-semibold transition-colors whitespace-nowrap flex-shrink-0 z-10
-                  ${isActive 
-                    ? 'text-blue-500' 
-                    : isDarkMode ? 'text-gray-400 hover:text-gray-200' : 'text-gray-600 hover:text-blue-400'}
-                `}
-              >
-                {getViewLabel(item)}
-                {/* Mobile Active Indicator */}
-                {isActive && (
-                  <span className={`absolute inset-0 rounded-lg -z-10 md:hidden ${
-                    isDarkMode ? 'bg-blue-900/20' : 'bg-blue-50/50'
-                  }`} />
-                )}
-              </button>
-            );
-          })}
+    <header className="relative sticky top-4 z-50 w-full">
+      <div className="max-w-6xl mx-auto px-4 py-3">
+        <div className={`relative overflow-hidden rounded-2xl border border-white/10 bg-[#08121d]/70 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.35)] ${
+          isDarkMode ? 'ring-1 ring-sky-500/10' : 'ring-1 ring-slate-900/5'
+        }`}>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(56,189,248,0.07),transparent_32%)] pointer-events-none" />
+          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-4 px-4 py-3">
+            <div className="flex items-center gap-3 cursor-pointer" onClick={() => onNavigate('HOME')}>
+              <div className="flex h-14 w-14 items-center justify-center rounded-full border border-white/10 bg-slate-900/90 shadow-[0_12px_40px_rgba(0,0,0,0.35)]">
+                <img src="media/alf.png" alt="Logo" className="w-9 h-9 object-contain rounded-full" />
+              </div>
+              <h1 className="text-2xl font-black text-white leading-tight">WAKAMOE</h1>
+            </div>
 
-          {/* Desktop Moving Indicator */}
-          <span 
-            className="absolute bottom-0 h-[3px] bg-blue-500 rounded-t-full transition-all duration-300 ease-in-out hidden md:block"
-            style={{
-              left: `${indicatorStyle.left}px`,
-              width: `${indicatorStyle.width}px`,
-              opacity: indicatorStyle.opacity,
-              pointerEvents: 'none'
-            }}
-          />
-        </nav>
+            <nav className="relative flex flex-wrap items-center gap-1 md:gap-2">
+              <div ref={(el) => { navContainerRef.current = el; }} className="relative flex items-center gap-2 z-0">
+                {NAV_ITEMS.map((item) => {
+                  const isActive = currentView === item;
+                  return (
+                    <button
+                      key={item}
+                      ref={(el) => { if (el) navRefs.current.set(item, el); else navRefs.current.delete(item); }}
+                      onClick={() => onNavigate(item)}
+                      onMouseEnter={() => updateIndicator(item)}
+                      onMouseLeave={() => updateIndicator(currentView)}
+                      className={`relative px-3 py-2 font-semibold text-sm transition-all whitespace-nowrap flex-shrink-0 rounded-full z-10 ${
+                        isActive
+                          ? 'text-white bg-sky-500/15 border border-sky-500/20 shadow-sm scale-[1.01]'
+                          : isDarkMode
+                          ? 'text-slate-300 hover:text-white hover:bg-white/5'
+                          : 'text-slate-800 hover:text-slate-900 hover:bg-slate-100'
+                      }`}
+                    >
+                      {getViewLabel(item)}
+                    </button>
+                  );
+                })}
 
-        {/* Search */}
-        <div className="w-full md:w-auto">
-          <div className={`flex items-center rounded-full px-4 py-2 transition-all w-full border ${
-            isDarkMode 
-              ? 'bg-[#0D1117] border-[#30363D] focus-within:border-blue-500/50' 
-              : 'bg-gray-100 border-transparent focus-within:bg-white focus-within:border-blue-100'
-          }`}>
-            <Search size={18} className={isDarkMode ? 'text-gray-500' : 'text-gray-400'} />
-            <input 
-              type="text" 
-              placeholder="Search..."
-              value={searchTerm}
-              onChange={(e) => onSearchChange(e.target.value)}
-              className={`bg-transparent border-none outline-none text-sm ml-2 w-full md:w-48 lg:w-64 ${
-                isDarkMode ? 'text-gray-200 placeholder:text-gray-600' : 'text-gray-800'
-              }`}
-            />
+                <span
+                  className="absolute left-0 top-0 h-full rounded-full bg-sky-500/12 transition-all duration-300 ease-in-out hidden md:block"
+                  style={{
+                    transform: `translateX(${indicatorStyle.left}px)`,
+                    width: `${indicatorStyle.width}px`,
+                    opacity: indicatorStyle.opacity,
+                    pointerEvents: 'none',
+                  }}
+                />
+              </div>
+            </nav>
           </div>
         </div>
       </div>

@@ -21,21 +21,17 @@ const HeroCarousel: React.FC = () => {
   }, [nextSlide]);
 
   return (
-    <div className="w-full relative h-[250px] md:h-[380px] rounded-2xl overflow-hidden group bg-gray-200 dark:bg-[#161B22] mb-6 border dark:border-gray-800 border-gray-100">
-      
-      {/* 슬라이드 트랙 */}
-      <div 
-        className="flex h-full transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]"
-        style={{ 
-          transform: `translateX(-${currentIndex * (100 / MOCK_CAROUSEL.length)}%)`,
-          width: `${MOCK_CAROUSEL.length * 100}%` 
-        }}
-      >
-        {MOCK_CAROUSEL.map((item) => (
+    <div className="relative w-full h-[260px] md:h-[320px] overflow-hidden mb-0 bg-[#070A10] group">
+      <div className="absolute inset-0 bg-gradient-to-r from-[#02040a]/95 via-transparent to-[#02040a]/95 pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.08),transparent_34%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(14,165,233,0.08),transparent_30%)] pointer-events-none" />
+
+      {MOCK_CAROUSEL.map((item, idx) => {
+        const isActive = currentIndex === idx;
+        return (
           <div
             key={item.id}
-            className="h-full flex-shrink-0"
-            style={{ width: `${100 / MOCK_CAROUSEL.length}%` }}
+            className={`absolute inset-0 transition-opacity duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)] ${isActive ? 'opacity-100 z-20' : 'opacity-0 z-10 pointer-events-none'}`}
           >
             <a 
               href={item.link} 
@@ -46,34 +42,35 @@ const HeroCarousel: React.FC = () => {
               <img 
                 src={item.image.startsWith('http') ? item.image : `/media/${item.image}`} 
                 alt={item.title} 
-                className="w-full h-full object-cover"
+                className={`absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.4,0,0.2,1)] ${isActive ? 'scale-[1.06]' : 'scale-[1.12]'}`}
                 onError={(e) => {
-                  (e.target as HTMLImageElement).src = 'https://via.placeholder.com/800x400?text=Image+Not+Found';
+                  (e.target as HTMLImageElement).src = 'https://via.placeholder.com/1200x700?text=Image+Not+Found';
                 }}
               />
-              {/* 제목이 있을 경우에만 그라데이션 및 텍스트 표시 */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
               {item.title && (
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex flex-col justify-end p-6 md:p-10">
-                  <h2 className="text-white text-xl md:text-3xl font-bold mb-2 drop-shadow-md">
+                <div className="relative z-20 flex h-full flex-col justify-end p-6 md:p-10">
+                  <p className="text-xs text-sky-300/80 mb-2">Featured</p>
+                  <h2 className={`text-white text-3xl md:text-5xl font-black leading-tight ${isActive ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500`}>
                     {item.title}
                   </h2>
                 </div>
               )}
             </a>
           </div>
-        ))}
-      </div>
+        );
+      })}
 
       {/* 컨트롤 버튼 */}
       <button 
         onClick={(e) => { e.preventDefault(); prevSlide(); }}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-black/20 hover:bg-black/40 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all backdrop-blur-md border border-white/10"
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-black/20 hover:bg-black/40 text-white p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all"
       >
         <ChevronLeft size={24} />
       </button>
       <button 
         onClick={(e) => { e.preventDefault(); nextSlide(); }}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-black/20 hover:bg-black/40 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all backdrop-blur-md border border-white/10"
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-black/20 hover:bg-black/40 text-white p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all"
       >
         <ChevronRight size={24} />
       </button>
@@ -84,8 +81,8 @@ const HeroCarousel: React.FC = () => {
           <button 
             key={idx}
             onClick={() => setCurrentIndex(idx)}
-            className={`h-1.5 rounded-full transition-all duration-300 ${
-              idx === currentIndex ? 'bg-white w-6' : 'bg-white/40 w-1.5 hover:bg-white/60'
+            className={`h-2 rounded-full transition-all duration-300 ${
+              idx === currentIndex ? 'bg-white w-8' : 'bg-white/30 w-2 hover:bg-white/60'
             }`}
           />
         ))}

@@ -1,151 +1,96 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { ArrowUpRight, Bell, Sun, Moon, Volume2, VolumeX, Settings } from 'lucide-react';
-import { OFFICIAL_NOTICES, FOR_YOU_LINKS, SIDEBAR_CAROUSEL } from '../../constants/index';
+import React from 'react';
+import { ArrowUpRight, Bell, Sun, Moon, Settings, Search } from 'lucide-react';
+import { OFFICIAL_NOTICES, FOR_YOU_LINKS } from '../../constants/index';
 
 interface RightSidebarProps {
   onNavigate?: (view: string) => void;
   onCategorySelect?: (category: string) => void;
+  searchTerm: string;
+  onSearchChange: (term: string) => void;
   isDarkMode: boolean;
   setIsDarkMode: (val: boolean) => void;
-  isMuted: boolean;
-  setIsMuted: (val: boolean) => void;
 }
 
 const RightSidebar: React.FC<RightSidebarProps> = ({ 
   onNavigate,
   onCategorySelect,
+  searchTerm,
+  onSearchChange,
   isDarkMode,
-  setIsDarkMode,
-  isMuted,
-  setIsMuted
+  setIsDarkMode
 }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
   const notices = OFFICIAL_NOTICES || [];
   const partners = FOR_YOU_LINKS || [];
-  const carouselItems = SIDEBAR_CAROUSEL || [];
 
-  const getImageSrc = (item: any) => {
-    if (!item.image) return 'https://placehold.co/300x150';
-    return item.image.startsWith('http') ? item.image : `/media/${item.image}`;
-  };
-
-  const nextSlide = useCallback(() => {
-    if (carouselItems.length > 0) {
-      setCurrentIndex((prev) => (prev + 1) % carouselItems.length);
-    }
-  }, [carouselItems.length]);
-
-  useEffect(() => {
-    if (carouselItems.length === 0) return;
-
-    const timer = setInterval(nextSlide, 4000);
-    return () => clearInterval(timer);
-  }, [carouselItems.length, nextSlide]);
-
-  const cardStyle = `transition-colors duration-300 rounded-lg p-5 border ${
-    isDarkMode ? 'bg-[#1e1e1e] border-gray-800' : 'bg-white border-gray-100'
+  const cardStyle = `transition-all duration-300 rounded-2xl p-5 border ${
+    isDarkMode ? 'bg-[#07101f] border-slate-700 shadow-[0_16px_35px_rgba(2,10,25,0.35)]' : 'bg-white border-slate-200 shadow-[0_16px_35px_rgba(15,23,42,0.08)]'
   }`;
 
-  const textPrimary = isDarkMode ? 'text-gray-100' : 'text-gray-800';
-  const textSecondary = isDarkMode ? 'text-gray-400' : 'text-gray-700';
+  const textPrimary = isDarkMode ? 'text-slate-100' : 'text-slate-900';
+  const textSecondary = isDarkMode ? 'text-slate-400' : 'text-slate-600';
 
   return (
-    <aside className="hidden md:flex flex-col gap-5 sticky top-20 h-fit w-80">
-      
-      {/* 1. Official Notices */}
+    <aside className="hidden md:flex flex-col gap-5 sticky top-20 h-fit w-72">
       <div className={cardStyle}>
-        <div className="flex justify-between items-center mb-4">
-          <h3 className={`font-bold flex items-center gap-2 ${textPrimary}`}>
-            <Bell size={18} className="text-blue-500" />
-            Official Notices
-          </h3>
+        <div className="flex items-center gap-2 mb-3">
+          <Search size={16} className="text-sky-400" />
+          <h3 className={`font-semibold text-sm ${textPrimary}`}>Search</h3>
+        </div>
+        <label className="w-full text-[10px] text-slate-500 mb-2 block">Search by title or description</label>
+        <div className={`flex items-center gap-2 rounded-2xl border px-3 py-2 ${isDarkMode ? 'bg-[#08131f] border-slate-700' : 'bg-slate-50 border-slate-200'}`}>
+          <Search size={16} className={isDarkMode ? 'text-slate-400' : 'text-slate-500'} />
+          <input
+            value={searchTerm}
+            onChange={(e) => onSearchChange(e.target.value)}
+            placeholder="Search content"
+            className={`w-full bg-transparent border-none outline-none text-sm ${isDarkMode ? 'text-slate-100 placeholder:text-slate-500' : 'text-slate-700 placeholder:text-slate-500'}`}
+          />
+        </div>
+      </div>
+
+      <div className={cardStyle}>
+        <div className="flex items-center gap-2 mb-3">
+          <Bell size={18} className="text-sky-400" />
+          <h3 className={`font-semibold text-sm ${textPrimary}`}>Notices</h3>
         </div>
         <div className="flex flex-col gap-3">
           {notices.map((item) => (
-            <div key={item.id} className={`flex items-start gap-3 group cursor-pointer pb-2 border-b last:border-0 last:pb-0 ${isDarkMode ? 'border-gray-800' : 'border-gray-50'}`}>
-              <div className="w-1.5 h-1.5 rounded-full bg-red-500 mt-2 flex-shrink-0" />
+            <div key={item.id} className={`flex items-start gap-3 pb-3 border-b last:border-0 last:pb-0 ${isDarkMode ? 'border-slate-800' : 'border-slate-100'}`}>
+              <div className="w-1.5 h-1.5 rounded-full bg-sky-400 mt-2 flex-shrink-0" />
               <div>
-                <h4 className={`text-sm font-medium group-hover:text-blue-500 line-clamp-2 leading-snug ${textSecondary}`}>{item.title}</h4>
-                <span className="text-[10px] text-gray-400 mt-0.5 block">{item.category}</span>
+                <h4 className={`text-sm font-medium leading-snug ${textSecondary}`}>{item.title}</h4>
+                <span className="text-[10px] text-slate-500 mt-1 block">{item.category}</span>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* 2. System Settings */}
       <div className={cardStyle}>
-        <div className="flex items-center gap-2 mb-4">
-          <Settings size={16} className="text-gray-400" />
-          <h3 className={`font-bold text-sm tracking-wide ${textPrimary}`}>System Settings</h3>
+        <div className="flex items-center gap-2 mb-3">
+          <Settings size={16} className="text-sky-400" />
+          <h3 className={`font-semibold text-sm ${textPrimary}`}>Theme</h3>
         </div>
-        <div className="grid grid-cols-2 gap-3">
-          <button 
-            onClick={() => setIsDarkMode(!isDarkMode)}
-            className={`flex flex-col items-center justify-center gap-2 p-3 rounded-xl border transition-all ${
-              isDarkMode 
-              ? 'bg-gray-800 border-gray-700 text-yellow-400' 
-              : 'bg-gray-50 border-gray-100 text-gray-500 hover:border-blue-200 hover:bg-blue-50'
-            }`}
-          >
-            {isDarkMode ? <Moon size={20} fill="currentColor" /> : <Sun size={20} />}
-            <span className="text-[10px] font-bold uppercase">{isDarkMode ? 'Dark' : 'Light'}</span>
-          </button>
-
-          <button 
-            onClick={() => setIsMuted(!isMuted)}
-            className={`flex flex-col items-center justify-center gap-2 p-3 rounded-xl border transition-all ${
-              !isMuted 
-              ? 'bg-blue-600/10 border-blue-500/50 text-blue-500' 
-              : isDarkMode ? 'bg-gray-800 border-gray-700 text-gray-500' : 'bg-gray-50 border-gray-100 text-gray-500 hover:border-red-200 hover:bg-red-50'
-            }`}
-          >
-            {!isMuted ? <Volume2 size={20} /> : <VolumeX size={20} />}
-            <span className="text-[10px] font-bold uppercase">{!isMuted ? 'BGM On' : 'Muted'}</span>
-          </button>
-        </div>
-      </div>
-
-      {/* 3. Mini Carousel Widget */}
-      <div className={`w-full h-32 rounded-lg overflow-hidden relative border ${isDarkMode ? 'border-gray-800 bg-gray-900' : 'border-gray-100 bg-gray-200'}`}>
-        <div 
-          className="flex h-full transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]"
-          style={{ 
-            transform: `translateX(-${currentIndex * (100 / carouselItems.length)}%)`,
-            width: `${carouselItems.length * 100}%`
-          }}
+        <button 
+          onClick={() => setIsDarkMode(!isDarkMode)}
+          className={`w-full flex items-center justify-between gap-3 px-4 py-3 rounded-2xl border transition-all ${
+            isDarkMode 
+              ? 'bg-[#08131f] border-slate-700 text-sky-300 hover:border-sky-400/30' 
+              : 'bg-slate-50 border-slate-200 text-slate-700 hover:border-slate-300'
+          }`}
         >
-          {carouselItems.map((item) => (
-            <a 
-              key={item.id}
-              href={item.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="h-full relative flex-shrink-0 block cursor-pointer"
-              style={{ width: `${100 / carouselItems.length}%` }}
-            >
-              <img 
-                src={getImageSrc(item)} 
-                alt={item.title} 
-                className="w-full h-full object-cover" 
-                onError={(e) => {
-                   console.error(`이미지 로드 실패: ${getImageSrc(item)}`);
-                   (e.target as HTMLImageElement).src = 'https://placehold.co/300x150?text=No+Image';
-                }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-3">
-                 <span className="text-white font-bold text-xs truncate">{item.title}</span>
-              </div>
-            </a>
-          ))}
-        </div>
+          <span className="flex items-center gap-2">
+            {isDarkMode ? <Moon size={18} className="text-sky-300" /> : <Sun size={18} className="text-slate-700" />}
+            <span className="text-sm font-medium uppercase tracking-[0.2em]">{isDarkMode ? 'Dark mode' : 'Light mode'}</span>
+          </span>
+          <span className="text-xs text-slate-400">Toggle</span>
+        </button>
       </div>
 
-      {/* 4. Partner Static Links */}
       <div className={cardStyle}>
-        <div className="flex justify-between items-center mb-4">
-          <h3 className={`font-bold text-sm tracking-wide ${textPrimary}`}>For you</h3>
+        <div className="flex items-center gap-2 mb-3">
+          <ArrowUpRight size={16} className="text-sky-400" />
+          <h3 className={`font-semibold text-sm ${textPrimary}`}>For you</h3>
         </div>
         <div className="flex flex-col gap-3">
           {partners.map(link => (
@@ -154,22 +99,23 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
               href={link.url} 
               target="_blank"
               rel="noreferrer" 
-              className={`relative h-16 rounded-xl overflow-hidden group border ${isDarkMode ? 'border-gray-800' : 'border-gray-100'}`}
+              className="relative h-16 rounded-2xl overflow-hidden group border border-slate-700"
             >
-              <img src={link.image.startsWith('http') ? link.image : `/media/${link.image}`} alt={link.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-              <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors flex items-center justify-center">
-                <span className="text-white font-bold text-sm drop-shadow-md flex items-center gap-1">
-                  {link.title} <ArrowUpRight size={14} />
-                </span>
-              </div>
+              <img src={link.image.startsWith('http') ? link.image : `/media/${link.image}`} alt={link.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 transform-gpu will-change-transform" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent transition-colors" />
+              {link.title && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-white font-medium text-sm drop-shadow-[0_0_10px_rgba(0,0,0,0.3)]">{link.title}</span>
+                </div>
+              )}
             </a>
           ))}
         </div>
       </div>
 
-      <div className="text-xs text-gray-400 px-2 space-y-2">
+      <div className="text-xs text-slate-500 px-2 space-y-2">
         <p>WakaMoe is a non-profit database for certain artist.</p>
-        <p>All content is the trademark and copyright of certain anime game companies and their respective holders.</p>
+        <p>All content belongs to the original rights holders.</p>
       </div>
     </aside>
   );

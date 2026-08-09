@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { ContentType } from '../../types';
-import { Play, ExternalLink } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 
 interface PostCardProps {
   post: any;
   viewMode: string;
   isDarkMode: boolean;
-  onVideoClick?: (url: string) => void;
   onImageClick?: (url: string) => void;
 }
 
@@ -45,7 +44,7 @@ const Chip: React.FC<{ label: string; url?: string; isDarkMode: boolean }> = ({ 
   );
 };
 
-const PostCard: React.FC<PostCardProps> = ({ post, viewMode, isDarkMode, onVideoClick, onImageClick }) => {
+const PostCard: React.FC<PostCardProps> = ({ post, viewMode, isDarkMode, onImageClick }) => {
   const [imageError, setImageError] = useState(false);
   
   const displayImage = post.thumbnail || post.coverImage;
@@ -53,7 +52,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, isDarkMode, onVideo
   // 각 타입별로 링크 우선순위 설정
   let contentUrl = '';
   if (post.type === ContentType.VIDEO) {
-    contentUrl = post.videoUrl || post.originalUrl || '';
+    contentUrl = post.externalLink || post.videoUrl || post.originalUrl || '';
   } else if (post.type === ContentType.REF || post.type === ContentType.IMAGE) {
     contentUrl = post.externalLink || post.originalUrl || '';
   } else if (post.type === ContentType.GAME) {
@@ -78,47 +77,49 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, isDarkMode, onVideo
     };
 
     return (
-      <div 
-        className={`group flex flex-row gap-4 p-4 border-b transition-colors min-h-[140px] ${isGame ? 'cursor-default' : 'cursor-pointer'} ${isDarkMode ? 'hover:bg-[#1C2128]' : 'hover:bg-gray-50'} ${isDarkMode ? 'border-[#30363D]' : 'border-gray-100'}`}
+      <div
+        className={`group flex flex-row gap-4 p-4 rounded-2xl border transition-all min-h-[140px] ${isGame ? 'cursor-default' : 'cursor-pointer'} ${isDarkMode ? 'bg-[#07111f] border-slate-800 hover:bg-[#0d1729]' : 'bg-white border-slate-200 hover:bg-slate-100'}`}
         onClick={handleCardClick}
       >
-        <div 
-          className={`flex-shrink-0 rounded-lg overflow-hidden relative ${isGame ? 'cursor-default' : 'cursor-pointer'} self-start ${
-            useSquareImage ? 'w-24 h-24 sm:w-32 sm:h-32' : 'w-28 h-20 sm:w-48 sm:h-32'
-          } ${isDarkMode ? 'bg-[#0D1117]' : 'bg-gray-100'}`}
+        <div
+          className={`flex-shrink-0 rounded-2xl overflow-hidden relative ${isGame ? 'cursor-default' : 'cursor-pointer'} self-start ${
+            useSquareImage ? 'w-24 h-24 sm:w-28 sm:h-28' : 'w-28 h-20 sm:w-40 sm:h-28'
+          } ${isDarkMode ? 'bg-[#0D1117]' : 'bg-slate-100'}`}
           onClick={(e) => {
             if (isGame) {
               e.stopPropagation();
               return;
             }
             e.stopPropagation();
-            if (isVideo && onVideoClick) onVideoClick(contentUrl);
-            else if (isArtist) window.open(contentUrl, '_blank');
-            else onImageClick && onImageClick(displayImage);
+            if (contentUrl) {
+              window.open(contentUrl, '_blank', 'noopener,noreferrer');
+            } else {
+              onImageClick && onImageClick(displayImage);
+            }
           }}
         >
-          <img 
-            src={imageError ? 'https://via.placeholder.com/400x225?text=Image+Failed' : displayImage} 
+          <img
+            src={imageError ? 'https://via.placeholder.com/400x225?text=Image+Failed' : displayImage}
             alt={post.title}
             onError={() => setImageError(true)}
-            className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-110`} 
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 transform-gpu will-change-transform"
           />
         </div>
 
         <div className="flex-1 flex flex-col min-w-0 justify-start pt-0.5">
-          <h3 className={`font-bold text-sm sm:text-lg leading-tight transition-colors mb-1.5 line-clamp-1 ${
-            isDarkMode ? `text-gray-100 ${isGame ? '' : 'group-hover:text-blue-400'}` : `text-gray-800 ${isGame ? '' : 'group-hover:text-blue-600'}`
+          <h3 className={`font-semibold text-sm sm:text-base leading-tight transition-colors mb-1 line-clamp-1 ${
+            isDarkMode ? `text-white ${isGame ? '' : 'group-hover:text-sky-300'}` : `text-slate-900 ${isGame ? '' : 'group-hover:text-sky-600'}`
           }`}>
             {post.title}
           </h3>
-          
+
           <div className="mb-3">
-            <p className={`text-xs sm:text-sm leading-relaxed line-clamp-2 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+            <p className={`text-xs sm:text-sm leading-relaxed line-clamp-2 ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
               {post.description}
             </p>
           </div>
 
-          <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide mt-auto md:mt-0">
+          <div className="mt-2 flex flex-wrap gap-2 relative z-30">
             {isGame && post.gameLinks?.map((link: any, idx: number) => (
               <Chip key={`game-link-${post.id}-${idx}`} label={link.label} url={link.url} isDarkMode={isDarkMode} />
             ))}
@@ -133,63 +134,61 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, isDarkMode, onVideo
 
   // --- 2. 그리드 레이아웃 (VIDEO, LIBRARY) ---
   return (
-    <div 
-      className={`transition-all cursor-pointer group flex flex-col h-full border rounded-lg overflow-hidden ${
-        isDarkMode 
-          ? 'bg-[#161B22] border-[#30363D] hover:bg-[#1C2128]' 
-          : 'bg-white border-gray-100 hover:bg-gray-50'
+    <div
+      className={`transition-all duration-300 transform group flex flex-col h-full border rounded-2xl overflow-hidden ${
+        isDarkMode
+          ? 'bg-[#07111f] border-slate-800 shadow-[0_20px_50px_rgba(4,12,28,0.35)] hover:-translate-y-0.5 hover:border-sky-500/20'
+          : 'bg-white border-slate-200 shadow-[0_16px_40px_rgba(15,23,42,0.08)] hover:-translate-y-0.5'
       }`}
       onClick={() => {
-        if (isVideo && onVideoClick && contentUrl) {
-          onVideoClick(contentUrl);
+        if (contentUrl && contentUrl !== '#') {
+          window.open(contentUrl, '_blank', 'noopener,noreferrer');
         } else if (isArtist) {
-          window.open(contentUrl, '_blank');
-        } else if (contentUrl && contentUrl !== '#') {
           window.open(contentUrl, '_blank');
         }
       }}
     >
-      <div className={`relative w-full overflow-hidden ${isVideo ? 'aspect-video bg-gray-900' : 'aspect-[3/4] bg-gray-100'}`}>
-        <img 
-          src={imageError ? 'https://via.placeholder.com/400x225?text=Image+Failed' : displayImage} 
+      <div className={`relative w-full overflow-hidden ${isVideo ? 'aspect-video bg-[#0a1220]' : 'aspect-[3/4] bg-[#0a1220]'}`}>
+        <img
+          src={imageError ? 'https://via.placeholder.com/400x225?text=Image+Failed' : displayImage}
           alt={post.title}
           onError={() => setImageError(true)}
-          className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 ${isVideo ? 'opacity-90 group-hover:opacity-100' : ''}`}
+          className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 transform-gpu will-change-transform ${isVideo ? 'opacity-90 group-hover:opacity-100' : ''}`}
         />
-        
-        {/* 비디오용 재생 아이콘 */}
-        {isVideo && (
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
+        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.06),transparent_28%)]" />
+
+        {isVideo && contentUrl && (
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className="w-10 h-10 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:scale-110 group-hover:bg-red-600 transition-all">
-                <Play size={20} className="text-white fill-white ml-1" />
+            <div className="w-11 h-11 rounded-full border border-sky-400/15 bg-black/35 backdrop-blur-md flex items-center justify-center shadow-[0_0_24px_rgba(56,189,248,0.18)]">
+              <ExternalLink size={18} className="text-sky-200" />
             </div>
           </div>
         )}
 
-        {/* 아티스트용 외부 링크 아이콘 */}
         {isArtist && (
-          <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-            <div className="p-1.5 bg-black/50 backdrop-blur-md rounded-md border border-white/20">
-              <ExternalLink size={14} className="text-white" />
+          <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+            <div className="p-1.5 bg-black/45 backdrop-blur-md rounded-xl border border-white/10">
+              <ExternalLink size={14} className="text-slate-100" />
             </div>
           </div>
         )}
       </div>
 
-      <div className="p-3 flex flex-col flex-1 min-w-0">
-          <h3 className={`font-bold text-sm line-clamp-1 mb-1.5 transition-colors ${
-            isDarkMode ? 'text-gray-100 group-hover:text-blue-400' : 'text-gray-800 group-hover:text-blue-600'
-          }`}>
-            {post.title}
-          </h3>
-          <p className={`text-[11px] leading-tight line-clamp-2 mb-3 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-            {post.description}
-          </p>
-          <div className="mt-auto flex items-center gap-1 overflow-x-auto scrollbar-hide">
-              {post.category && (
-                <Chip label={Array.isArray(post.category) ? post.category[0] : post.category} isDarkMode={isDarkMode} />
-              )}
-          </div>
+      <div className="p-4 flex flex-col flex-1 min-w-0">
+        <h3 className={`font-semibold text-base md:text-lg line-clamp-2 mb-1 transition-colors ${
+          isDarkMode ? 'text-white group-hover:text-sky-300' : 'text-slate-900 group-hover:text-sky-600'
+        }`}>
+          {post.title}
+        </h3>
+        <p className={`text-[12px] leading-relaxed line-clamp-3 mb-3 ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
+          {post.description}
+        </p>
+        <div className="mt-2 flex flex-wrap gap-2 relative z-30">
+          {post.category && (
+            <Chip label={Array.isArray(post.category) ? post.category[0] : post.category} isDarkMode={isDarkMode} />
+          )}
+        </div>
       </div>
     </div>
   );
