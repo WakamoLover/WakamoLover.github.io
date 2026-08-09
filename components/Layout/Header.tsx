@@ -65,9 +65,9 @@ const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, isDarkMode }) 
                       onClick={() => onNavigate(item)}
                       onMouseEnter={() => updateIndicator(item)}
                       onMouseLeave={() => updateIndicator(currentView)}
-                      className={`relative px-3 py-2 font-semibold text-sm transition-all whitespace-nowrap flex-shrink-0 rounded-full z-10 ${
+                      className={`relative px-3 py-2 font-semibold text-sm whitespace-nowrap flex-shrink-0 rounded-full z-10 ${
                         isActive
-                          ? 'text-white bg-sky-500/15 border border-sky-500/20 shadow-sm scale-[1.01]'
+                          ? 'text-white bg-sky-500/15 border border-sky-500/20 shadow-sm'
                           : isDarkMode
                           ? 'text-slate-300 hover:text-white hover:bg-white/5'
                           : 'text-slate-800 hover:text-slate-900 hover:bg-slate-100'
@@ -79,7 +79,7 @@ const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, isDarkMode }) 
                 })}
 
                 <span
-                  className="absolute left-0 top-0 h-full rounded-full bg-sky-500/12 transition-all duration-300 ease-in-out hidden md:block"
+                  className="absolute left-0 top-0 h-full rounded-full bg-sky-500/12 hidden md:block"
                   style={{
                     transform: `translateX(${indicatorStyle.left}px)`,
                     width: `${indicatorStyle.width}px`,
