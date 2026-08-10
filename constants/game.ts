@@ -210,6 +210,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     type: ContentType.GAME,
     category: 'Bushroad',
     gameLinks: [
+      { label: 'Official Arts', url: 'https://bandori.party/assets/officialart/' },
     ]
   },
   {
