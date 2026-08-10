@@ -32,6 +32,34 @@ const getAutoThumbnail = (url: string | undefined, coverImage?: string, imageInd
   return 'https://placehold.co/400x225?text=Link+Preview';
 };
 
+const isYouTubeChannelUrl = (url: string | undefined): boolean => {
+  if (!url) return false;
+  return /(?:https?:\/\/)?(?:www\.)?youtube\.com\/(?:@[^/]+|channel\/[^/]+)/i.test(url);
+};
+
+const resolveYouTubeChannelThumbnail = async (url: string | undefined, coverImage?: string, imageIndex: number = 1): Promise<string> => {
+  if (coverImage && coverImage.trim() !== '') {
+    if (coverImage.startsWith('http')) return coverImage;
+    return `/media/${coverImage}`;
+  }
+
+  if (!url || !isYouTubeChannelUrl(url)) {
+    return getAutoThumbnail(url, coverImage, imageIndex);
+  }
+
+  try {
+    const response = await fetch(`https://www.youtube.com/oembed?url=${encodeURIComponent(url)}&format=json`);
+    if (response.ok) {
+      const data = await response.json();
+      if (data?.thumbnail_url) return data.thumbnail_url;
+    }
+  } catch {
+    // fallback to placeholder below
+  }
+
+  return `https://yt3.ggpht.com/ytc/AKedOLR2p3QJ1qQw4M6x0b5a7t7c6b4T4VQwQhjS-vQ=s900-c-k-c0x00ffffff-no-rj`;
+};
+
 
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState('HOME');
@@ -43,6 +71,7 @@ const App: React.FC = () => {
   
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [currentImageUrl, setCurrentImageUrl] = useState('');
+  const [resolvedThumbnails, setResolvedThumbnails] = useState<Record<string, string>>({});
 
   
 
@@ -65,7 +94,13 @@ const App: React.FC = () => {
   const getCategories = (): string[] => {
     if (currentView === 'HOME') return [];
     const viewKey = currentView as keyof typeof CATEGORY_TABS;
-    return CATEGORY_TABS[viewKey] || [];
+    const categories = CATEGORY_TABS[viewKey] || [];
+
+    const withoutAll = categories.filter(category => category !== 'All');
+    const others = withoutAll.filter(category => category === 'Others');
+    const rest = withoutAll.filter(category => category !== 'Others').sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+
+    return ['All', ...rest, ...others];
   };
 
   const allFilteredPosts = useMemo(() => {
@@ -73,11 +108,11 @@ const App: React.FC = () => {
       // 각 타입별로 URL을 올바르게 선택
       let url = '';
       if (post.type === ContentType.VIDEO) {
-        url = post.externalLink || post.videoUrl || '';
+        url = post.externalLink || post.channelUrl || post.videoUrl || '';
       } else if (post.type === ContentType.GAME) {
         url = '';
       } else {
-        url = post.externalLink || post.videoUrl || post.link || post.url || '';
+        url = post.externalLink || post.channelUrl || post.videoUrl || post.link || post.url || '';
       }
 
       return {
@@ -117,15 +152,47 @@ const App: React.FC = () => {
       );
     }
 
-    return result;
+    return [...result].sort((a, b) => a.title.localeCompare(b.title, undefined, { sensitivity: 'base' }));
   }, [currentView, currentCategory, searchTerm]);
 
+  useEffect(() => {
+    let isMounted = true;
+    const pending = allFilteredPosts.filter(post => {
+      const url = post.originalUrl || post.channelUrl || post.videoUrl || post.externalLink || '';
+      return post.type === ContentType.VIDEO && isYouTubeChannelUrl(url) && !resolvedThumbnails[post.id];
+    });
+
+    if (pending.length === 0) return undefined;
+
+    Promise.all(
+      pending.map(async (post) => {
+        const url = post.originalUrl || post.channelUrl || post.videoUrl || post.externalLink || '';
+        const thumbnail = await resolveYouTubeChannelThumbnail(url, post.coverImage, post.imageIndex || 1);
+        return [post.id, thumbnail] as const;
+      })
+    ).then((results) => {
+      if (!isMounted) return;
+      setResolvedThumbnails(prev => ({ ...prev, ...Object.fromEntries(results) }));
+    }).catch(() => undefined);
+
+    return () => {
+      isMounted = false;
+    };
+  }, [allFilteredPosts, resolvedThumbnails]);
+
+  const displayPosts = useMemo(() => {
+    return allFilteredPosts.map(post => ({
+      ...post,
+      thumbnail: resolvedThumbnails[post.id] || post.thumbnail,
+    }));
+  }, [allFilteredPosts, resolvedThumbnails]);
+
   const effectivePageSize = currentView === 'LIBRARY' ? 9 : pageSize;
-  const totalPages = Math.ceil(allFilteredPosts.length / effectivePageSize);
+  const totalPages = Math.ceil(displayPosts.length / effectivePageSize);
   const paginatedPosts = useMemo(() => {
     const start = (currentPage - 1) * effectivePageSize;
-    return allFilteredPosts.slice(start, start + effectivePageSize);
-  }, [allFilteredPosts, currentPage, effectivePageSize]);
+    return displayPosts.slice(start, start + effectivePageSize);
+  }, [displayPosts, currentPage, effectivePageSize]);
 
   const tabs = getCategories();
 

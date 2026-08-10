@@ -20,7 +20,8 @@ export interface Post {
   
   tags?: string[]; 
   
-  videoUrl?: string; 
+  videoUrl?: string;
+  channelUrl?: string;
   externalLink?: string; 
   gameLinks?: GameLink[]; 
   

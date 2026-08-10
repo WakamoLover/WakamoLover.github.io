@@ -48,7 +48,6 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     type: ContentType.GAME,
     category: 'Hoyoverse',
     gameLinks: [
-      { label: '', url: '' }
     ]
   },
   {
@@ -201,6 +200,66 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
       { label: 'Official Wallpaper', url: 'https://colorfulstage.com/media/wallpapers/' },
       { label: 'Official Special Download', url: 'https://pjsekai.sega.jp/special/download.html' },
       { label: 'Google Drive Archive', url: 'https://drive.google.com/drive/folders/1D2yUaYlABRNf7vtM1bYV6CPMwTJa-oR1' }
+    ]
+  },
+  {
+    id: 'g17',
+    title: 'BanG Dream! Girls Band Party!',
+    description: '',
+    coverImage: 'game/bdgbp.png',
+    type: ContentType.GAME,
+    category: 'Bushroad',
+    gameLinks: [
+    ]
+  },
+  {
+    id: 'g18',
+    title: 'BanG Dream! Our Notes',
+    description: '',
+    coverImage: 'game/bdon.png',
+    type: ContentType.GAME,
+    category: 'Bushroad',
+    gameLinks: [
+    ]
+  },
+  {
+    id: 'g19',
+    title: 'Azur Lane',
+    description: '',
+    coverImage: 'game/al.png',
+    type: ContentType.GAME,
+    category: 'Manjuu',
+    gameLinks: [
+    ]
+  },
+  {
+    id: 'g20',
+    title: 'Azur Promilia',
+    description: '',
+    coverImage: 'game/ap.png',
+    type: ContentType.GAME,
+    category: 'Manjuu',
+    gameLinks: [
+    ]
+  },
+  {
+    id: 'g21',
+    title: 'Tower of Fantasy',
+    description: '',
+    coverImage: 'game/tof.png',
+    type: ContentType.GAME,
+    category: 'Hotta Studio',
+    gameLinks: [
+    ]
+  },
+  {
+    id: 'g22',
+    title: 'Neverness to Everness',
+    description: '',
+    coverImage: 'game/nte.png',
+    type: ContentType.GAME,
+    category: 'Hotta Studio',
+    gameLinks: [
     ]
   },
 ];

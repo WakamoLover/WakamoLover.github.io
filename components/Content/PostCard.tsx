@@ -46,23 +46,37 @@ const Chip: React.FC<{ label: string; url?: string; isDarkMode: boolean }> = ({ 
 
 const PostCard: React.FC<PostCardProps> = ({ post, viewMode, isDarkMode, onImageClick }) => {
   const [imageError, setImageError] = useState(false);
+  const [iconError, setIconError] = useState(false);
   
   const displayImage = post.thumbnail || post.coverImage;
   
   // 각 타입별로 링크 우선순위 설정
   let contentUrl = '';
   if (post.type === ContentType.VIDEO) {
-    contentUrl = post.externalLink || post.videoUrl || post.originalUrl || '';
+    contentUrl = post.externalLink || post.channelUrl || post.videoUrl || post.originalUrl || '';
   } else if (post.type === ContentType.REF || post.type === ContentType.IMAGE) {
     contentUrl = post.externalLink || post.originalUrl || '';
   } else if (post.type === ContentType.GAME) {
     contentUrl = '';
   } else {
-    contentUrl = post.originalUrl || post.externalLink || post.videoUrl || post.link || post.url || '';
+    contentUrl = post.originalUrl || post.externalLink || post.channelUrl || post.videoUrl || post.link || post.url || '';
   }
   
   const isVideo = post.type === ContentType.VIDEO;
   const isArtist = viewMode === 'LIBRARY' || post.type === ContentType.IMAGE;
+  const isSquareVideo = isVideo && !!post.thumbnail && (post.thumbnail.includes('ytimg') || post.thumbnail.includes('youtube') || post.thumbnail.includes('i.ytimg'));
+  const channelLabel = isVideo && contentUrl ? (() => {
+    try {
+      const url = new URL(contentUrl);
+      if (url.hostname.includes('youtube.com')) {
+        const handle = url.pathname.startsWith('/@') ? url.pathname : url.pathname.replace(/^\//, '');
+        return handle ? handle.replace(/^@/, '') : 'YouTube Channel';
+      }
+    } catch {
+      // ignore
+    }
+    return '';
+  })() : '';
 
   // --- 1. 리스트 레이아웃 (HOME, GAME, REF) ---
   if (viewMode === 'HOME' || viewMode === 'GAME' || viewMode === 'REF') {
@@ -148,12 +162,12 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, isDarkMode, onImage
         }
       }}
     >
-      <div className={`relative w-full overflow-hidden ${isVideo ? 'aspect-video bg-[#0a1220]' : 'aspect-[3/4] bg-[#0a1220]'}`}>
+      <div className={`relative w-full overflow-hidden ${isVideo ? (isSquareVideo ? 'aspect-square bg-[#0a1220]' : 'aspect-video bg-[#0a1220]') : 'aspect-[3/4] bg-[#0a1220]'}`}>
         <img
           src={imageError ? 'https://via.placeholder.com/400x225?text=Image+Failed' : displayImage}
           alt={post.title}
           onError={() => setImageError(true)}
-          className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 transform-gpu will-change-transform ${isVideo ? 'opacity-90 group-hover:opacity-100' : ''}`}
+          className={`w-full h-full transition-transform duration-500 group-hover:scale-105 transform-gpu will-change-transform ${isSquareVideo ? 'object-contain p-3 rounded-2xl' : 'object-cover'} ${isVideo ? 'opacity-90 group-hover:opacity-100' : ''}`}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
         <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.06),transparent_28%)]" />
@@ -162,6 +176,23 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, isDarkMode, onImage
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <div className="w-11 h-11 rounded-full border border-sky-400/15 bg-black/35 backdrop-blur-md flex items-center justify-center shadow-[0_0_24px_rgba(56,189,248,0.18)]">
               <ExternalLink size={18} className="text-sky-200" />
+            </div>
+          </div>
+        )}
+
+        {isVideo && channelLabel && (
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className={`absolute bottom-3 left-3 right-3 inline-flex items-center gap-2 rounded-full border px-2.5 py-1 backdrop-blur-md ${isDarkMode ? 'border-white/10 bg-black/45 text-slate-100' : 'border-slate-200/70 bg-white/75 text-slate-700'}`}>
+              <span className="h-2 w-2 rounded-full bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.7)]" />
+              <span className="text-[11px] font-medium truncate">{channelLabel}</span>
+            </div>
+            <div className={`absolute left-3 top-3 flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl border shadow-lg ${isDarkMode ? 'border-slate-900 bg-slate-950' : 'border-white bg-slate-50'}`}>
+              <img
+                src={iconError ? 'https://via.placeholder.com/160x160?text=Channel' : displayImage}
+                alt={`${channelLabel} icon`}
+                className="h-full w-full object-cover"
+                onError={() => setIconError(true)}
+              />
             </div>
           </div>
         )}
@@ -187,6 +218,9 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, isDarkMode, onImage
         <div className="mt-2 flex flex-wrap gap-2 relative z-30">
           {post.category && (
             <Chip label={Array.isArray(post.category) ? post.category[0] : post.category} isDarkMode={isDarkMode} />
+          )}
+          {isVideo && channelLabel && (
+            <Chip label="Channel" isDarkMode={isDarkMode} />
           )}
         </div>
       </div>

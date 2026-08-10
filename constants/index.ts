@@ -43,22 +43,16 @@ export const MOCK_CAROUSEL: CarouselItem[] = [
     title: 'ANANTA',
     link: 'https://www.anantagame.com/'
   },
-  {
-    id: '4',
-    image: 'hero4.png',
-    title: 'NEVERNESS TO EVERNESS',
-    link: 'https://nte.perfectworld.com/en/index.html'
-  }
 ];
 
 export const NAV_ITEMS = ['HOME', 'GAME', 'LIBRARY', 'REF', 'VIDEO'];
 
 // Categories for each page
 export const CATEGORY_TABS: Record<string, string[]> = {
-  'GAME': ['All', 'Hoyoverse', 'HyperGraph', 'Nexon', 'Kuro Games', 'Shift Up', 'Yostar', 'Manjuu', 'Sega', 'Others'],
-  'LIBRARY': ['All', 'Illustrator', 'Cosplayer', 'Mangaka', 'Concept Artist', 'Designer'],
+  'GAME': ['All', 'Hoyoverse', 'HyperGraph', 'Nexon', 'Kuro Games', 'Shift Up', 'Yostar', 'Manjuu', 'Sega', 'Bushroad', 'Hotta Studio', 'Others'],
+  'LIBRARY': ['All', 'Illustrator', 'Cosplayer', 'Mangaka', 'Concept Artist', 'Designer', 'Others'],
   'REF': ['All', 'Social', 'Image', 'Pose', 'Color', 'Design', 'Market', 'Others'],
-  'VIDEO': ['All', 'YouTube', 'Bilibili', 'Niconico']
+  'VIDEO': ['All', 'YouTube', 'Bilibili', 'Niconico', 'Others']
 };
 
 export const MOCK_POSTS: Post[] = [

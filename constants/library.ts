@@ -5,7 +5,7 @@ export const LIBRARY_ITEMS: Omit<Post, 'id'>[] = [
 // Illustrator
   {
     title: 'ASK',
-    description: '',
+    description: 'Arknights',
     coverImage: 'https://pbs.twimg.com/media/F7MdgZ-bQAA3sC-?format=jpg&name=medium',
     type: ContentType.IMAGE,
     category: 'Illustrator',
@@ -45,7 +45,7 @@ export const LIBRARY_ITEMS: Omit<Post, 'id'>[] = [
   },
   {
     title: 'alzimi',
-    description: '',
+    description: 'Arknights',
     coverImage: 'https://pbs.twimg.com/media/Gn1jT43XAAAc7Hm?format=jpg&name=large',
     type: ContentType.IMAGE,
     category: 'Illustrator',
@@ -58,14 +58,6 @@ export const LIBRARY_ITEMS: Omit<Post, 'id'>[] = [
     type: ContentType.IMAGE,
     category: 'Illustrator',
     externalLink: 'https://x.com/__LM7__/media'
-  },
-  {
-    title: '𝘧𝘳𝘦𝘯𝘨',
-    description: '',
-    coverImage: 'https://pbs.twimg.com/media/GPdg8s6bEAAYoIm?format=jpg&name=4096x4096',
-    type: ContentType.IMAGE,
-    category: 'Illustrator',
-    externalLink: 'https://x.com/frengchiano2/media'
   },
   {
     title: 'モ誰',
@@ -278,14 +270,6 @@ export const LIBRARY_ITEMS: Omit<Post, 'id'>[] = [
     externalLink: 'https://x.com/tiebanonini/media'
   },
   {
-    title: '大薯条',
-    description: '',
-    coverImage: 'https://pbs.twimg.com/media/G9ybzfHbgAAGQle?format=jpg&name=large',
-    type: ContentType.IMAGE,
-    category: 'Cosplayer',
-    externalLink: 'https://x.com/kanek1ww/media'
-  },
-  {
     title: 'ふちどり',
     description: '',
     coverImage: 'https://pbs.twimg.com/media/Gv-R0KdXgAAK967?format=jpg&name=large',
@@ -342,28 +326,12 @@ export const LIBRARY_ITEMS: Omit<Post, 'id'>[] = [
     externalLink: 'https://x.com/suxizzz233/media'
   },
   {
-    title: 'かしゅーわ',
-    description: 'Photographer',
-    coverImage: 'https://pbs.twimg.com/media/G753UN4aUAENjRN?format=jpg&name=4096x4096',
+    title: 'ネキ',
+    description: '',
+    coverImage: 'https://pbs.twimg.com/media/HOsPnnvboAAdREc?format=jpg&name=4096x4096',
     type: ContentType.IMAGE,
     category: 'Cosplayer',
-    externalLink: 'https://x.com/kasyuuwa/media'
-  },
-  {
-    title: 'みやび',
-    description: 'Photographer',
-    coverImage: 'https://pbs.twimg.com/media/G8H4zNAaMAEvU82?format=jpg&name=4096x4096',
-    type: ContentType.IMAGE,
-    category: 'Cosplayer',
-    externalLink: 'https://x.com/tnsk6400/media'
-  },
-  {
-    title: '飞鱼Fiyu',
-    description: 'Photographer',
-    coverImage: 'https://pbs.twimg.com/media/G8iUzlOaMAEBqEH?format=jpg&name=large',
-    type: ContentType.IMAGE,
-    category: 'Cosplayer',
-    externalLink: 'https://x.com/UKYEJFT/media'
+    externalLink: 'https://x.com/Nekinow/media'
   },
 
 // Mangaka
@@ -411,6 +379,14 @@ export const LIBRARY_ITEMS: Omit<Post, 'id'>[] = [
   },
 
 // Designer
+  {
+    title: 'Ordinary Folk',
+    description: '',
+    coverImage: 'https://pbs.twimg.com/profile_banners/3092213516/1677611320/1500x500',
+    type: ContentType.IMAGE,
+    category: 'Designer',
+    externalLink: 'https://x.com/ordinaryfolkco/media'
+  },
   {
     title: 'タマケン',
     description: '',
