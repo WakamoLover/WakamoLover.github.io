@@ -65,7 +65,7 @@ const App: React.FC = () => {
   const [currentView, setCurrentView] = useState('HOME');
   const [searchTerm, setSearchTerm] = useState('');
   const [currentCategory, setCurrentCategory] = useState('All');
-  const [isDarkMode, setIsDarkMode] = useState(() => true);
+  const [isDarkMode, setIsDarkMode] = useState(() => false);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(8);
   
@@ -105,7 +105,6 @@ const App: React.FC = () => {
 
   const allFilteredPosts = useMemo(() => {
     let result = (MOCK_POSTS || []).map((post: any) => {
-      // 각 타입별로 URL을 올바르게 선택
       let url = '';
       if (post.type === ContentType.VIDEO) {
         url = post.externalLink || post.channelUrl || post.videoUrl || '';
@@ -122,7 +121,7 @@ const App: React.FC = () => {
       };
     });
 
-    // 1. 페이지 뷰에 따른 필터링
+    // 1. Page View Filtering
     if (currentView !== 'HOME') {
       const typeMap: Record<string, ContentType> = {
         GAME: ContentType.GAME, REF: ContentType.REF, VIDEO: ContentType.VIDEO, LIBRARY: ContentType.IMAGE,
@@ -132,7 +131,7 @@ const App: React.FC = () => {
       }
     }
 
-    // 2. 카테고리 필터링
+    // 2. Cateory Filtering
     if (currentCategory !== 'All') {
       result = result.filter(p => {
         if (Array.isArray(p.category)) {
@@ -143,7 +142,7 @@ const App: React.FC = () => {
       });
     }
 
-    // 3. 검색어 필터링
+    // 3. Search Filtering
     if (searchTerm.trim() !== '') {
       const lowerTerm = searchTerm.toLowerCase();
       result = result.filter(p => 
@@ -228,10 +227,10 @@ const App: React.FC = () => {
 
               <div className="flex flex-col lg:flex-row lg:items-start">
                 {tabs.length > 0 && !searchTerm && (
-                  <aside className={`hidden lg:flex lg:flex-col lg:gap-2 lg:w-48 xl:w-52 pt-4 pb-4 px-4 ${isDarkMode ? 'bg-[#121820] border-r border-[#30363D]' : 'bg-gray-50 border-r border-gray-200'}`}>
+                  <aside className={`hidden lg:flex lg:flex-col lg:gap-2 lg:w-48 xl:w-52 pt-4 pb-4 px-4 ${isDarkMode ? 'bg-[#121820] border-r border-[#30363D]' : 'bg-white border-r border-gray-200'}`}>
                     <span className={`text-xs uppercase tracking-[0.24em] mt-0 ${isDarkMode ? 'text-slate-500' : 'text-slate-500'}`}>Category</span>
                     {tabs.map(tab => (
-                      <button key={tab} onClick={() => handleCategorySelect(tab)} className={`w-full text-left px-4 py-3 rounded-2xl transition-colors ${currentCategory === tab ? 'bg-sky-500/15 text-white' : isDarkMode ? 'text-slate-300 hover:bg-white/5' : 'text-slate-700 hover:bg-slate-100'}`}>
+                      <button key={tab} onClick={() => handleCategorySelect(tab)} className={`w-full text-left px-4 py-3 rounded-full transition-colors ${currentCategory === tab ? 'bg-sky-500/15 text-black font-bold' : isDarkMode ? 'text-slate-300 hover:bg-white/5' : 'text-black hover:bg-slate-100'}`}>
                         {tab}
                       </button>
                     ))}

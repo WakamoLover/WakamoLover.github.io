@@ -19,11 +19,9 @@ const ImageModal: React.FC<ImageModalProps> = ({ isOpen, onClose, imageUrl }) =>
 
   if (!isOpen) return null;
 
-  // 이미지 다운로드 핸들러
+  // Implement a function to handle image download
   const handleDownload = (e: React.MouseEvent) => {
     e.stopPropagation();
-    // 외부 CDN(vxtwitter 등) 이미지는 CORS 정책에 따라 직접 다운로드가 제한될 수 있음
-    // 이 경우 새 탭에서 열기가 더 안정적일 수 있습니다.
     const link = document.createElement('a');
     link.href = imageUrl;
     link.download = `archive-image-${Date.now()}.jpg`;

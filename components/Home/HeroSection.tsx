@@ -75,7 +75,7 @@ const HeroCarousel: React.FC = () => {
         <ChevronRight size={24} />
       </button>
 
-      {/* 인디케이터 (점) */}
+      {/* Indicator */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2">
         {MOCK_CAROUSEL.map((_, idx) => (
           <button 

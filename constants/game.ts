@@ -1,6 +1,6 @@
 import { ContentType, Post } from '../types';
 
-// Game Page Items (id는 constants/index.ts에서 자동으로 생성됨)
+// Game Page Items
 export const GAME_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Honkai Gakuen 2',
@@ -41,7 +41,6 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     ]
   },
   {
-    id: 'g4',
     title: 'Honkai: Nexus Anima',
     description: '',
     coverImage: 'game/hna.png',
@@ -51,7 +50,6 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     ]
   },
   {
-    id: 'g5',
     title: 'Genshin Impact',
     description: '',
     coverImage: 'game/gi.png',
@@ -65,7 +63,6 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     ]
   },
   {
-    id: 'g6',
     title: 'Zenless Zone Zero',
     description: '',
     coverImage: 'game/zzz.png',
@@ -76,7 +73,6 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     ]
   },
   {
-    id: 'g7',
     title: 'Arknights',
     description: '',
     coverImage: 'game/an.png',
@@ -92,7 +88,6 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     ]
   },
   {
-    id: 'g8',
     title: 'Arknights: Endfield',
     description: '',
     coverImage: 'game/anef.png',
@@ -103,7 +98,6 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     ]
   },
   {
-    id: 'g9',
     title: 'Punishing: Gray Raven',
     description: '',
     coverImage: 'game/pgr.png',
@@ -114,7 +108,6 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     ]
   },
   {
-    id: 'g10',
     title: 'Wuthering Waves',
     description: '',
     coverImage: 'game/ww.png',
@@ -125,7 +118,6 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     ]
   },
   {
-    id: 'g11',
     title: 'Bleu Archive',
     description: '',
     coverImage: 'game/ba.png',
@@ -141,7 +133,6 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     ]
   },
   {
-    id: 'g12',
     title: 'Project RX',
     description: '',
     coverImage: 'game/prx.png',
@@ -152,7 +143,6 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     ]
   },
   {
-    id: 'g13',
     title: 'Goddess of Victory: Nikke',
     description: '',
     coverImage: 'game/gvnk.png',
@@ -166,7 +156,6 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     ]
   },
   {
-    id: 'g14',
     title: 'Aether Gazer',
     description: '',
     coverImage: 'game/ag.png',
@@ -178,7 +167,6 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     ]
   },
   {
-    id: 'g15',
     title: 'Epic Seven',
     description: '',
     coverImage: 'game/es.png',
@@ -190,7 +178,6 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     ]
   },
   {
-    id: 'g16',
     title: 'Project Sekai Colorful Stage! feat. HATSUNE MIKU',
     description: '',
     coverImage: 'game/pscs.png',
@@ -203,7 +190,6 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     ]
   },
   {
-    id: 'g17',
     title: 'BanG Dream! Girls Band Party!',
     description: '',
     coverImage: 'game/bdgbp.png',
@@ -214,7 +200,6 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     ]
   },
   {
-    id: 'g18',
     title: 'BanG Dream! Our Notes',
     description: '',
     coverImage: 'game/bdon.png',
@@ -224,7 +209,6 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     ]
   },
   {
-    id: 'g19',
     title: 'Azur Lane',
     description: '',
     coverImage: 'game/al.png',
@@ -234,7 +218,6 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     ]
   },
   {
-    id: 'g20',
     title: 'Azur Promilia',
     description: '',
     coverImage: 'game/ap.png',
@@ -244,7 +227,6 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     ]
   },
   {
-    id: 'g21',
     title: 'Tower of Fantasy',
     description: '',
     coverImage: 'game/tof.png',
@@ -254,7 +236,6 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     ]
   },
   {
-    id: 'g22',
     title: 'Neverness to Everness',
     description: '',
     coverImage: 'game/nte.png',

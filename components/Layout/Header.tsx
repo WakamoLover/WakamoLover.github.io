@@ -42,7 +42,7 @@ const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, isDarkMode }) 
   return (
     <header className="relative sticky top-4 z-50 w-full">
       <div className="max-w-6xl mx-auto px-4 py-3">
-        <div className={`relative overflow-hidden rounded-2xl border border-white/10 bg-[#08121d]/70 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.35)] ${
+        <div className={`relative overflow-hidden rounded-full border border-white/10 bg-[#08121d]/70 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.35)] ${
           isDarkMode ? 'ring-1 ring-sky-500/10' : 'ring-1 ring-slate-900/5'
         }`}>
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(56,189,248,0.07),transparent_32%)] pointer-events-none" />
@@ -70,7 +70,7 @@ const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, isDarkMode }) 
                           ? 'text-white bg-sky-500/15 border border-sky-500/20 shadow-sm'
                           : isDarkMode
                           ? 'text-slate-300 hover:text-white hover:bg-white/5'
-                          : 'text-slate-800 hover:text-slate-900 hover:bg-slate-100'
+                          : 'text-slate-400 hover:text-slate-900 hover:bg-slate-100'
                       }`}
                     >
                       {getViewLabel(item)}
