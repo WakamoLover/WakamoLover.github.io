@@ -4,7 +4,7 @@ import { REF_ITEMS as REF_ITEMS_BASE } from './ref';
 import { VIDEO_ITEMS as VIDEO_ITEMS_BASE } from './video';
 import { LIBRARY_ITEMS as LIBRARY_ITEMS_BASE } from './library';
 
-// 자동 id 생성 함수
+// Auto ID generation for items
 const generateIds = (items: any[], prefix: string): Post[] => {
   return items.map((item, index) => ({
     ...item,

@@ -113,6 +113,14 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
     externalLink: 'https://www.posemaniacs.com/'
   } as any,
   {
+    title: 'Attorial',
+    description: '',
+    coverImage: 'https://attorial.com/assets/images/attorial/bootcamp_2.png',
+    type: ContentType.REF,
+    category: 'Pose',
+    externalLink: 'https://attorial.com/croquis'
+  } as any,
+  {
     title: 'Magic Poser',
     description: '',
     coverImage: '',

@@ -61,7 +61,7 @@ const HeroCarousel: React.FC = () => {
         );
       })}
 
-      {/* 컨트롤 버튼 */}
+      {/* Control Button */}
       <button 
         onClick={(e) => { e.preventDefault(); prevSlide(); }}
         className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-black/20 hover:bg-black/40 text-white p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all"

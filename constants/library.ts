@@ -203,7 +203,7 @@ export const LIBRARY_ITEMS: Omit<Post, 'id'>[] = [
     category: 'Illustrator',
     externalLink: 'https://x.com/Dongji97/media'
   },
-    {
+  {
     title:'Komiya',
     description: '',
     coverImage: 'https://pbs.twimg.com/media/GuMwuyQagAYMJAQ?format=jpg&name=medium',
@@ -211,7 +211,7 @@ export const LIBRARY_ITEMS: Omit<Post, 'id'>[] = [
     category: 'Illustrator',
     externalLink: 'https://x.com/komiya_latte/media'
   },
-    {
+  {
     title:'Kutata',
     description: '',
     coverImage: 'https://pbs.twimg.com/media/HB5_x6db0AAu6XI?format=jpg&name=large',
@@ -219,7 +219,7 @@ export const LIBRARY_ITEMS: Omit<Post, 'id'>[] = [
     category: 'Illustrator',
     externalLink: 'https://x.com/kutataSR/media'
   },
-    {
+  {
     title:'Hesun',
     description: '',
     coverImage: 'https://pbs.twimg.com/media/HPB8H35akAA6gXt?format=jpg&name=large',
@@ -227,7 +227,7 @@ export const LIBRARY_ITEMS: Omit<Post, 'id'>[] = [
     category: 'Illustrator',
     externalLink: 'https://x.com/umberwig/media'
   },
-    {
+  {
     title:'Bita',
     description: '',
     coverImage: 'https://pbs.twimg.com/media/HDTVOC6aoAAzarY?format=jpg&name=large',
