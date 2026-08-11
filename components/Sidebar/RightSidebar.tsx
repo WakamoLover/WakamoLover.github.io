@@ -23,30 +23,50 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
   const partners = FOR_YOU_LINKS || [];
 
   const cardStyle = `transition-all duration-300 rounded-2xl p-5 border ${
-    isDarkMode ? 'bg-[#07101f] border-slate-700 shadow-[0_16px_35px_rgba(2,10,25,0.35)]' : 'bg-white border-slate-200 shadow-[0_16px_35px_rgba(15,23,42,0.08)]'
+    isDarkMode ? 'bg-[#07101f] border-slate-700 ' : 'bg-white border-slate-200 '
   }`;
 
   const textPrimary = isDarkMode ? 'text-slate-100' : 'text-slate-900';
   const textSecondary = isDarkMode ? 'text-slate-400' : 'text-slate-600';
 
-  return (
-    <aside className="hidden md:flex flex-col gap-5 sticky top-20 h-fit w-72">
-      <div className={cardStyle}>
-        <div className="flex items-center gap-2 mb-3">
-          <Search size={16} className="text-sky-400" />
-          <h3 className={`font-semibold text-sm ${textPrimary}`}>Search</h3>
-        </div>
-        <label className="w-full text-[10px] text-slate-500 mb-2 block">Search by title or description</label>
-        <div className={`flex items-center gap-2 rounded-2xl border px-3 py-2 ${isDarkMode ? 'bg-[#08131f] border-slate-700' : 'bg-slate-50 border-slate-200'}`}>
-          <Search size={16} className={isDarkMode ? 'text-slate-400' : 'text-slate-500'} />
-          <input
-            value={searchTerm}
-            onChange={(e) => onSearchChange(e.target.value)}
-            placeholder="Search content"
-            className={`w-full bg-transparent border-none outline-none text-sm ${isDarkMode ? 'text-slate-100 placeholder:text-slate-500' : 'text-slate-700 placeholder:text-slate-500'}`}
-          />
-        </div>
-      </div>
+return (
+  <aside className="hidden md:flex flex-col gap-5 sticky top-20 h-fit w-72">
+    <div
+      className={`group flex items-center gap-3 rounded-full border px-4 py-2.5 transition-colors ${
+        isDarkMode
+          ? 'bg-[#202327] border-transparent focus-within:bg-black focus-within:border-sky-500 focus-within:ring-1 focus-within:ring-sky-500'
+          : 'bg-[#eff3f4] border-transparent focus-within:bg-white focus-within:border-sky-500 focus-within:ring-1 focus-within:ring-sky-500'
+      }`}
+    >
+      <Search
+        size={18}
+        className={`transition-colors shrink-0 ${
+          isDarkMode
+            ? 'text-slate-500 group-focus-within:text-sky-500'
+            : 'text-slate-500 group-focus-within:text-sky-500'
+        }`}
+      />
+
+      <input
+        value={searchTerm}
+        onChange={(e) => onSearchChange(e.target.value)}
+        placeholder="Search"
+        className={`w-full bg-transparent border-none outline-none text-sm ${
+          isDarkMode
+            ? 'text-slate-100 placeholder:text-slate-500'
+            : 'text-slate-900 placeholder:text-slate-500'
+        }`}
+      />
+
+      {searchTerm && (
+        <button
+          type="button"
+          onClick={() => onSearchChange('')}
+          className="flex items-center justify-center p-0.5 rounded-full bg-sky-500 text-white hover:bg-sky-600 transition-colors shrink-0"
+        >
+        </button>
+      )}
+    </div>
 
       <div className={cardStyle}>
         <div className="flex items-center gap-2 mb-3">
@@ -99,13 +119,12 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
               href={link.url} 
               target="_blank"
               rel="noreferrer" 
-              className="relative h-16 rounded-2xl overflow-hidden group border border-slate-700"
+              className="relative h-16 rounded-2xl overflow-hidden group border border-slate-200"
             >
               <img src={link.image.startsWith('http') ? link.image : `/media/${link.image}`} alt={link.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 transform-gpu will-change-transform" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent transition-colors" />
               {link.title && (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-white font-medium text-sm drop-shadow-[0_0_10px_rgba(0,0,0,0.3)]">{link.title}</span>
+                  <span className="text-white font-medium text-sm">{link.title}</span>
                 </div>
               )}
             </a>

@@ -42,13 +42,13 @@ const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, isDarkMode }) 
   return (
     <header className="relative sticky top-4 z-50 w-full">
       <div className="max-w-6xl mx-auto px-4 py-3">
-        <div className={`relative overflow-hidden rounded-full border border-white/10 bg-[#08121d]/70 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.35)] ${
+        <div className={`relative overflow-hidden rounded-full border border-white/10 bg-[#08121d]/70 backdrop-blur-xl ${
           isDarkMode ? 'ring-1 ring-sky-500/10' : 'ring-1 ring-slate-900/5'
         }`}>
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(56,189,248,0.07),transparent_32%)] pointer-events-none" />
           <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-4 px-4 py-3">
             <div className="flex items-center gap-3 cursor-pointer" onClick={() => onNavigate('HOME')}>
-              <div className="flex h-14 w-14 items-center justify-center rounded-full border border-white/10 bg-slate-900/90 shadow-[0_12px_40px_rgba(0,0,0,0.35)]">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full border border-white/10 bg-slate-900/90">
                 <img src="media/alf.png" alt="Logo" className="w-9 h-9 object-contain rounded-full" />
               </div>
               <h1 className="text-2xl font-black text-white leading-tight">WAKAMOE</h1>

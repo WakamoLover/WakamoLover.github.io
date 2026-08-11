@@ -28,6 +28,8 @@ export interface Post {
   imageIndex?: number;
   
   thumbnail?: string;
+
+  sliderImages?: string[];
 }
 
 export interface CarouselItem {

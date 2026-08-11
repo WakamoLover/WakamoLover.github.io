@@ -1,4 +1,4 @@
-import { ContentType, Post, CarouselItem, ExternalLinkItem, User } from '../types';
+import { ContentType, Post, CarouselItem, HotContentItem, ExternalLinkItem, User } from '../types';
 import { GAME_ITEMS as GAME_ITEMS_BASE } from './game';
 import { REF_ITEMS as REF_ITEMS_BASE } from './ref';
 import { VIDEO_ITEMS as VIDEO_ITEMS_BASE } from './video';

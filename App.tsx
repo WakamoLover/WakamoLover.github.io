@@ -196,7 +196,7 @@ const App: React.FC = () => {
   const tabs = getCategories();
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 font-sans ${isDarkMode ? 'bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.08),transparent_24%),radial-gradient(circle_at_20%_30%,rgba(59,130,246,0.08),transparent_18%),#020617] text-slate-100' : 'bg-[#F0F2F5] text-slate-900'}`}>
+    <div className={`min-h-screen transition-colors duration-300 font-sans ${isDarkMode ? 'bg-black text-slate-100' : 'bg-white text-slate-900'}`}>
       <Header currentView={currentView} onNavigate={handleNavigate} isDarkMode={isDarkMode} />
 
       {currentView === 'HOME' && !searchTerm && (
@@ -210,27 +210,13 @@ const App: React.FC = () => {
           <div className="md:col-span-8 lg:col-span-9">
             <div className={`rounded-xl border min-h-[500px] flex flex-col relative ${isDarkMode ? 'bg-[#161B22] border-[#30363D]' : 'bg-white border-gray-200 shadow-sm'}`}>
 
-              {/* Top tabs and controls */}
-              <div className={`border-b z-10 px-4 py-3 md:sticky md:top-16 flex items-center justify-between rounded-t-xl ${isDarkMode ? 'bg-[#161B22]/95 backdrop-blur-md border-[#30363D]' : 'bg-white border-gray-200'}`}>
-                {tabs.length > 0 && !searchTerm ? (
-                  <div className="flex items-center gap-2 overflow-x-auto py-3 px-1 lg:hidden">
-                    {tabs.map(tab => (
-                      <button key={tab} onClick={() => handleCategorySelect(tab)} className={`px-4 py-1.5 rounded-full text-xs font-semibold border transition-all whitespace-nowrap ${currentCategory === tab ? 'bg-blue-600 text-white border-blue-600' : isDarkMode ? 'bg-[#21262D] text-gray-400 border-[#30363D]' : 'bg-gray-100 text-gray-500 border-transparent'}`}>
-                        {tab}
-                      </button>
-                    ))}
-                  </div>
-                ) : (searchTerm ? <h2 className="text-sm font-bold ml-2">"{searchTerm}" results</h2> : <div />)}
-
-                   <div />
-              </div>
 
               <div className="flex flex-col lg:flex-row lg:items-start">
                 {tabs.length > 0 && !searchTerm && (
-                  <aside className={`hidden lg:flex lg:flex-col lg:gap-2 lg:w-48 xl:w-52 pt-4 pb-4 px-4 ${isDarkMode ? 'bg-[#121820] border-r border-[#30363D]' : 'bg-white border-r border-gray-200'}`}>
+                  <aside className={`hidden rounded-xl lg:flex lg:flex-col lg:gap-2 lg:w-48 xl:w-52 pt-4 pb-4 px-4 ${isDarkMode ? 'bg-black border-r border-[#30363D]' : 'bg-white border-r border-gray-200'}`}>
                     <span className={`text-xs uppercase tracking-[0.24em] mt-0 ${isDarkMode ? 'text-slate-500' : 'text-slate-500'}`}>Category</span>
                     {tabs.map(tab => (
-                      <button key={tab} onClick={() => handleCategorySelect(tab)} className={`w-full text-left px-4 py-3 rounded-full transition-colors ${currentCategory === tab ? 'bg-sky-500/15 text-black font-bold' : isDarkMode ? 'text-slate-300 hover:bg-white/5' : 'text-black hover:bg-slate-100'}`}>
+                      <button key={tab} onClick={() => handleCategorySelect(tab)} className={`w-full text-left px-4 py-3 rounded-full transition-colors ${currentCategory === tab ? 'bg-gray-100 text-black font-bold' : isDarkMode ? 'text-slate-300 hover:bg-white/5' : 'text-black hover:bg-gray-100'}`}>
                         {tab}
                       </button>
                     ))}
