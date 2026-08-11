@@ -5,12 +5,12 @@ export const VIDEO_ITEMS: Omit<Post, 'id'>[] = [
 
 // --- Illustration ---
   {
-    title: 'Unknown',
+    title: 'キュアスカイ',
     description: '',
-    coverImage: 'https://i.ytimg.com/vi/QwExFKxU5ok/hqdefault.jpg',
+    coverImage: '',
     type: ContentType.VIDEO,
     category: 'Youtube',
-    channelUrl: 'https://youtu.be/QwExFKxU5ok'
+    channelUrl: 'https://youtu.be/uOrSsajNt_w?si=2VAeYKivkD77Ft5Z'
   } as any,
 
 ];

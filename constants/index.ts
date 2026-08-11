@@ -67,13 +67,11 @@ export const OFFICIAL_NOTICES: HotContentItem[] = [
   { 
     id: 'n1', 
     title: 'Make Artist Great Again.', 
-    category: 'Notice', 
     image: '' 
   },
   { 
     id: 'n2', 
     title: 'Do not share this site with others.', 
-    category: 'Notice', 
     image: '' 
   },
 ];
