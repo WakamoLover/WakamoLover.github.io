@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { ArrowUpRight, Bell, Sun, Moon, Settings, Search, X } from 'lucide-react';
-import { OFFICIAL_NOTICES, FOR_YOU_LINKS } from '../../constants/index';
+import { Bell, Sun, Moon, Settings, Search, X } from 'lucide-react';
+import { OFFICIAL_NOTICES } from '../../constants/index';
 
 interface RightSidebarProps {
   onNavigate?: (view: string) => void;
@@ -14,8 +14,6 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
   onSearchChange
 }) => {
   const notices = OFFICIAL_NOTICES || [];
-  const partners = FOR_YOU_LINKS || [];
-
   const [isDark, setIsDark] = useState(() => {
     if (typeof window !== 'undefined') {
       return document.documentElement.classList.contains('dark');
@@ -97,31 +95,6 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
           </span>
           <span className="text-xs text-slate-400">Toggle</span>
         </button>
-      </div>
-
-      <div className={cardStyle}>
-        <div className="flex items-center gap-2 mb-3">
-          <ArrowUpRight size={16} className="text-sky-400" />
-          <h3 className={`font-semibold text-sm ${textPrimary}`}>For you</h3>
-        </div>
-        <div className="flex flex-col gap-3">
-          {partners.map(link => (
-            <a 
-              key={link.id} 
-              href={link.url} 
-              target="_blank"
-              rel="noreferrer" 
-              className="relative h-16 rounded-2xl overflow-hidden group border border-slate-200"
-            >
-              <img src={link.image.startsWith('http') ? link.image : `/media/${link.image}`} alt={link.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 transform-gpu will-change-transform" />
-              {link.title && (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-white font-medium text-sm">{link.title}</span>
-                </div>
-              )}
-            </a>
-          ))}
-        </div>
       </div>
 
       <div className="text-xs text-slate-500 px-2 space-y-2">

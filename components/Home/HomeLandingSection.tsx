@@ -1,5 +1,5 @@
 import React from 'react';
-import { Gamepad2, Library, FolderHeart, Video, ArrowUpRight, Sparkles, Play, Youtube } from 'lucide-react';
+import { Gamepad2, Library, FolderHeart, Video, ArrowUpRight } from 'lucide-react';
 
 interface HomeLandingProps {
   onNavigate: (view: string) => void;
@@ -27,33 +27,9 @@ const HomeLandingSection: React.FC<HomeLandingProps> = ({ onNavigate }) => {
     },
     {
       id: 'VIDEO',
-      title: 'Video',
+      title: 'Media',
       count: 'Media Channel',
       icon: Video
-    }
-  ];
-
-  const favoriteVideos = [
-    {
-      id: 'v1',
-      title: 'キュアアンサー＆キュアミスティック',
-      channel: '名探偵プリキュア！',
-      url: 'https://www.youtube.com/watch?v=ANZ2qYtKdMA',
-      image: 'https://i.ytimg.com/vi/ANZ2qYtKdMA/hqdefault.jpg'
-    },
-    {
-      id: 'v2',
-      title: 'キュアアルカナ・シャドウ',
-      channel: '名探偵プリキュア！',
-      url: 'https://www.youtube.com/watch?v=jx91h6qKR6U',
-      image: 'https://i.ytimg.com/vi/jx91h6qKR6U/hqdefault.jpg'
-    },
-    {
-      id: 'v3',
-      title: 'キュアエクレール',
-      channel: '名探偵プリキュア！',
-      url: 'https://www.youtube.com/watch?v=QwExFKxU5ok',
-      image: 'https://i.ytimg.com/vi/QwExFKxU5ok/hqdefault.jpg'
     }
   ];
 
@@ -116,46 +92,6 @@ const HomeLandingSection: React.FC<HomeLandingProps> = ({ onNavigate }) => {
         })}
       </section>
 
-      <section className="flex flex-col gap-4">
-        <div className="flex items-center justify-between pb-2 border-b border-slate-200">
-          <div className="flex items-center gap-2">
-            <Youtube size={18} className="text-red-500" />
-            <h2 className="text-base font-bold text-slate-900 uppercase tracking-tight">Cool Videos</h2>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {favoriteVideos.map((vid) => (
-            <div
-              key={vid.id}
-              onClick={() => window.open(vid.url, '_blank', 'noopener,noreferrer')}
-              className="group rounded-2xl border border-slate-200 bg-white overflow-hidden cursor-pointer hover:border-slate-400 transition-colors flex flex-col"
-            >
-              <div className="relative w-full aspect-video bg-slate-950 overflow-hidden no-invert">
-                <img 
-                  src={vid.image} 
-                  alt={vid.title} 
-                  className="w-full h-full object-cover opacity-85 group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <div className="w-11 h-11 rounded-full bg-slate-900/70 backdrop-blur-md flex items-center justify-center text-white group-hover:bg-red-600 group-hover:scale-110 transition-all">
-                    <Play size={18} className="fill-white text-white ml-0.5" />
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-4 flex flex-col justify-between flex-1">
-                <h3 className="font-bold text-sm text-slate-900 group-hover:text-sky-600 transition-colors line-clamp-2 mb-2 leading-snug">
-                  {vid.title}
-                </h3>
-                <span className="text-[11px] font-mono text-slate-400">
-                  {vid.channel}
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
     </div>
   );
 };

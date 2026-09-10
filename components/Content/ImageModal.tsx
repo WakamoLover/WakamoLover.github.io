@@ -19,7 +19,6 @@ const ImageModal: React.FC<ImageModalProps> = ({ isOpen, onClose, imageUrl }) =>
 
   if (!isOpen) return null;
 
-  // Implement a function to handle image download
   const handleDownload = (e: React.MouseEvent) => {
     e.stopPropagation();
     const link = document.createElement('a');

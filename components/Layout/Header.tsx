@@ -17,7 +17,7 @@ const Header: React.FC<HeaderProps> = ({ currentView, onNavigate }) => {
       GAME: 'Game',
       LIBRARY: 'Library',
       REF: 'Reference',
-      VIDEO: 'Video',
+      VIDEO: 'Media',
     };
     return viewMap[view] || view;
   };
@@ -39,17 +39,17 @@ const Header: React.FC<HeaderProps> = ({ currentView, onNavigate }) => {
   }, [currentView]);
 
   return (
-    <header className="sticky top-4 z-50 w-full">
-      <div className="max-w-6xl mx-auto px-4 py-3">
+    <header className="sticky top-2 md:top-4 z-50 w-full">
+      <div className="max-w-6xl mx-auto px-2 sm:px-4 py-2 md:py-3">
         <div className="relative overflow-hidden rounded-full border border-slate-200/80 bg-white/80 backdrop-blur-xl ring-1 ring-slate-900/5">
-          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-4 px-4 py-3">
-            <div className="flex items-center gap-3 cursor-pointer" onClick={() => onNavigate('HOME')}>
-              <img src="media/alf.png" alt="Logo" className="w-11 h-11 object-cover rounded-full shrink-0" />
-              <h1 className="text-2xl font-black text-slate-900 leading-tight">WAKAMOE</h1>
+          <div className="relative z-10 flex items-center justify-between gap-2 px-3 py-2 md:px-4 md:py-3">
+            <div className="flex items-center gap-2 md:gap-3 cursor-pointer shrink-0" onClick={() => onNavigate('HOME')}>
+              <img src="media/alf.png" alt="Logo" className="w-9 h-9 md:w-11 md:h-11 object-cover rounded-full shrink-0" />
+              <h1 className="text-lg md:text-2xl font-black text-slate-900 leading-tight">WAKAMOE</h1>
             </div>
 
-            <nav className="relative flex flex-wrap items-center gap-1 md:gap-2">
-              <div ref={(el) => { navContainerRef.current = el; }} className="relative flex items-center gap-1 z-0">
+            <nav className="relative min-w-0 overflow-x-auto scrollbar-hide">
+              <div ref={(el) => { navContainerRef.current = el; }} className="relative flex items-center gap-0.5 md:gap-1 z-0 w-max">
                 {NAV_ITEMS.map((item) => {
                   const isActive = currentView === item;
                   return (
@@ -57,9 +57,7 @@ const Header: React.FC<HeaderProps> = ({ currentView, onNavigate }) => {
                       key={item}
                       ref={(el) => { if (el) navRefs.current.set(item, el); else navRefs.current.delete(item); }}
                       onClick={() => onNavigate(item)}
-                      onMouseEnter={() => updateIndicator(item)}
-                      onMouseLeave={() => updateIndicator(currentView)}
-                      className={`relative px-3.5 py-2 font-bold text-sm whitespace-nowrap flex-shrink-0 rounded-full z-10 transition-colors bg-transparent ${
+                      className={`relative px-2.5 py-2 md:px-3.5 font-bold text-xs md:text-sm whitespace-nowrap flex-shrink-0 rounded-full z-10 transition-colors bg-transparent ${
                         isActive ? 'text-sky-600' : 'text-slate-600 hover:text-slate-900'
                       }`}
                     >

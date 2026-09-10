@@ -1,6 +1,5 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import Header from './components/Layout';
-import HeroCarousel from './components/Home/HeroSection';
 import PostCard from './components/Content/PostCard';
 import RightSidebar from './components/Sidebar/RightSidebar';
 import ImageModal from './components/Content/ImageModal';
@@ -9,55 +8,12 @@ import { MOCK_POSTS, CATEGORY_TABS } from './constants/index';
 import { ContentType } from './types';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-const getAutoThumbnail = (url: string | undefined, coverImage?: string, imageIndex: number = 1): string => {
+const getCoverImage = (coverImage?: string): string => {
   if (coverImage && coverImage.trim() !== '') {
     if (coverImage.startsWith('http')) return coverImage;
     return `/media/${coverImage}`;
   }
-  if (!url) return 'https://placehold.co/400x225?text=No+Link';
-
-  const ytMatch = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
-  if (ytMatch) return `https://img.youtube.com/vi/${ytMatch[1]}/hqdefault.jpg`;
-
-  const xMatch = url.match(/(?:twitter\.com|x\.com)\/\w+\/status\/(\d+)/);
-  if (xMatch) {
-    const tweetId = xMatch[1];
-    const imageParam = imageIndex > 1 ? `?image=${imageIndex}` : '';
-    return `https://nitter.net/i/web/status/${tweetId}${imageParam}`;
-  }
-
-  const nicoMatch = url.match(/sm(\d+)/);
-  if (nicoMatch) return `https://nicovideo.cdn.nimg.jp/thumbnails/${nicoMatch[1]}/${nicoMatch[1]}`;
-
-  if (url.includes('bilibili.com')) return 'https://archive.bilibili.com/favicon.ico';
-  return 'https://placehold.co/400x225?text=Link+Preview';
-};
-
-const isYouTubeChannelUrl = (url: string | undefined): boolean => {
-  if (!url) return false;
-  return /(?:https?:\/\/)?(?:www\.)?youtube\.com\/(?:@[^/]+|channel\/[^/]+)/i.test(url);
-};
-
-const resolveYouTubeChannelThumbnail = async (url: string | undefined, coverImage?: string, imageIndex: number = 1): Promise<string> => {
-  if (coverImage && coverImage.trim() !== '') {
-    if (coverImage.startsWith('http')) return coverImage;
-    return `/media/${coverImage}`;
-  }
-
-  if (!url || !isYouTubeChannelUrl(url)) {
-    return getAutoThumbnail(url, coverImage, imageIndex);
-  }
-
-  try {
-    const response = await fetch(`https://noembed.com/embed?url=${encodeURIComponent(url)}`);
-    if (response.ok) {
-      const data = await response.json();
-      if (data?.thumbnail_url) return data.thumbnail_url;
-    }
-  } catch {
-  }
-
-  return `https://yt3.ggpht.com/ytc/AKedOLR2p3QJ1qQw4M6x0b5a7t7c6b4T4VQwQhjS-vQ=s900-c-k-c0x00ffffff-no-rj`;
+  return 'https://placehold.co/400x225?text=No+Cover+Image';
 };
 
 const App: React.FC = () => {
@@ -69,8 +25,6 @@ const App: React.FC = () => {
   
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [currentImageUrl, setCurrentImageUrl] = useState('');
-  const [resolvedThumbnails, setResolvedThumbnails] = useState<Record<string, string>>({});
-
   const handleNavigate = (view: string) => {
     setCurrentView(view);
     setCurrentCategory('All'); 
@@ -105,10 +59,12 @@ const App: React.FC = () => {
         url = post.externalLink || post.channelUrl || post.videoUrl || post.link || post.url || '';
       }
 
+      const thumbnail = getCoverImage(post.coverImage);
+
       return {
         ...post,
         originalUrl: url,
-        thumbnail: getAutoThumbnail(url, post.coverImage, post.imageIndex || 1),
+        thumbnail,
       };
     });
 
@@ -142,39 +98,9 @@ const App: React.FC = () => {
     return [...result].sort((a, b) => a.title.localeCompare(b.title, undefined, { sensitivity: 'base' }));
   }, [currentView, currentCategory, searchTerm]);
 
-  useEffect(() => {
-    let isMounted = true;
-    const pending = allFilteredPosts.filter(post => {
-      const url = post.originalUrl || post.channelUrl || post.videoUrl || post.externalLink || '';
-      return post.type === ContentType.VIDEO && isYouTubeChannelUrl(url) && !resolvedThumbnails[post.id];
-    });
+  const displayPosts = allFilteredPosts;
 
-    if (pending.length === 0) return undefined;
-
-    Promise.all(
-      pending.map(async (post) => {
-        const url = post.originalUrl || post.channelUrl || post.videoUrl || post.externalLink || '';
-        const thumbnail = await resolveYouTubeChannelThumbnail(url, post.coverImage, post.imageIndex || 1);
-        return [post.id, thumbnail] as const;
-      })
-    ).then((results) => {
-      if (!isMounted) return;
-      setResolvedThumbnails(prev => ({ ...prev, ...Object.fromEntries(results) }));
-    }).catch(() => undefined);
-
-    return () => {
-      isMounted = false;
-    };
-  }, [allFilteredPosts, resolvedThumbnails]);
-
-  const displayPosts = useMemo(() => {
-    return allFilteredPosts.map(post => ({
-      ...post,
-      thumbnail: resolvedThumbnails[post.id] || post.thumbnail,
-    }));
-  }, [allFilteredPosts, resolvedThumbnails]);
-
-  const effectivePageSize = currentView === 'LIBRARY' ? 9 : pageSize;
+  const effectivePageSize = currentView === 'VIDEO' ? 25 : currentView === 'LIBRARY' ? 12 : pageSize;
   const totalPages = Math.ceil(displayPosts.length / effectivePageSize);
   const paginatedPosts = useMemo(() => {
     const start = (currentPage - 1) * effectivePageSize;
@@ -187,20 +113,10 @@ const App: React.FC = () => {
     <div className="min-h-screen font-sans bg-white text-slate-900">
       <Header currentView={currentView} onNavigate={handleNavigate} />
 
-      {currentView === 'GAME' && !searchTerm && (
-        <div className="w-full overflow-hidden mb-4">
-          <HeroCarousel />
-        </div>
-      )}
-
       <main className="max-w-7xl mx-auto px-4 py-4 md:py-6">
         {currentView === 'HOME' && !searchTerm ? (
           <HomeLandingSection 
-            onNavigate={handleNavigate} 
-            onImageClick={(imgUrl: string) => {
-              setCurrentImageUrl(imgUrl);
-              setIsImageModalOpen(true);
-            }} 
+            onNavigate={handleNavigate}
           />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
@@ -224,7 +140,7 @@ const App: React.FC = () => {
 
                   <div className="flex-1 p-4">
                     {paginatedPosts.length > 0 ? (
-                      <div className={`grid ${currentView === 'VIDEO' ? 'grid-cols-1 sm:grid-cols-2 gap-4' : currentView === 'LIBRARY' ? 'grid-cols-2 lg:grid-cols-3 gap-4' : 'grid-cols-1 gap-3'}`}>
+                      <div className={`grid ${currentView === 'VIDEO' ? 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3' : currentView === 'LIBRARY' ? 'grid-cols-2 lg:grid-cols-3 gap-4' : 'grid-cols-1 gap-3'}`}>
                         {paginatedPosts.map((post: any) => (
                           <PostCard 
                             key={post.id} 

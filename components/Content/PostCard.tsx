@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ContentType } from '../../types';
-import { ExternalLink, Play } from 'lucide-react';
+import { ExternalLink, Play, Youtube } from 'lucide-react';
 
 interface PostCardProps {
   post: any;
@@ -31,6 +31,42 @@ const Chip: React.FC<{ label: string; url?: string }> = ({ label, url }) => {
   );
 };
 
+const PlatformIcon: React.FC<{ category?: string | string[]; iconImage?: string }> = ({ category, iconImage }) => {
+  const [iconError, setIconError] = React.useState(false);
+
+  if (iconImage && !iconError) {
+    const src = iconImage.startsWith('http') ? iconImage : `/media/${iconImage}`;
+    return (
+      <img
+        src={src}
+        alt=""
+        className="h-4 w-4 object-contain"
+        referrerPolicy="no-referrer"
+        onError={() => setIconError(true)}
+      />
+    );
+  }
+
+  const label = Array.isArray(category) ? category[0] : category;
+  const normalized = label?.toLowerCase() || '';
+
+  if (normalized.includes('youtube')) {
+    return <Youtube size={15} strokeWidth={2.5} aria-label="YouTube" />;
+  }
+
+  if (normalized.includes('bilibili')) {
+    return <span className="text-xs font-black leading-none" aria-label="Bilibili">B</span>;
+  }
+  if (normalized.includes('pixiv')) {
+    return <span className="text-xs font-black leading-none" aria-label="Pixiv">P</span>;
+  }
+  if (normalized.includes('twitter') || normalized === 'x') {
+    return <span className="text-xs font-black leading-none" aria-label="X">X</span>;
+  }
+
+  return null;
+};
+
 const PostCard: React.FC<PostCardProps> = ({ post, viewMode, onImageClick }) => {
   const [imageError, setImageError] = useState(false);
   
@@ -49,6 +85,11 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, onImageClick }) => 
   
   const isVideo = post.type === ContentType.VIDEO;
   const isArtist = viewMode === 'LIBRARY' || post.type === ContentType.IMAGE;
+  const isVisualGrid = viewMode === 'LIBRARY' || viewMode === 'VIDEO';
+  const categoryLabel = Array.isArray(post.category) ? post.category[0] : post.category;
+  const hasPlatformIcon = Boolean(
+    post.iconImage || /youtube|bilibili|pixiv|twitter/i.test(categoryLabel || '') || categoryLabel?.toLowerCase() === 'x'
+  );
 
   if (viewMode === 'HOME' || viewMode === 'GAME' || viewMode === 'REF') {
     const isRef = post.type === ContentType.REF;
@@ -86,6 +127,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, onImageClick }) => 
           <img
             src={imageError ? 'https://placehold.co/400x225?text=Image+Failed' : displayImage}
             alt={post.title}
+            referrerPolicy="no-referrer"
             onError={() => setImageError(true)}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 transform-gpu will-change-transform"
           />
@@ -115,6 +157,62 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, onImageClick }) => 
     );
   }
 
+  if (isVisualGrid) {
+    return (
+      <div
+        className="group relative aspect-square overflow-hidden rounded-xl bg-slate-100 cursor-pointer"
+        onClick={() => {
+          if (contentUrl && contentUrl !== '#') {
+            window.open(contentUrl, '_blank', 'noopener,noreferrer');
+          }
+        }}
+      >
+        <img
+          src={imageError ? 'https://placehold.co/400x400?text=Image+Failed' : displayImage}
+          alt={post.title}
+          referrerPolicy="no-referrer"
+          onError={() => setImageError(true)}
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
+
+        {hasPlatformIcon && (
+          <div className="absolute right-2.5 top-2.5 flex h-7 w-7 items-center justify-center rounded-full bg-black/35 text-white backdrop-blur-sm">
+            <PlatformIcon category={post.category} iconImage={post.iconImage} />
+          </div>
+        )}
+
+        <div className="absolute inset-x-0 bottom-0 p-3 text-white">
+          {viewMode === 'LIBRARY' ? (
+            <>
+              {post.description && (
+                <p className="mb-1 text-[11px] leading-snug text-white/75 line-clamp-1">
+                  {post.description}
+                </p>
+              )}
+              <div className="flex items-end justify-between gap-2">
+                <h3 className="min-w-0 font-semibold text-sm leading-tight line-clamp-2 drop-shadow-sm">
+                  {post.title || 'Untitled'}
+                </h3>
+                {post.category && (
+                  <span className="shrink-0 text-[10px] font-medium text-white/80">
+                    {Array.isArray(post.category) ? post.category[0] : post.category}
+                  </span>
+                )}
+              </div>
+            </>
+          ) : (
+            <>
+              <h3 className="font-semibold text-sm leading-tight line-clamp-2 drop-shadow-sm">
+                {post.title || 'Untitled'}
+              </h3>
+            </>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
       className="transition-all duration-300 transform group flex flex-col h-full border rounded-2xl overflow-hidden bg-white border-slate-200 hover:border-slate-400 cursor-pointer"
@@ -126,12 +224,11 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, onImageClick }) => 
         }
       }}
     >
-      <div className={`relative w-full overflow-hidden bg-slate-100 ${
-        isVideo ? 'aspect-video' : 'aspect-[3/4]'
-      }`}>
+      <div className="relative w-full overflow-hidden bg-slate-100 aspect-[3/4]">
         <img
           src={imageError ? 'https://placehold.co/400x225?text=Image+Failed' : displayImage}
           alt={post.title}
+          referrerPolicy="no-referrer"
           onError={() => setImageError(true)}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 transform-gpu will-change-transform"
         />
