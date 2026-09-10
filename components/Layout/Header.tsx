@@ -39,10 +39,10 @@ const Header: React.FC<HeaderProps> = ({ currentView, onNavigate }) => {
   }, [currentView]);
 
   return (
-    <header className="sticky top-2 md:top-4 z-50 w-full">
-      <div className="max-w-6xl mx-auto px-2 sm:px-4 py-2 md:py-3">
-        <div className="relative overflow-hidden rounded-full border border-slate-200/80 bg-white/80 backdrop-blur-xl ring-1 ring-slate-900/5">
-          <div className="relative z-10 flex items-center justify-between gap-2 px-3 py-2 md:px-4 md:py-3">
+    <header className="sticky top-0 z-50 w-full border-b border-slate-200/80 bg-white/95 backdrop-blur-xl">
+      <div className="max-w-6xl mx-auto px-4 py-2 md:py-3">
+        <div className="relative overflow-hidden">
+          <div className="relative z-10 flex items-center justify-between gap-2">
             <div className="flex items-center gap-2 md:gap-3 cursor-pointer shrink-0" onClick={() => onNavigate('HOME')}>
               <img src="media/alf.png" alt="Logo" className="w-9 h-9 md:w-11 md:h-11 object-cover rounded-full shrink-0" />
               <h1 className="text-lg md:text-2xl font-black text-slate-900 leading-tight">WAKAMOE</h1>
