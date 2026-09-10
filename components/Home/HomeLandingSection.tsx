@@ -8,28 +8,28 @@ interface HomeLandingProps {
 const HomeLandingSection: React.FC<HomeLandingProps> = ({ onNavigate }) => {
   const sections = [
     {
-      id: 'GAME',
-      title: 'Game',
-      count: 'Official Game Resource',
-      icon: Gamepad2
-    },
-    {
       id: 'LIBRARY',
       title: 'Library',
       count: 'Mangaka, Cosplayer and Others',
       icon: Library
     },
     {
-      id: 'REF',
-      title: 'Reference',
-      count: 'Pose & Color',
-      icon: FolderHeart
-    },
-    {
       id: 'VIDEO',
       title: 'Media',
       count: 'Media Channel',
       icon: Video
+    },
+    {
+      id: 'GAME',
+      title: 'Game',
+      count: 'Official Game Resource',
+      icon: Gamepad2
+    },
+    {
+      id: 'REF',
+      title: 'Reference',
+      count: 'Pose & Color',
+      icon: FolderHeart
     }
   ];
 
