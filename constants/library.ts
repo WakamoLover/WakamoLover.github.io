@@ -334,14 +334,6 @@ export const LIBRARY_ITEMS: Omit<Post, 'id'>[] = [
     externalLink: 'https://x.com/sherryken777/media'
   },
   {
-    title: 'Tiebanonini',
-    description: '',
-    coverImage: 'https://pbs.twimg.com/media/FxRPyU5aMAAoQBO?format=jpg&name=large',
-    type: ContentType.IMAGE,
-    category: 'Cosplayer',
-    externalLink: 'https://x.com/tiebanonini/media'
-  },
-  {
     title: 'Futidori',
     description: '',
     coverImage: 'https://pbs.twimg.com/media/Gv-R0KdXgAAK967?format=jpg&name=large',
