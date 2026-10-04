@@ -32,9 +32,9 @@ const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, searchTerm, on
         <div className="flex min-w-0 items-center gap-3 lg:gap-7">
           <button
             type="button"
-            onClick={() => onNavigate('LIBRARY')}
+            onClick={() => onNavigate('GAME')}
             className="flex shrink-0 items-center gap-2 text-left"
-            aria-label="WakaMoe Creator"
+            aria-label="WakaMoe Game"
           >
             <img src="/media/alf.png" alt="" className="h-8 w-8 rounded-full object-cover sm:h-9 sm:w-9" />
             <span className="text-base font-black leading-none text-slate-900 sm:text-2xl">WAKAMOE</span>

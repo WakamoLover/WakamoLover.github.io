@@ -35,7 +35,7 @@ const App: React.FC = () => {
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [currentImageUrl, setCurrentImageUrl] = useState('');
   const handleNavigate = (view: string) => {
-    const nextView = VIEW_PATHS[view] ? view : 'LIBRARY';
+    const nextView = VIEW_PATHS[view] ? view : 'GAME';
     const nextPath = VIEW_PATHS[nextView];
     if (window.location.pathname !== nextPath) {
       window.history.pushState({ view: nextView }, '', nextPath);
