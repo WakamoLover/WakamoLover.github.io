@@ -10,7 +10,6 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     type: ContentType.GAME,
     category: 'Hoyoverse',
     gameLinks: [
-      { label: 'Official Info', url: 'https://www.miyoushe.com/bh2/home/31' },
       { label: 'Official Gallery', url: 'http://www.mihoyo.co.jp/gallery/' }
     ]
   } as any,

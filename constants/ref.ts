@@ -14,7 +14,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
     externalLink: 'https://x.com/'
   } as any,
   {
-    title: '',
+    title: 'DeviantArt',
     subtitle: '데비안아트',
     description: 'Explore our archive of past community events, celebrating the incredible projects, contests, and gatherings that have brought us together.',
     coverImage: 'ref/devianart.webp',
@@ -129,7 +129,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Attorial',
     subtitle: '아또리얼',
     description: '게임 및 웹툰에서 주로 사용되는 만화 및 일러스트 작법 강의를 전문으로 하는 온라인 학원입니다. 크로키 자료 및 일러스트 강의를 제공하여 그림을 그리는 데 도움을 줍니다.',
-    coverImage: '',
+    coverImage: 'ref/attorial.webp',
     type: ContentType.REF,
     category: 'Pose',
     externalLink: 'https://attorial.com/croquis'
@@ -196,7 +196,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Design Spiration',
     subtitle: '',
     description: '',
-    coverImage: '',
+    coverImage: 'ref/designspiration.webp',
     type: ContentType.REF,
     category: 'Design',
     externalLink: 'https://www.designspiration.com/'
@@ -205,7 +205,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Design Boom',
     subtitle: '',
     description: '',
-    coverImage: '',
+    coverImage: 'ref/designboom.webp',
     type: ContentType.REF,
     category: 'Design',
     externalLink: 'https://www.designboom.com/'
@@ -214,7 +214,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Dribbble',
     subtitle: '',
     description: '',
-    coverImage: '',
+    coverImage: 'ref/dribbble.webp',
     type: ContentType.REF,
     category: 'Design',
     externalLink: 'https://dribbble.com/'
@@ -223,7 +223,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Envato',
     subtitle: '',
     description: '',
-    coverImage: '',
+    coverImage: 'ref/envato.webp',
     type: ContentType.REF,
     category: 'Design',
     externalLink: 'https://elements.envato.com/'
@@ -250,7 +250,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Medium Design',
     subtitle: '',
     description: '',
-    coverImage: '',
+    coverImage: 'ref/mediumdesign.webp',
     type: ContentType.REF,
     category: 'Design',
     externalLink: 'https://medium.design/'
@@ -259,7 +259,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Notefolio',
     subtitle: '',
     description: '',
-    coverImage: '',
+    coverImage: 'ref/notefolio.webp',
     type: ContentType.REF,
     category: 'Design',
     externalLink: 'https://notefolio.net/'
@@ -286,7 +286,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
 // --- Market ---
   {
     title: 'Booth',
-    subtitle: '',
+    subtitle: '부스',
     description: '',
     coverImage: 'ref/booth.webp',
     type: ContentType.REF,
@@ -295,7 +295,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'DLsite',
-    subtitle: '',
+    subtitle: '디엘사이트',
     description: 'Doujinshi, doujin games, doujin audio and ASMR, updated daily and available for immediate download.',
     coverImage: 'ref/dlsite.webp',
     type: ContentType.REF,
@@ -304,7 +304,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Pixiv Fanbox',
-    subtitle: '',
+    subtitle: '픽시브 팬박스',
     description: 'A community where creators can receive continuous support from their fans.',
     coverImage: 'ref/pixivfanbox.webp',
     type: ContentType.REF,
@@ -326,7 +326,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Textures',
     subtitle: '',
     description: '',
-    coverImage: '',
+    coverImage: 'ref/textures.webp',
     type: ContentType.REF,
     category: 'Others',
     externalLink: 'https://www.textures.com/'
@@ -335,7 +335,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Sketchfab',
     subtitle: '',
     description: '',
-    coverImage: '',
+    coverImage: 'ref/sketchfab.webp',
     type: ContentType.REF,
     category: 'Others',
     externalLink: 'https://sketchfab.com/'
@@ -353,7 +353,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Bone Clones',
     subtitle: '',
     description: '',
-    coverImage: '',
+    coverImage: 'ref/boneclones.webp',
     type: ContentType.REF,
     category: 'Others',
     externalLink: 'https://boneclones.com/'
