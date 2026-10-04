@@ -8,7 +8,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
     title: 'X',
     subtitle: '',
     description: 'From breaking news and entertainment to sports and politics, get the full story with all the live commentary.',
-    coverImage: 'ref/x.png',
+    coverImage: 'ref/x.webp',
     type: ContentType.REF,
     category: 'Social',
     externalLink: 'https://x.com/'
@@ -17,7 +17,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
     title: 'DeviantArt',
     subtitle: '',
     description: 'Explore our archive of past community events, celebrating the incredible projects, contests, and gatherings that have brought us together.',
-    coverImage: 'ref/devianart.png',
+    coverImage: 'ref/devianart.webp',
     type: ContentType.REF,
     category: 'Social',
     externalLink: 'https://www.deviantart.com/'
@@ -26,7 +26,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
     title: 'ArtStation',
     subtitle: '',
     description: 'The leading showcase platform for games, film, media & entertainment artists.',
-    coverImage: 'ref/artstation.png',
+    coverImage: 'ref/artstation.webp',
     type: ContentType.REF,
     category: 'Social',
     externalLink: 'https://www.artstation.com/'
@@ -35,7 +35,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Pixiv',
     subtitle: '',
     description: 'A leading domestic creative communication platform where users can post and browse illustrations, manga, and novels.',
-    coverImage: 'ref/pixiv.png',
+    coverImage: 'ref/pixiv.webp',
     type: ContentType.REF,
     category: 'Social',
     externalLink: 'https://www.pixiv.net/'
@@ -44,7 +44,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Bluesky',
     subtitle: '',
     description: 'Find your community among millions of users, unleash your creativity, and have some fun again.',
-    coverImage: 'ref/bluesky.png',
+    coverImage: 'ref/bluesky.webp',
     type: ContentType.REF,
     category: 'Social',
     externalLink: 'https://bsky.app/'
@@ -53,7 +53,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Behance',
     subtitle: '',
     description: 'Help hirers and creators navigate the creative world from discovering inspiration, to connecting with one another · Popular Tools.',
-    coverImage: 'ref/behance.png',
+    coverImage: 'ref/behance.webp',
     type: ContentType.REF,
     category: 'Social',
     externalLink: 'https://www.behance.net/'
@@ -64,7 +64,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Cosmos',
     subtitle: '',
     description: 'Resurface your elements instantly. Find anything in your library with ease.',
-    coverImage: 'ref/cosmos.png',
+    coverImage: 'ref/cosmos.webp',
     type: ContentType.REF,
     category: 'Image',
     externalLink: 'https://www.cosmos.so/'
@@ -73,7 +73,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
     title: 'FilmGrab',
     subtitle: '',
     description: 'The largest growing archive of stills from the best films ever.',
-    coverImage: 'ref/filmgrab.png',
+    coverImage: 'ref/filmgrab.webp',
     type: ContentType.REF,
     category: 'Image',
     externalLink: 'https://film-grab.com/'
@@ -81,8 +81,8 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'PhotoBash',
     subtitle: '',
-    description: 'High Quality Reference Photos & Masked PNGs for Artists & Creatives.',
-    coverImage: 'ref/photobash.png',
+    description: 'High Quality Reference Photos & Masked webps for Artists & Creatives.',
+    coverImage: 'ref/photobash.webp',
     type: ContentType.REF,
     category: 'Image',
     externalLink: 'https://www.photobash.org/'
@@ -91,7 +91,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Pinterest',
     subtitle: '',
     description: 'Create boards, save Pins and make collages of all your inspiration.',
-    coverImage: 'ref/pinterest.png',
+    coverImage: 'ref/pinterest.webp',
     type: ContentType.REF,
     category: 'Image',
     externalLink: 'https://kr.pinterest.com/'
@@ -100,7 +100,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Pixabay',
     subtitle: '',
     description: 'Stunning royalty-free images & royalty-free stock',
-    coverImage: 'ref/pixabay.png',
+    coverImage: 'ref/pixabay.webp',
     type: ContentType.REF,
     category: 'Image',
     externalLink: 'https://pixabay.com/'
@@ -109,7 +109,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Unsplash',
     subtitle: '',
     description: 'A website dedicated to proprietary stock photography.',
-    coverImage: 'ref/unsplash.png',
+    coverImage: 'ref/unsplash.webp',
     type: ContentType.REF,
     category: 'Image',
     externalLink: 'https://unsplash.com/'
@@ -129,7 +129,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Attorial',
     subtitle: '아또리얼',
     description: '게임 및 웹툰에서 주로 사용되는 만화 및 일러스트 작법 강의를 전문으로 하는 온라인 학원입니다.',
-    coverImage: 'https://attorial.com/assets/images/attorial/bootcamp_2.png',
+    coverImage: '',
     type: ContentType.REF,
     category: 'Pose',
     externalLink: 'https://attorial.com/croquis'
@@ -288,7 +288,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Booth',
     subtitle: '',
     description: '',
-    coverImage: 'ref/booth.png',
+    coverImage: 'ref/booth.webp',
     type: ContentType.REF,
     category: 'Market',
     externalLink: 'https://booth.pm/ja'
@@ -297,7 +297,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
     title: 'DLsite',
     subtitle: '',
     description: 'Doujinshi, doujin games, doujin audio and ASMR, updated daily and available for immediate download.',
-    coverImage: 'ref/dlsite.png',
+    coverImage: 'ref/dlsite.webp',
     type: ContentType.REF,
     category: 'Market',
     externalLink: 'https://www.dlsite.com/index.html'
@@ -306,7 +306,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Pixiv Fanbox',
     subtitle: '',
     description: 'A community where creators can receive continuous support from their fans.',
-    coverImage: 'ref/pixivfanbox.png',
+    coverImage: 'ref/pixivfanbox.webp',
     type: ContentType.REF,
     category: 'Market',
     externalLink: 'https://www.fanbox.cc/'

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { optimizeImageUrl } from '../../utils/optimizeImageUrl';
 
 const MAX_IMAGE_EDGE = 1280;
 
@@ -6,9 +7,16 @@ type ResolutionLimitedImageProps = React.ImgHTMLAttributes<HTMLImageElement> & {
   src: string;
 };
 
-const ResolutionLimitedImage: React.FC<ResolutionLimitedImageProps> = ({ src, onLoad, ...props }) => {
+const ResolutionLimitedImage: React.FC<ResolutionLimitedImageProps> = ({
+  src,
+  onLoad,
+  loading = 'lazy',
+  decoding = 'async',
+  ...props
+}) => {
   const [optimizedSrc, setOptimizedSrc] = useState<string | null>(null);
   const objectUrlRef = useRef<string | null>(null);
+  const cdnOptimizedSrc = optimizeImageUrl(src);
 
   useEffect(() => {
     setOptimizedSrc(null);
@@ -45,7 +53,7 @@ const ResolutionLimitedImage: React.FC<ResolutionLimitedImageProps> = ({ src, on
     onLoad?.(event);
   };
 
-  return <img {...props} src={optimizedSrc || src} onLoad={handleLoad} />;
+  return <img {...props} src={optimizedSrc || cdnOptimizedSrc} loading={loading} decoding={decoding} onLoad={handleLoad} />;
 };
 
 export default ResolutionLimitedImage;

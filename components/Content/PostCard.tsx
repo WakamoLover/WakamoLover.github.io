@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ContentType } from '../../types';
 import { ExternalLink, Play, Youtube } from 'lucide-react';
 import ResolutionLimitedImage from './ResolutionLimitedImage';
+import { optimizeImageUrl } from '../../utils/optimizeImageUrl';
 
 interface PostCardProps {
   post: any;
@@ -39,9 +40,11 @@ const PlatformIcon: React.FC<{ category?: string | string[]; iconImage?: string 
     const src = iconImage.startsWith('http') ? iconImage : `/media/${iconImage}`;
     return (
       <img
-        src={src}
+        src={optimizeImageUrl(src)}
         alt=""
         className="h-4 w-4 object-contain"
+        loading="lazy"
+        decoding="async"
         referrerPolicy="no-referrer"
         onError={() => setIconError(true)}
       />

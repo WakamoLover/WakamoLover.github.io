@@ -6,7 +6,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Honkai Gakuen 2',
     subtitle: '崩坏学园2',
     description: '',
-    coverImage: 'game/hg2.png', 
+    coverImage: 'game/hg2.webp', 
     type: ContentType.GAME,
     category: 'Hoyoverse',
     gameLinks: [
@@ -18,7 +18,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Honkai Impact 3RD',
     subtitle: '崩坏3',
     description: '',
-    coverImage: 'game/hi3.png',
+    coverImage: 'game/hi3.webp',
     type: ContentType.GAME,
     category: 'Hoyoverse',
     gameLinks: [
@@ -33,7 +33,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Honkai: Star Rail',
     subtitle: '崩坏：星穹铁道',
     description: '',
-    coverImage: 'game/hsr.png',
+    coverImage: 'game/hsr.webp',
     type: ContentType.GAME,
     category: 'Hoyoverse',
     gameLinks: [
@@ -47,7 +47,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Honkai: Nexus Anima',
     subtitle: '崩坏：因缘精灵',
     description: '',
-    coverImage: 'game/hna.png',
+    coverImage: 'game/hna.webp',
     type: ContentType.GAME,
     category: 'Hoyoverse',
     gameLinks: [
@@ -57,7 +57,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Genshin Impact',
     subtitle: '原神',
     description: '',
-    coverImage: 'game/gi.png',
+    coverImage: 'game/gi.webp',
     type: ContentType.GAME,
     category: 'Hoyoverse',
     gameLinks: [
@@ -71,7 +71,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Zenless Zone Zero',
     subtitle: '绝区零',
     description: '',
-    coverImage: 'game/zzz.png',
+    coverImage: 'game/zzz.webp',
     type: ContentType.GAME,
     category: 'Hoyoverse',
     gameLinks: [
@@ -82,7 +82,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Arknights',
     subtitle: '明日方舟',
     description: '',
-    coverImage: 'game/an.png',
+    coverImage: 'game/an.webp',
     type: ContentType.GAME,
     category: 'HyperGraph',
     gameLinks: [
@@ -98,7 +98,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Arknights: Endfield',
     subtitle: '明日方舟：终末地',
     description: '',
-    coverImage: 'game/anef.png',
+    coverImage: 'game/anef.webp',
     type: ContentType.GAME,
     category: 'HyperGraph',
     gameLinks: [
@@ -109,7 +109,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Punishing: Gray Raven',
     subtitle: '战双帕弥什',
     description: '',
-    coverImage: 'game/pgr.png',
+    coverImage: 'game/pgr.webp',
     type: ContentType.GAME,
     category: 'Kuro Games',
     gameLinks: [
@@ -120,7 +120,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Wuthering Waves',
     subtitle: '鸣潮',
     description: '',
-    coverImage: 'game/ww.png',
+    coverImage: 'game/ww.webp',
     type: ContentType.GAME,
     category: 'Kuro Games',
     gameLinks: [
@@ -131,7 +131,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Bleu Archive',
     subtitle: 'ブルーアーカイブ',
     description: '',
-    coverImage: 'game/ba.png',
+    coverImage: 'game/ba.webp',
     type: ContentType.GAME,
     category: 'Nexon',
     gameLinks: [
@@ -147,7 +147,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Fareidolia',
     subtitle: 'ファレイドリア',
     description: '',
-    coverImage: 'game/prx.png',
+    coverImage: 'game/prx.webp',
     type: ContentType.GAME,
     category: 'Nexon',
     gameLinks: [
@@ -158,7 +158,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Goddess of Victory: Nikke',
     subtitle: '勝利の女神',
     description: '',
-    coverImage: 'game/gvnk.png',
+    coverImage: 'game/gvnk.webp',
     type: ContentType.GAME,
     category: 'Shift Up',
     gameLinks: [
@@ -172,7 +172,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Aether Gazer',
     subtitle: '深空之眼',
     description: '',
-    coverImage: 'game/ag.png',
+    coverImage: 'game/ag.webp',
     type: ContentType.GAME,
     category: 'Others',
     gameLinks: [
@@ -184,7 +184,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Epic Seven',
     subtitle: 'エピックセブン',
     description: '',
-    coverImage: 'game/es.png',
+    coverImage: 'game/es.webp',
     type: ContentType.GAME,
     category: 'Others',
     gameLinks: [
@@ -196,7 +196,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Project Sekai Colorful Stage! feat.初音ミク',
     subtitle: 'プロセカ',
     description: '',
-    coverImage: 'game/pscs.png',
+    coverImage: 'game/pscs.webp',
     type: ContentType.GAME,
     category: 'Sega',
     gameLinks: [
@@ -209,7 +209,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     title: 'BanG Dream! Girls Band Party!',
     subtitle: 'ガルパ',
     description: '',
-    coverImage: 'game/bdgbp.png',
+    coverImage: 'game/bdgbp.webp',
     type: ContentType.GAME,
     category: 'Bushroad',
     gameLinks: [
@@ -220,7 +220,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     title: 'BanG Dream! Our Notes',
     subtitle: 'アワーノーツ',
     description: '',
-    coverImage: 'game/bdon.png',
+    coverImage: 'game/bdon.webp',
     type: ContentType.GAME,
     category: 'Bushroad',
     gameLinks: [
@@ -231,7 +231,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Azur Lane',
     subtitle: '碧蓝航线',
     description: '',
-    coverImage: 'game/al.png',
+    coverImage: 'game/al.webp',
     type: ContentType.GAME,
     category: 'Manjuu',
     gameLinks: [
@@ -242,7 +242,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Azur Promilia',
     subtitle: '蓝色星原：旅谣',
     description: '',
-    coverImage: 'game/ap.png',
+    coverImage: 'game/ap.webp',
     type: ContentType.GAME,
     category: 'Manjuu',
     gameLinks: [
@@ -252,7 +252,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Tower of Fantasy',
     subtitle: '幻塔',
     description: '',
-    coverImage: 'game/tof.png',
+    coverImage: 'game/tof.webp',
     type: ContentType.GAME,
     category: 'Hotta Studio',
     gameLinks: [
@@ -262,7 +262,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Neverness to Everness',
     subtitle: '异环',
     description: '',
-    coverImage: 'game/nte.png',
+    coverImage: 'game/nte.webp',
     type: ContentType.GAME,
     category: 'Hotta Studio',
     gameLinks: [
@@ -272,7 +272,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     title: 'Gakuen iDOLM@STER',
     subtitle: '学マス',
     description: '',
-    coverImage: 'game/gim.png',
+    coverImage: 'game/gim.webp',
     type: ContentType.GAME,
     category: 'QualiArts',
     gameLinks: [
