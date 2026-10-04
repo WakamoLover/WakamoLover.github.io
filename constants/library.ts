@@ -1,6 +1,5 @@
 import { ContentType, Post } from '../types';
 
-// Library Page Items (id는 constants/index.ts에서 자동으로 생성됨)
 export const LIBRARY_ITEMS: Omit<Post, 'id'>[] = [
 // Illustrator ------
   {
@@ -373,15 +372,6 @@ export const LIBRARY_ITEMS: Omit<Post, 'id'>[] = [
     type: ContentType.IMAGE,
     category: 'Cosplayer',
     externalLink: 'https://x.com/sherryken777/media'
-  },
-  {
-    title: 'Tiebanonini',
-    subtitle: '',
-    description: '',
-    coverImage: 'https://pbs.twimg.com/media/FxRPyU5aMAAoQBO?format=jpg&name=large',
-    type: ContentType.IMAGE,
-    category: 'Cosplayer',
-    externalLink: 'https://x.com/tiebanonini/media'
   },
   {
     title: 'Futidori',
