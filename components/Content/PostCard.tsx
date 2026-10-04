@@ -134,9 +134,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, onImageClick }) => 
             alt={post.title}
             referrerPolicy="no-referrer"
             onError={() => setImageError(true)}
-            className={`w-full h-full object-cover transition-transform duration-500 transform-gpu will-change-transform ${
-              isGame ? '' : 'group-hover:scale-105'
-            }`}
+            className="w-full h-full object-cover transition-transform duration-500 transform-gpu will-change-transform group-hover:scale-105"
           />
         </div>
 
