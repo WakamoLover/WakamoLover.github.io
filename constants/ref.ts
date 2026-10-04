@@ -6,7 +6,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
 // --- Social ---
   {
     title: 'X',
-    subtitle: '',
+    subtitle: 'Twitter',
     description: 'From breaking news and entertainment to sports and politics, get the full story with all the live commentary.',
     coverImage: 'ref/x.webp',
     type: ContentType.REF,
@@ -15,7 +15,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'DeviantArt',
-    subtitle: '',
+    subtitle: '데비안아트',
     description: 'Explore our archive of past community events, celebrating the incredible projects, contests, and gatherings that have brought us together.',
     coverImage: 'ref/devianart.webp',
     type: ContentType.REF,
@@ -24,7 +24,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'ArtStation',
-    subtitle: '',
+    subtitle: '아트스테이션',
     description: 'The leading showcase platform for games, film, media & entertainment artists.',
     coverImage: 'ref/artstation.webp',
     type: ContentType.REF,
@@ -33,7 +33,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Pixiv',
-    subtitle: '',
+    subtitle: '픽시브',
     description: 'A leading domestic creative communication platform where users can post and browse illustrations, manga, and novels.',
     coverImage: 'ref/pixiv.webp',
     type: ContentType.REF,
@@ -42,7 +42,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Bluesky',
-    subtitle: '',
+    subtitle: '블루스카이',
     description: 'Find your community among millions of users, unleash your creativity, and have some fun again.',
     coverImage: 'ref/bluesky.webp',
     type: ContentType.REF,
@@ -51,7 +51,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Behance',
-    subtitle: '',
+    subtitle: '비핸스',
     description: 'Help hirers and creators navigate the creative world from discovering inspiration, to connecting with one another · Popular Tools.',
     coverImage: 'ref/behance.webp',
     type: ContentType.REF,
@@ -62,7 +62,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
 // --- Image ---
   {
     title: 'Cosmos',
-    subtitle: '',
+    subtitle: '코스모스',
     description: 'Resurface your elements instantly. Find anything in your library with ease.',
     coverImage: 'ref/cosmos.webp',
     type: ContentType.REF,
@@ -71,7 +71,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'FilmGrab',
-    subtitle: '',
+    subtitle: '필름그랩',
     description: 'The largest growing archive of stills from the best films ever.',
     coverImage: 'ref/filmgrab.webp',
     type: ContentType.REF,
@@ -80,7 +80,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'PhotoBash',
-    subtitle: '',
+    subtitle: '포토배시',
     description: 'High Quality Reference Photos & Masked webps for Artists & Creatives.',
     coverImage: 'ref/photobash.webp',
     type: ContentType.REF,
@@ -89,7 +89,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Pinterest',
-    subtitle: '',
+    subtitle: '핀터레스트',
     description: 'Create boards, save Pins and make collages of all your inspiration.',
     coverImage: 'ref/pinterest.webp',
     type: ContentType.REF,
@@ -98,7 +98,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Pixabay',
-    subtitle: '',
+    subtitle: '픽사베이',
     description: 'Stunning royalty-free images & royalty-free stock',
     coverImage: 'ref/pixabay.webp',
     type: ContentType.REF,
@@ -107,7 +107,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Unsplash',
-    subtitle: '',
+    subtitle: '언스플래시',
     description: 'A website dedicated to proprietary stock photography.',
     coverImage: 'ref/unsplash.webp',
     type: ContentType.REF,
@@ -118,7 +118,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
 // --- Pose ---
   {
     title: 'Pose Maniacs',
-    subtitle: '',
+    subtitle: '포즈 매니악스',
     description: '',
     coverImage: '',
     type: ContentType.REF,
@@ -128,7 +128,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Attorial',
     subtitle: '아또리얼',
-    description: '게임 및 웹툰에서 주로 사용되는 만화 및 일러스트 작법 강의를 전문으로 하는 온라인 학원입니다.',
+    description: '게임 및 웹툰에서 주로 사용되는 만화 및 일러스트 작법 강의를 전문으로 하는 온라인 학원입니다. 크로키 자료 및 일러스트 강의를 제공하여 그림을 그리는 데 도움을 줍니다.',
     coverImage: '',
     type: ContentType.REF,
     category: 'Pose',
@@ -136,7 +136,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Magic Poser',
-    subtitle: '',
+    subtitle: '매직 포저',
     description: '',
     coverImage: '',
     type: ContentType.REF,
