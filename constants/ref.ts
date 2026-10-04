@@ -14,7 +14,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
     externalLink: 'https://x.com/'
   } as any,
   {
-    title: 'DeviantArt',
+    title: '',
     subtitle: '데비안아트',
     description: 'Explore our archive of past community events, celebrating the incredible projects, contests, and gatherings that have brought us together.',
     coverImage: 'ref/devianart.webp',

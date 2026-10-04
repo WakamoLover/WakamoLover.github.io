@@ -109,18 +109,18 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, onImageClick }) => 
 
     return (
       <div
-        className="group flex flex-row gap-4 p-4 rounded-2xl border transition-all min-h-[140px] cursor-pointer bg-white border-slate-200 hover:border-slate-400 hover:bg-slate-50"
-        onClick={handleCardClick}
+        className={`group flex flex-row gap-4 p-4 rounded-2xl border transition-all min-h-[140px] bg-white border-slate-200 ${
+          isGame ? '' : 'cursor-pointer hover:border-slate-400 hover:bg-slate-50'
+        }`}
+        onClick={isGame ? undefined : handleCardClick}
       >
         <div
-          className={`flex-shrink-0 rounded-2xl overflow-hidden relative cursor-pointer self-start ${
+          className={`flex-shrink-0 rounded-2xl overflow-hidden relative self-start ${
+            isGame ? '' : 'cursor-pointer'
+          } ${
             useSquareImage ? 'w-24 h-24 sm:w-28 sm:h-28' : 'w-28 h-20 sm:w-40 sm:h-28'
           } bg-slate-100`}
-          onClick={(e) => {
-            if (isGame) {
-              e.stopPropagation();
-              return;
-            }
+          onClick={isGame ? undefined : (e) => {
             e.stopPropagation();
             if (contentUrl) {
               window.open(contentUrl, '_blank', 'noopener,noreferrer');
@@ -134,12 +134,16 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, onImageClick }) => 
             alt={post.title}
             referrerPolicy="no-referrer"
             onError={() => setImageError(true)}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 transform-gpu will-change-transform"
+            className={`w-full h-full object-cover transition-transform duration-500 transform-gpu will-change-transform ${
+              isGame ? '' : 'group-hover:scale-105'
+            }`}
           />
         </div>
 
         <div className="flex-1 flex flex-col min-w-0 justify-start pt-0.5">
-          <h3 className="flex min-w-0 items-baseline gap-1.5 font-semibold text-sm sm:text-base leading-tight transition-colors mb-1 text-slate-900 group-hover:text-[var(--brand-accent)]">
+          <h3 className={`flex min-w-0 items-baseline gap-1.5 font-semibold text-sm sm:text-base leading-tight transition-colors mb-1 text-slate-900 ${
+            isGame ? '' : 'group-hover:text-[var(--brand-accent)]'
+          }`}>
             <span className="truncate">{post.title}</span>
             {post.subtitle && <span className="card-subtitle shrink-0">{post.subtitle}</span>}
           </h3>
@@ -170,14 +174,14 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, onImageClick }) => 
         : [];
 
     return (
-      <article className="flex min-h-44 gap-3 rounded-xl bg-slate-50 p-4 transition-colors hover:bg-slate-100 sm:gap-4">
+      <article className="group flex min-h-44 gap-3 rounded-xl bg-slate-50 p-4 transition-colors hover:bg-slate-100 sm:gap-4">
         <div className="h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-white sm:h-[72px] sm:w-[72px]">
           <ResolutionLimitedImage
             src={imageError ? 'https://placehold.co/160x160?text=Image+Failed' : displayImage}
             alt={post.title}
             referrerPolicy="no-referrer"
             onError={() => setImageError(true)}
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover transition-transform duration-300 transform-gpu group-hover:scale-110"
           />
         </div>
 
@@ -188,7 +192,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, onImageClick }) => 
               {post.subtitle && <span className="card-subtitle">{post.subtitle}</span>}
             </h3>
             {categoryLabels.map((category: string) => (
-              <span key={category} className={`${LABEL_CLASSES} bg-slate-100 hover:bg-slate-200 hover:text-slate-600`}>
+              <span key={category} className={`${LABEL_CLASSES} bg-slate-100`}>
                 {category}
               </span>
             ))}
