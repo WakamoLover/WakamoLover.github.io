@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ContentType } from '../../types';
 import { ExternalLink, Play, Youtube } from 'lucide-react';
+import ResolutionLimitedImage from './ResolutionLimitedImage';
 
 interface PostCardProps {
   post: any;
@@ -8,16 +9,16 @@ interface PostCardProps {
   onImageClick?: (url: string) => void;
 }
 
-const Chip: React.FC<{ label: string; url?: string }> = ({ label, url }) => {
-  const commonClasses = "text-[11px] px-2.5 py-0.5 rounded-full transition-all inline-flex items-center whitespace-nowrap flex-shrink-0 border font-medium";
+const LABEL_CLASSES = "inline-flex shrink-0 items-center whitespace-nowrap rounded-full px-2.5 py-1 text-[11px] font-medium text-slate-600 transition-colors";
 
+const Chip: React.FC<{ label: string; url?: string }> = ({ label, url }) => {
   if (url) {
     return (
       <a 
         href={url}
         target="_blank"
         rel="noreferrer"
-        className={`${commonClasses} bg-blue-50 text-blue-600 border-blue-100 hover:bg-blue-100`}
+        className={`${LABEL_CLASSES} bg-slate-100 hover:bg-[var(--brand-accent-tint)] hover:text-[var(--brand-accent)]`}
         onClick={(e) => e.stopPropagation()}
       >
         {label}
@@ -25,7 +26,7 @@ const Chip: React.FC<{ label: string; url?: string }> = ({ label, url }) => {
     );
   }
   return (
-    <span className={`${commonClasses} bg-slate-100 text-slate-600 border-slate-200`}>
+    <span className={`${LABEL_CLASSES} bg-slate-100 hover:bg-slate-200 hover:text-slate-600`}>
       {label}
     </span>
   );
@@ -85,13 +86,14 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, onImageClick }) => 
   
   const isVideo = post.type === ContentType.VIDEO;
   const isArtist = viewMode === 'LIBRARY' || post.type === ContentType.IMAGE;
-  const isVisualGrid = viewMode === 'LIBRARY' || viewMode === 'VIDEO';
+  const isMediaOrReference = viewMode === 'VIDEO' || viewMode === 'REF';
+  const isVisualGrid = viewMode === 'LIBRARY';
   const categoryLabel = Array.isArray(post.category) ? post.category[0] : post.category;
   const hasPlatformIcon = Boolean(
     post.iconImage || /youtube|bilibili|pixiv|twitter/i.test(categoryLabel || '') || categoryLabel?.toLowerCase() === 'x'
   );
 
-  if (viewMode === 'HOME' || viewMode === 'GAME' || viewMode === 'REF') {
+  if (viewMode === 'GAME') {
     const isRef = post.type === ContentType.REF;
     const isGame = post.type === ContentType.GAME;
     const useSquareImage = isGame || isRef;
@@ -124,7 +126,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, onImageClick }) => 
             }
           }}
         >
-          <img
+          <ResolutionLimitedImage
             src={imageError ? 'https://placehold.co/400x225?text=Image+Failed' : displayImage}
             alt={post.title}
             referrerPolicy="no-referrer"
@@ -134,8 +136,9 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, onImageClick }) => 
         </div>
 
         <div className="flex-1 flex flex-col min-w-0 justify-start pt-0.5">
-          <h3 className="font-semibold text-sm sm:text-base leading-tight transition-colors mb-1 line-clamp-1 text-slate-900 group-hover:text-sky-600">
-            {post.title}
+          <h3 className="flex min-w-0 items-baseline gap-1.5 font-semibold text-sm sm:text-base leading-tight transition-colors mb-1 text-slate-900 group-hover:text-[var(--brand-accent)]">
+            <span className="truncate">{post.title}</span>
+            {post.subtitle && <span className="card-subtitle shrink-0">{post.subtitle}</span>}
           </h3>
 
           <div className="mb-3">
@@ -148,12 +151,57 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, onImageClick }) => 
             {isGame && post.gameLinks?.map((link: any, idx: number) => (
               <Chip key={`game-link-${post.id}-${idx}`} label={link.label} url={link.url} />
             ))}
-            {!isGame && post.category && (
-              <Chip label={Array.isArray(post.category) ? post.category[0] : post.category} />
-            )}
           </div>
         </div>
       </div>
+    );
+  }
+
+  if (isMediaOrReference) {
+    const shortcutUrl = contentUrl || post.externalLink || post.channelUrl || '';
+    const shortcutLabel = 'Open';
+    const categoryLabels = Array.isArray(post.category)
+      ? post.category
+      : post.category
+        ? [post.category]
+        : [];
+
+    return (
+      <article className="flex min-h-44 gap-3 rounded-xl bg-slate-50 p-4 transition-colors hover:bg-slate-100 sm:gap-4">
+        <div className="h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-white sm:h-[72px] sm:w-[72px]">
+          <ResolutionLimitedImage
+            src={imageError ? 'https://placehold.co/160x160?text=Image+Failed' : displayImage}
+            alt={post.title}
+            referrerPolicy="no-referrer"
+            onError={() => setImageError(true)}
+            className="h-full w-full object-cover"
+          />
+        </div>
+
+        <div className="flex min-w-0 flex-1 flex-col">
+          <div className="flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1">
+            <h3 className="flex min-w-0 flex-wrap items-baseline gap-x-1.5 leading-tight">
+              <span className="text-sm font-semibold text-slate-900 sm:text-base">{post.title}</span>
+              {post.subtitle && <span className="card-subtitle">{post.subtitle}</span>}
+            </h3>
+            {categoryLabels.map((category: string) => (
+              <span key={category} className={`${LABEL_CLASSES} bg-slate-100 hover:bg-slate-200 hover:text-slate-600`}>
+                {category}
+              </span>
+            ))}
+          </div>
+          {post.description && (
+            <p className="mt-2 line-clamp-3 text-xs leading-relaxed text-slate-600 sm:text-sm">
+              {post.description}
+            </p>
+          )}
+          {shortcutUrl && (
+            <div className="mt-auto flex justify-end">
+              <Chip label={shortcutLabel} url={shortcutUrl} />
+            </div>
+          )}
+        </div>
+      </article>
     );
   }
 
@@ -167,7 +215,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, onImageClick }) => 
           }
         }}
       >
-        <img
+        <ResolutionLimitedImage
           src={imageError ? 'https://placehold.co/400x400?text=Image+Failed' : displayImage}
           alt={post.title}
           referrerPolicy="no-referrer"
@@ -191,20 +239,17 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, onImageClick }) => 
                 </p>
               )}
               <div className="flex items-end justify-between gap-2">
-                <h3 className="min-w-0 font-semibold text-sm leading-tight line-clamp-2 drop-shadow-sm">
-                  {post.title || 'Untitled'}
+                <h3 className="flex min-w-0 items-baseline gap-1.5 font-semibold text-sm leading-tight drop-shadow-sm">
+                  <span className="line-clamp-2">{post.title || 'Untitled'}</span>
+                  {post.subtitle && <span className="card-subtitle card-subtitle-on-image shrink-0">{post.subtitle}</span>}
                 </h3>
-                {post.category && (
-                  <span className="shrink-0 text-[10px] font-medium text-white/80">
-                    {Array.isArray(post.category) ? post.category[0] : post.category}
-                  </span>
-                )}
               </div>
             </>
           ) : (
             <>
-              <h3 className="font-semibold text-sm leading-tight line-clamp-2 drop-shadow-sm">
-                {post.title || 'Untitled'}
+              <h3 className="flex min-w-0 items-baseline gap-1.5 font-semibold text-sm leading-tight drop-shadow-sm">
+                <span className="line-clamp-2">{post.title || 'Untitled'}</span>
+                {post.subtitle && <span className="card-subtitle card-subtitle-on-image shrink-0">{post.subtitle}</span>}
               </h3>
             </>
           )}
@@ -225,7 +270,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, onImageClick }) => 
       }}
     >
       <div className="relative w-full overflow-hidden bg-slate-100 aspect-[3/4]">
-        <img
+        <ResolutionLimitedImage
           src={imageError ? 'https://placehold.co/400x225?text=Image+Failed' : displayImage}
           alt={post.title}
           referrerPolicy="no-referrer"
@@ -235,7 +280,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, onImageClick }) => 
 
         {isVideo && (
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className="w-12 h-12 rounded-full bg-slate-900/60 backdrop-blur-md flex items-center justify-center text-white group-hover:bg-sky-500 group-hover:scale-110 transition-all">
+            <div className="w-12 h-12 rounded-full bg-slate-900/60 backdrop-blur-md flex items-center justify-center text-white group-hover:bg-[var(--brand-accent)] group-hover:scale-110 transition-all">
               <Play size={20} className="fill-white ml-0.5 text-white" />
             </div>
           </div>
@@ -252,8 +297,9 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, onImageClick }) => 
 
       <div className="p-4 flex flex-col flex-1 min-w-0 justify-between">
         <div>
-          <h3 className="font-bold text-base line-clamp-2 mb-1.5 transition-colors text-slate-900 group-hover:text-sky-600">
-            {post.title}
+          <h3 className="mb-1.5 flex min-w-0 items-baseline gap-1.5 font-bold text-base transition-colors text-slate-900 group-hover:text-[var(--brand-accent)]">
+            <span className="line-clamp-2">{post.title}</span>
+            {post.subtitle && <span className="card-subtitle shrink-0">{post.subtitle}</span>}
           </h3>
           {post.description && (
             <p className="text-xs leading-relaxed line-clamp-2 mb-3 text-slate-500">

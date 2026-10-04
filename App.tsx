@@ -1,12 +1,21 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import Header from './components/Layout';
 import PostCard from './components/Content/PostCard';
-import RightSidebar from './components/Sidebar/RightSidebar';
 import ImageModal from './components/Content/ImageModal';
-import HomeLandingSection from './components/Home/HomeLandingSection';
 import { MOCK_POSTS, CATEGORY_TABS } from './constants/index';
 import { ContentType } from './types';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+const VIEW_PATHS: Record<string, string> = {
+  LIBRARY: '/creator',
+  VIDEO: '/media',
+  GAME: '/game',
+  REF: '/reference',
+};
+
+const getViewFromPath = () => {
+  const pathname = window.location.pathname.replace(/\/+$/, '') || '/';
+  return Object.entries(VIEW_PATHS).find(([, path]) => path === pathname)?.[0] || 'LIBRARY';
+};
 
 const getCoverImage = (coverImage?: string): string => {
   if (coverImage && coverImage.trim() !== '') {
@@ -17,27 +26,51 @@ const getCoverImage = (coverImage?: string): string => {
 };
 
 const App: React.FC = () => {
-  const [currentView, setCurrentView] = useState('HOME');
+  const [currentView, setCurrentView] = useState(getViewFromPath);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentCategory, setCurrentCategory] = useState('All');
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize] = useState(8);
+  const [visibleCount, setVisibleCount] = useState(24);
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
   
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [currentImageUrl, setCurrentImageUrl] = useState('');
   const handleNavigate = (view: string) => {
-    setCurrentView(view);
+    const nextView = VIEW_PATHS[view] ? view : 'LIBRARY';
+    const nextPath = VIEW_PATHS[nextView];
+    if (window.location.pathname !== nextPath) {
+      window.history.pushState({ view: nextView }, '', nextPath);
+    }
+    setCurrentView(nextView);
     setCurrentCategory('All'); 
-    setCurrentPage(1);
+    setVisibleCount(24);
   };
+
+  useEffect(() => {
+    const syncViewFromPath = () => {
+      const view = getViewFromPath();
+      const path = VIEW_PATHS[view];
+      if (window.location.pathname !== path) window.history.replaceState({ view }, '', path);
+      setCurrentView(view);
+      setCurrentCategory('All');
+      setVisibleCount(24);
+    };
+
+    syncViewFromPath();
+    window.addEventListener('popstate', syncViewFromPath);
+    return () => window.removeEventListener('popstate', syncViewFromPath);
+  }, []);
 
   const handleCategorySelect = (category: string) => {
     setCurrentCategory(category);
-    setCurrentPage(1);
+    setVisibleCount(24);
+  };
+
+  const handleSearchChange = (term: string) => {
+    setSearchTerm(term);
+    setVisibleCount(24);
   };
 
   const getCategories = (): string[] => {
-    if (currentView === 'HOME') return [];
     const viewKey = currentView as keyof typeof CATEGORY_TABS;
     const categories = CATEGORY_TABS[viewKey] || [];
 
@@ -68,13 +101,11 @@ const App: React.FC = () => {
       };
     });
 
-    if (currentView !== 'HOME') {
-      const typeMap: Record<string, ContentType> = {
-        GAME: ContentType.GAME, REF: ContentType.REF, VIDEO: ContentType.VIDEO, LIBRARY: ContentType.IMAGE,
-      };
-      if (typeMap[currentView]) {
-        result = result.filter(p => p.type === typeMap[currentView]);
-      }
+    const typeMap: Record<string, ContentType> = {
+      GAME: ContentType.GAME, REF: ContentType.REF, VIDEO: ContentType.VIDEO, LIBRARY: ContentType.IMAGE,
+    };
+    if (typeMap[currentView]) {
+      result = result.filter(p => p.type === typeMap[currentView]);
     }
 
     if (currentCategory !== 'All') {
@@ -91,6 +122,7 @@ const App: React.FC = () => {
       const lowerTerm = searchTerm.toLowerCase();
       result = result.filter(p => 
         p.title.toLowerCase().includes(lowerTerm) || 
+        (p.subtitle && p.subtitle.toLowerCase().includes(lowerTerm)) ||
         (p.description && p.description.toLowerCase().includes(lowerTerm))
       );
     }
@@ -100,48 +132,55 @@ const App: React.FC = () => {
 
   const displayPosts = allFilteredPosts;
 
-  const effectivePageSize = currentView === 'VIDEO' ? 25 : currentView === 'LIBRARY' ? 12 : pageSize;
-  const totalPages = Math.ceil(displayPosts.length / effectivePageSize);
-  const paginatedPosts = useMemo(() => {
-    const start = (currentPage - 1) * effectivePageSize;
-    return displayPosts.slice(start, start + effectivePageSize);
-  }, [displayPosts, currentPage, effectivePageSize]);
+  const visiblePosts = displayPosts.slice(0, visibleCount);
+
+  useEffect(() => {
+    const target = loadMoreRef.current;
+    if (!target || visibleCount >= displayPosts.length) return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setVisibleCount((count) => Math.min(count + 24, displayPosts.length));
+      }
+    }, { rootMargin: '0px' });
+
+    observer.observe(target);
+    return () => observer.disconnect();
+  }, [displayPosts.length, visibleCount]);
 
   const tabs = getCategories();
 
   return (
-    <div className="min-h-screen font-sans bg-white text-slate-900">
-      <Header currentView={currentView} onNavigate={handleNavigate} />
+    <div className="theme-accent min-h-screen w-full font-sans bg-white text-slate-900">
+      <Header
+        currentView={currentView}
+        onNavigate={handleNavigate}
+        searchTerm={searchTerm}
+        onSearchChange={handleSearchChange}
+      />
 
-      <main className="max-w-7xl mx-auto px-4 py-4 md:py-6">
-        {currentView === 'HOME' && !searchTerm ? (
-          <HomeLandingSection 
-            onNavigate={handleNavigate}
-          />
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-            <div className="md:col-span-8 lg:col-span-9">
-              <div className="rounded-xl border min-h-[500px] flex flex-col relative bg-white border-gray-200 shadow-sm">
-                <div className="flex flex-col lg:flex-row lg:items-start">
-                  {tabs.length > 0 && !searchTerm && (
-                    <aside className="hidden rounded-xl lg:flex lg:flex-col lg:gap-2 lg:w-48 xl:w-52 pt-4 pb-4 px-4 bg-white border-r border-gray-200">
-                      <span className="text-xs uppercase tracking-[0.24em] mt-0 text-slate-500">Category</span>
-                      {tabs.map(tab => (
-                        <button 
-                          key={tab} 
-                          onClick={() => handleCategorySelect(tab)} 
-                          className={`w-full text-left px-4 py-3 rounded-full transition-colors ${currentCategory === tab ? 'bg-gray-100 text-black font-bold' : 'text-black hover:bg-gray-100'}`}
-                        >
-                          {tab}
-                        </button>
-                      ))}
-                    </aside>
-                  )}
+      <main className="min-h-[calc(100vh-4rem)] w-full px-4 py-4 sm:px-6 md:py-6 xl:px-8">
+          <section className="min-w-0">
+                {tabs.length > 0 && !searchTerm && (
+                  <nav aria-label="Categories" className="scrollbar-hide mb-5 flex gap-2 overflow-x-auto border-b border-slate-200 pb-3">
+                    {tabs.map(tab => (
+                      <button
+                        key={tab}
+                        type="button"
+                        onClick={() => handleCategorySelect(tab)}
+                        aria-pressed={currentCategory === tab}
+                        className={`shrink-0 rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${currentCategory === tab ? 'bg-[var(--brand-accent)] text-white' : 'bg-slate-100 text-slate-800 hover:bg-slate-200'}`}
+                      >
+                        {tab}
+                      </button>
+                    ))}
+                  </nav>
+                )}
 
-                  <div className="flex-1 p-4">
-                    {paginatedPosts.length > 0 ? (
-                      <div className={`grid ${currentView === 'VIDEO' ? 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3' : currentView === 'LIBRARY' ? 'grid-cols-2 lg:grid-cols-3 gap-4' : 'grid-cols-1 gap-3'}`}>
-                        {paginatedPosts.map((post: any) => (
+                <div className="min-h-[500px]">
+                    {visiblePosts.length > 0 ? (
+                      <div className={`grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 ${currentView === 'VIDEO' || currentView === 'REF' ? 'xl:grid-cols-5' : 'xl:grid-cols-4'}`}>
+                        {visiblePosts.map((post: any) => (
                           <PostCard 
                             key={post.id} 
                             post={post} 
@@ -161,61 +200,19 @@ const App: React.FC = () => {
                       <div className="py-32 text-center text-gray-500">No content found.</div>
                     )}
 
-                    {totalPages > 1 && (
-                      <div className="py-8 flex justify-center items-center gap-3 border-t border-gray-100 mt-auto">
-                        <button 
-                          disabled={currentPage === 1} 
-                          onClick={() => { setCurrentPage(p => Math.max(1, p - 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }} 
-                          className={`p-2 rounded-xl border transition-all ${currentPage === 1 ? 'opacity-20 cursor-not-allowed' : 'hover:bg-gray-100 border-gray-200'}`}
-                        >
-                          <ChevronLeft size={18}/>
-                        </button>
-
-                        <div className="flex gap-2 items-center">
-                          {[...Array(totalPages)].map((_, i) => {
-                            const pageNum = i + 1;
-                            const isActive = currentPage === pageNum;
-                            return (
-                              <button 
-                                key={pageNum} 
-                                onClick={() => { setCurrentPage(pageNum); window.scrollTo({ top: 0, behavior: 'smooth' }); }} 
-                                className={`w-10 h-10 rounded-xl text-sm font-bold transition-all border flex items-center justify-center ${
-                                  isActive 
-                                    ? 'bg-blue-600 border-blue-600 text-white' 
-                                    : 'bg-white border-gray-200 text-gray-500 hover:border-blue-400'
-                                }`}
-                              >
-                                {pageNum}
-                              </button>
-                            );
-                          })}
-                        </div>
-
-                        <button 
-                          disabled={currentPage === totalPages} 
-                          onClick={() => { setCurrentPage(p => Math.min(totalPages, p + 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }} 
-                          className={`p-2 rounded-xl border transition-all ${currentPage === totalPages ? 'opacity-20 cursor-not-allowed' : 'hover:bg-gray-100 border-gray-200'}`}
-                        >
-                          <ChevronRight size={18}/>
-                        </button>
+                    {visibleCount < displayPosts.length && (
+                      <div ref={loadMoreRef} role="status" className="py-8 text-center text-sm text-slate-500">
+                        Loading more...
                       </div>
                     )}
-                  </div>
                 </div>
-              </div>
-            </div>
-
-            <div className="hidden md:block md:col-span-4 lg:col-span-3">
-              <RightSidebar 
-                onNavigate={handleNavigate} 
-                onCategorySelect={handleCategorySelect} 
-                searchTerm={searchTerm}
-                onSearchChange={setSearchTerm}
-              />
-            </div>
-          </div>
-        )}
+              </section>
       </main>
+
+        <footer className="border-t border-slate-200 px-4 py-6 text-center text-xs leading-relaxed text-slate-500 sm:px-6 xl:px-8">
+          <p>WakaMoe is a non-profit database.</p>
+          <p>All content belongs to the original rights holders.</p>
+        </footer>
 
       <ImageModal isOpen={isImageModalOpen} onClose={() => setIsImageModalOpen(false)} imageUrl={currentImageUrl} />
     </div>

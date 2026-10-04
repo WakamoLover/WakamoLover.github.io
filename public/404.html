@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>WakaMoe</title>
+  </head>
+  <body>
+    <script>
+      const requestedRoute = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+      window.location.replace(`/?route=${encodeURIComponent(requestedRoute)}`);
+    </script>
+  </body>
+</html>

@@ -21,7 +21,7 @@ const SubNav: React.FC<SubNavProps> = ({
           onClick={() => setCurrentCategory(category)}
           className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
             currentCategory === category 
-              ? 'bg-blue-600 text-white shadow-sm font-semibold' 
+              ? 'bg-[var(--brand-accent)] text-white shadow-sm font-semibold' 
               : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
           }`}
         >

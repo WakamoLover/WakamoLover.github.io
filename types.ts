@@ -13,6 +13,7 @@ export interface GameLink {
 export interface Post {
   id: string;
   title: string;
+  subtitle?: string;
   description: string;
   coverImage: string;
   iconImage?: string;
@@ -38,13 +39,6 @@ export interface CarouselItem {
   image: string;
   title: string;
   link: string;
-}
-
-export interface HotContentItem {
-  id: string;
-  title: string;
-  category: string;
-  image: string;
 }
 
 export interface ExternalLinkItem {

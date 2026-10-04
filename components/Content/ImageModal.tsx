@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { X, Download, ExternalLink } from 'lucide-react';
+import ResolutionLimitedImage from './ResolutionLimitedImage';
 
 interface ImageModalProps {
   isOpen: boolean;
@@ -39,14 +40,14 @@ const ImageModal: React.FC<ImageModalProps> = ({ isOpen, onClose, imageUrl }) =>
         <button 
           onClick={handleDownload}
           title="이미지 저장"
-          className="p-2.5 bg-white/10 hover:bg-blue-600 text-white rounded-full transition-all border border-white/10"
+          className="p-2.5 bg-white/10 hover:bg-[var(--brand-accent)] text-white rounded-full transition-all border border-white/10"
         >
           <Download size={22} />
         </button>
         <button 
           onClick={(e) => { e.stopPropagation(); window.open(imageUrl, '_blank'); }}
           title="원본 보기"
-          className="p-2.5 bg-white/10 hover:bg-blue-600 text-white rounded-full transition-all border border-white/10"
+          className="p-2.5 bg-white/10 hover:bg-[var(--brand-accent)] text-white rounded-full transition-all border border-white/10"
         >
           <ExternalLink size={22} />
         </button>
@@ -63,7 +64,7 @@ const ImageModal: React.FC<ImageModalProps> = ({ isOpen, onClose, imageUrl }) =>
         className="relative max-w-full max-h-full flex flex-col items-center justify-center" 
         onClick={(e) => e.stopPropagation()}
       >
-         <img 
+         <ResolutionLimitedImage
             src={imageUrl} 
             alt="Full Size" 
             className="max-w-[95vw] max-h-[85vh] object-contain rounded-lg shadow-[0_0_40px_rgba(0,0,0,0.7)] select-none animate-in zoom-in-95 duration-300"

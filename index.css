@@ -1,9 +1,29 @@
+.theme-accent {
+  --brand-accent: #881188;
+  --brand-accent-hover: #6f0f6f;
+  --brand-accent-tint: #f7eaf7;
+  --brand-accent-border: #e8cbe8;
+}
+
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
 
 .scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.search-input::-webkit-search-cancel-button,
+.search-input::-webkit-search-decoration,
+.search-input::-webkit-search-results-button,
+.search-input::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+  display: none;
+}
+
+.search-input::-ms-clear {
   display: none;
 }
 
@@ -96,4 +116,16 @@ html {
   scroll-behavior: smooth;
   overflow-y: scroll;
   scrollbar-gutter: stable;
+}
+
+.card-subtitle {
+  color: #94a3b8;
+  font-family: "Noto Sans JP", "Yu Gothic UI", Meiryo, sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.card-subtitle-on-image {
+  color: rgb(255 255 255 / 0.72);
 }

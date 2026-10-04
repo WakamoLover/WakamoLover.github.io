@@ -4,6 +4,7 @@ import { ContentType, Post } from '../types';
 export const GAME_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Honkai Gakuen 2',
+    subtitle: '崩坏学园2',
     description: '',
     coverImage: 'game/hg2.png', 
     type: ContentType.GAME,
@@ -15,6 +16,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Honkai Impact 3RD',
+    subtitle: '崩坏3',
     description: '',
     coverImage: 'game/hi3.png',
     type: ContentType.GAME,
@@ -29,6 +31,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Honkai: Star Rail',
+    subtitle: '崩坏：星穹铁道',
     description: '',
     coverImage: 'game/hsr.png',
     type: ContentType.GAME,
@@ -36,12 +39,13 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     gameLinks: [
       { label: 'Official Game Graphic', url: 'https://bbs.mihoyo.com/sr/wiki/channel/map/21/38?bbs_presentation_style=no_header' },
       { label: 'Official Story CG', url: 'https://bbs.mihoyo.com/sr/wiki/channel/map/21/196?bbs_presentation_style=no_header' },
-      { label: 'Tumblr Archive (Older)', url: 'https://the-astral-express-archive.tumblr.com/archive' },
+      { label: 'Tumblr (Older)', url: 'https://the-astral-express-archive.tumblr.com/archive' },
       { label: 'Google Drive Archive', url: 'https://drive.google.com/drive/folders/1BIkcfgJzCWMsCP9E6qLGmgG5wrrgbK44' }
     ]
   },
   {
     title: 'Honkai: Nexus Anima',
+    subtitle: '崩坏：因缘精灵',
     description: '',
     coverImage: 'game/hna.png',
     type: ContentType.GAME,
@@ -51,19 +55,21 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
   },
   {
     title: 'Genshin Impact',
+    subtitle: '原神',
     description: '',
     coverImage: 'game/gi.png',
     type: ContentType.GAME,
     category: 'Hoyoverse',
     gameLinks: [
       { label: 'Official Cutscene', url: 'https://baike.mihoyo.com/ys/obc/channel/map/80/81?bbs_presentation_style=no_header&visit_device=pc' },
-      { label: 'Tumblr Archive (Older)', url: 'https://genshinresource.tumblr.com/archive' },
-      { label: 'Tumblr Archive (Newer)', url: 'https://genshinimpactresources.tumblr.com/archive' },
+      { label: 'Tumblr (Older)', url: 'https://genshinresource.tumblr.com/archive' },
+      { label: 'Tumblr (Newer)', url: 'https://genshinimpactresources.tumblr.com/archive' },
       { label: 'Fashion 3D Archive', url: 'https://gamesfashionarchive.net/viewer/Genshin_Impact' }
     ]
   },
   {
     title: 'Zenless Zone Zero',
+    subtitle: '绝区零',
     description: '',
     coverImage: 'game/zzz.png',
     type: ContentType.GAME,
@@ -74,6 +80,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
   },
   {
     title: 'Arknights',
+    subtitle: '明日方舟',
     description: '',
     coverImage: 'game/an.png',
     type: ContentType.GAME,
@@ -83,12 +90,13 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
       { label: 'Official Music', url: 'https://monster-siren.hypergryph.com/music' },
       { label: 'Story Gallery', url: 'https://arkwaifu.cc/story/main-stories' },
       { label: 'Act Gallery', url: 'https://arkwaifu.cc/galleries' },
-      { label: 'Toolbox Archive (Older)', url: 'https://aceship.github.io/AN-EN-Tags/akgallery.html' },
+      { label: 'Toolbox (Older)', url: 'https://aceship.github.io/AN-EN-Tags/akgallery.html' },
       { label: 'OST Files', url: 'https://arknightsost.nbh.workers.dev/' }
     ]
   },
   {
     title: 'Arknights: Endfield',
+    subtitle: '明日方舟：终末地',
     description: '',
     coverImage: 'game/anef.png',
     type: ContentType.GAME,
@@ -99,6 +107,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
   },
   {
     title: 'Punishing: Gray Raven',
+    subtitle: '战双帕弥什',
     description: '',
     coverImage: 'game/pgr.png',
     type: ContentType.GAME,
@@ -109,6 +118,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
   },
   {
     title: 'Wuthering Waves',
+    subtitle: '鸣潮',
     description: '',
     coverImage: 'game/ww.png',
     type: ContentType.GAME,
@@ -119,6 +129,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
   },
   {
     title: 'Bleu Archive',
+    subtitle: 'ブルーアーカイブ',
     description: '',
     coverImage: 'game/ba.png',
     type: ContentType.GAME,
@@ -133,7 +144,8 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     ]
   },
   {
-    title: 'Project RX',
+    title: 'Fareidolia',
+    subtitle: 'ファレイドリア',
     description: '',
     coverImage: 'game/prx.png',
     type: ContentType.GAME,
@@ -144,6 +156,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
   },
   {
     title: 'Goddess of Victory: Nikke',
+    subtitle: '勝利の女神',
     description: '',
     coverImage: 'game/gvnk.png',
     type: ContentType.GAME,
@@ -157,6 +170,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
   },
   {
     title: 'Aether Gazer',
+    subtitle: '深空之眼',
     description: '',
     coverImage: 'game/ag.png',
     type: ContentType.GAME,
@@ -168,6 +182,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
   },
   {
     title: 'Epic Seven',
+    subtitle: 'エピックセブン',
     description: '',
     coverImage: 'game/es.png',
     type: ContentType.GAME,
@@ -178,7 +193,8 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     ]
   },
   {
-    title: 'Project Sekai Colorful Stage! feat. HATSUNE MIKU',
+    title: 'Project Sekai Colorful Stage! feat.初音ミク',
+    subtitle: 'プロセカ',
     description: '',
     coverImage: 'game/pscs.png',
     type: ContentType.GAME,
@@ -191,6 +207,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
   },
   {
     title: 'BanG Dream! Girls Band Party!',
+    subtitle: 'ガルパ',
     description: '',
     coverImage: 'game/bdgbp.png',
     type: ContentType.GAME,
@@ -201,24 +218,29 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
   },
   {
     title: 'BanG Dream! Our Notes',
+    subtitle: 'アワーノーツ',
     description: '',
     coverImage: 'game/bdon.png',
     type: ContentType.GAME,
     category: 'Bushroad',
     gameLinks: [
+      { label: 'Database', url: 'https://bdon.moe/' },
     ]
   },
   {
     title: 'Azur Lane',
+    subtitle: '碧蓝航线',
     description: '',
     coverImage: 'game/al.png',
     type: ContentType.GAME,
     category: 'Manjuu',
     gameLinks: [
+      { label: 'Wiki Archive', url: 'https://azurlane.koumakan.jp/wiki/Loading_Screens' },
     ]
   },
   {
     title: 'Azur Promilia',
+    subtitle: '蓝色星原：旅谣',
     description: '',
     coverImage: 'game/ap.png',
     type: ContentType.GAME,
@@ -228,6 +250,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
   },
   {
     title: 'Tower of Fantasy',
+    subtitle: '幻塔',
     description: '',
     coverImage: 'game/tof.png',
     type: ContentType.GAME,
@@ -237,11 +260,23 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
   },
   {
     title: 'Neverness to Everness',
+    subtitle: '异环',
     description: '',
     coverImage: 'game/nte.png',
     type: ContentType.GAME,
     category: 'Hotta Studio',
     gameLinks: [
+    ]
+  },
+  {
+    title: 'Gakuen iDOLM@STER',
+    subtitle: '学マス',
+    description: '',
+    coverImage: 'game/gim.png',
+    type: ContentType.GAME,
+    category: 'QualiArts',
+    gameLinks: [
+      { label: 'Database', url: 'https://imasgk.gamedbs.jp/' },
     ]
   },
 ];

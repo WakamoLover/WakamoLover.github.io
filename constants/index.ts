@@ -1,4 +1,4 @@
-import { ContentType, Post, HotContentItem, User } from '../types';
+import { ContentType, Post, User } from '../types';
 import { GAME_ITEMS as GAME_ITEMS_BASE } from './game';
 import { REF_ITEMS as REF_ITEMS_BASE } from './ref';
 import { MEDIA_ITEMS as MEDIA_ITEMS_BASE } from './media';
@@ -8,6 +8,7 @@ const generateIds = (items: any[], prefix: string): Post[] => {
   return items.map((item, index) => ({
     ...item,
     id: `${prefix}${index + 1}`,
+    subtitle: item.subtitle,
     iconImage: item.iconImage || getPlatformIconImage(item.externalLink || item.channelUrl)
   }));
 };
@@ -50,10 +51,10 @@ export const MOCK_USERS: User[] = [
   { id: 'u1', name: 'Miyouji', avatar: 'miyouji.png' },
 ];
 
-export const NAV_ITEMS = ['HOME', 'LIBRARY', 'VIDEO', 'GAME', 'REF'];
+export const NAV_ITEMS = ['GAME', 'LIBRARY', 'VIDEO', 'REF'];
 
 export const CATEGORY_TABS: Record<string, string[]> = {
-  'GAME': ['All', 'Hoyoverse', 'HyperGraph', 'Nexon', 'Kuro Games', 'Shift Up', 'Yostar', 'Manjuu', 'Sega', 'Bushroad', 'Hotta Studio', 'Others'],
+  'GAME': ['All', 'Hoyoverse', 'HyperGraph', 'Nexon', 'Kuro Games', 'Shift Up', 'Yostar', 'Manjuu', 'Sega', 'Bushroad', 'Hotta Studio', 'QualiArts', 'Others'],
   'LIBRARY': ['All', 'Illustrator', 'Cosplayer', 'Mangaka', 'Concept Artist', 'Designer', 'Others'],
   'REF': ['All', 'Social', 'Image', 'Pose', 'Color', 'Design', 'Market', 'Others'],
   'VIDEO': ['All', 'YouTube', 'Bilibili', 'Niconico', 'Others']
@@ -64,20 +65,5 @@ export const MOCK_POSTS: Post[] = [
   ...REF_ITEMS,
   ...MEDIA_ITEMS,
   ...LIBRARY_ITEMS,
-];
-
-export const OFFICIAL_NOTICES: HotContentItem[] = [
-  { 
-    id: 'n1', 
-    title: 'Make Artist Great Again.', 
-    image: '',
-    category: 'notice'
-  },
-  { 
-    id: 'n2', 
-    title: 'Do not share this site with others.', 
-    image: '',
-    category: 'notice'
-  },
 ];
 

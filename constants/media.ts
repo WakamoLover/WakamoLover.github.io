@@ -4,6 +4,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
 // Bilibili
   {
     title: 'MODARE',
+    subtitle: '모군',
     description: '',
     coverImage: 'https://i0.hdslb.com/bfs/face/5237b268dd7bae556e5c5642ca32efedf19e7692.jpg@96w_96h.webp',
     type: ContentType.VIDEO,
@@ -12,6 +13,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Matcha',
+    subtitle: '',
     description: '',
     coverImage: 'https://i0.hdslb.com/bfs/garb/86ece6d65ee0730b494c6a962afae15c0d27316b.png@96w_96h.webp',
     type: ContentType.VIDEO,
@@ -20,6 +22,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'IYun',
+    subtitle: '',
     description: '',
     coverImage: 'https://i0.hdslb.com/bfs/face/1ee4b0cfccd340cbf070a822032c7310b6ee3b08.jpg@160w_160h_1c_1s.webp',
     type: ContentType.VIDEO,
@@ -30,6 +33,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
 // YouTube
   {
     title: 'SINI42',
+    subtitle: '시니42',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/TDZL3_bz8U5WhiUZTgzKTf8lHDsENcBWAd82anlzxb4NhZNnfpxJgTIUaYJtWgk7cVBXN1vi=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -38,6 +42,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'HxxG',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/Ha7So-t8QYKEsUALn0eIm-uXhYBC6SSTwvqytmgu8g_LyW31FncpuPiLIaZ7q8mvAkysMUwU=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -46,6 +51,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Naoki Saito',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/gZ4ZQwhqle9_SehIS96ALDaeSvxOAN10sfeQPHYdCB1Skk87NYfWKjD1P5xvifFZZXKsC_2vVng=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -54,6 +60,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'hide channel',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/ytc/AIdro_lFCgPZEcMaLPjZfeamxUBICw610j3DqpGjgcuPU0Q=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -62,6 +69,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Leviathan',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/ytc/AIdro_l21JVYWjsSufP_gRqYh5uv34qWvN_UmNwQ3J3Ur9ZOe7k=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -70,6 +78,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Nekojira',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/DsLwmbT5mXKFNNunXLCg65DCsk4TSb7i2NGqU_K3RPDp8gVKsVuVWWCtlkYdK6JkS0TWTfU80Q=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -78,6 +87,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Nvqsvr',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/lForZKUYppWJpRNh_EU8qr7THknY5M6LLI8IbrHNiovMt5pxMimx34i96__P0PENbe01HM5AJw=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -86,6 +96,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'redjuice',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/ytc/AIdro_mNECUBbWZwtbFD7JUvShzJxMvR4mAYQSIvMO45rdzsEWA=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -94,6 +105,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'RITY',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/4AVr2m-gwXLN2_6wgCpOuOHPL8D_NIlZMjLefAysmR2KeBUV31aH8Omt5bYqiNpimILi85fp=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -102,6 +114,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'rurudo',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/iPABH9tEiZOZvxOuaaoGFFjAbH8bMtKGJ7JFvzspRjwjC00O4net65HHn-mSCcIsNPBxfuL8kQ=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -110,6 +123,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Toga',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/hrGMB1Q_RiR4H_GQkuM1kSwnHfO7o3EJELGAvevRaYczeMOBHYYV0VSg_Ru3pHNH1XkL4Vke7B4=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -118,6 +132,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'yu-ri',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/ItlcsBAn7xzWdaFuzT9jmh7b8-o62OS6-KTSoIt2UQGPDBHnoFkcf6a6Ul-5IX8rDqcMXo3_4A=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -126,6 +141,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'kyockcho',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/lyR4YyfIR-xal3o_OIzEIxc3Inl_TBknJc7j4_0Z56lb7EaJxuPplEAejatyKsbo9PI-rpN6FQ=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -134,6 +150,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Agyou',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/DILMG74p4unZuGg-NC9edmgiUGbALvm97v1WHV-68mYCO4xQ9bkcVuSWAh5oImZwjATEAFZtn6c=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -142,6 +159,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Kionaoki',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/05U05L-U5JSicy4zf6vhTNEf6vzvQbHv8vy89XjMt1jqcrylPfturuFNi8HtFQDawU19zWLWR2k=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -150,6 +168,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'mm',
+    subtitle: 'ㅁㅁ',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/Us4UAOn4v0EttcdqJnSPXIk1VSfvVr_5YUpcKMhh5DaA8zBc546q6nXgl5_kP0A8k7Rmfbf7=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -158,6 +177,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'gozenjuziame',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/ytc/AIdro_mn-ChSqxbmeGdCZZVSF7w1MqonFBWZnt3q_uGV9iNKBw=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -166,6 +186,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'lack',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/ytc/AIdro_nwPEVygomIpt4e0GTFSmf5cFoKTa9GyrLSwJM73zNe5A=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -174,6 +195,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Zumizumi',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/p3gSELnRCRGpqb9dy_La-KsNPj5oQxxdWhuwrj_DHYtedpuLZY204tkL3devcf8wyKAhcNdApQ=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -182,6 +204,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'ki minwoo',
+    subtitle: '기민우',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/0o_hmNgE0ZtLyZtZMwHbAjd-CNBRd5qKPmz8HnrygSZCLQCUVqZiKvK5ezBk2o1t_U_1377T=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -190,6 +213,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Rockhe Kim',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/ytc/AIdro_kypDi6xOcffNAukO3wxRV4n3t4-oDartNuBwrPg7QapyE=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -198,6 +222,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'DDUCK KONG',
+    subtitle: '떡콩',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/tzNSAWVVzQQ8Yinvj_hLIjTs2DIHxaEIkgorwVBcUP_jBnB70iWyei4Ia_C__9QGJvTVGI69fpY=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -206,6 +231,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'D.Ramz',
+    subtitle: '람지의 작업실',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/FlIetHiE044atfnt8Bw5rgfna0ZRzXiRsOO2II6Pk-f55TvS4XNeWNifhFaWJphWFWbYGOAV=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -214,6 +240,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'seorang',
+    subtitle: '서랑그림',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/tUAP_psBReKdm946Rflyjidr1ktoYenJr4c_ZBAxx7evJJeXUC70deCKApXFJlMQ6lvm2GyYtKI=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -222,6 +249,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Sjoop',
+    subtitle: '수줍',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/cmvzSlAI1cXArLJ4Dj2XvgVrcEWdrFlty3SHZhMaTIoWlKnnbzmxOLPyelVCyKQQqqXFSCSQ4g=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -230,6 +258,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Toki Murasaki',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/Qgen2AAH2JsO3wdS2SZNkZ0L-X_RMmxXvAqj-d23N13WgpL7oJXexJwuz8dLamTp5QGUz8n2=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -238,6 +267,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Yenkoes',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/c2cDAF3J0JTKe2vO4b1sezp9rF1X76Jrr993TU-xyB4p7cE_b_AYeWh1dy_w6VQtPg693WiXMA=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -246,6 +276,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'kuzuvine',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/7kRSKuBJVkuyX0p7YMgnuj3kuyaLwPFkBIPOykvHxyl7ecqQqJsYo-0v5DLREsYMTn8D8xRYTw=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -254,6 +285,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Yotsumi Shiro',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/qd1xxEMHaLVR7aOqiOoNAgHWBhpwsJSAqMQh-VJuAABidu367nnJR18z0R8AzRwjOUcV9uwffg=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -262,6 +294,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'kakage',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/ytc/AIdro_kJqgJLG0BdJZtaWtjkRqvfdMBoo_Ux9zpdnHqmJJDF4lo=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -270,6 +303,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Ixy',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/YGF9URNFhAlrgqqig0eqVXynVMff07um_4r4UTM5JIGB4oWoSzPNcKF_J-OlUwFRlnFSCaGD=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -278,6 +312,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Neg',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/ytc/AIdro_lCQSTtMJ-Jue0fRNhdZDjdNZ6kyCORin47ugkkoP3oqQ=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -286,6 +321,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'SUNGMOOMOO',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/tIhz8OIOHmVQWFQsZs2TeNcKiH0Zt2JMKdDj3vlcfqF4zKFFzeeUDeyCpvTcX4RhVjC8RKmK=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -294,6 +330,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'ANIZI',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/1TmGbO8DbY6VwEw60Tobs_uPpyGKasAjmlzGipY5iQEbkQtpQz15ARujg3g5euDz9X0mxs6zmVY=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -302,6 +339,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'floomf',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/K8mLFJU2uImbSZp6vXqyyTlpuPcTc7He0zQCHWTnbjEt3zDnGHOJL3kW-g70Po2cWnpRIVVRBA=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -310,6 +348,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'seeshin',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/SJZFBOTiiVi0XYEHYf_zBrJpZnEARvGo0o03BzLIxqVZnFWC0uhVuY5A-E4IszTmrhDxigPxlA=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -318,6 +357,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Monoco55',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/hASkB8by9B5dc3n44OWxb-tP99XjCaHmaMcvgsCiY-6hGS9rraBJ8tnE7yKj_YnJE_MQ6Y8fmH4=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -326,6 +366,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'ye_jji',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/cpgwt51wJ5lt05GWYhmscjlBXlIq82r9jMHVJWuAvpMQa0-k9s6UCVUsWD_-vruRr-SqLFoSQTk=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -334,6 +375,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'happyend404',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/ElpDN3uoTSCdbwFEKKaDAg9hJSM8_VG7VxHxEyJRIXqgEsu9MCKHSP8tieSZ99T36lXvs6hO3w=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -342,6 +384,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'foritis wang',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/ytc/AIdro_lMX2M9JogJxULuco3GDEHKcfRBLtOGaW6Xs2SmD7vektA=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -350,6 +393,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Kitazume Kumin',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/IFYLn51brJ2D9UPtx2L3YoGUN7p3HPQajjsyTM68WH6wdCkkVX_Hq5kN-gJ3TuowHcqAe1Le=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -358,6 +402,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'azit',
+    subtitle: '',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/gsIDKFmBfQoaXqkB37XiX5yZP1EfHQmkZ8MmyuPumkKhHIvSIMdrO4qt-Y6rUlTxtaYFh3WW=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -366,6 +411,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'Macciatto',
+    subtitle: '마끼아또',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/M822QmGJ541qmFBqYACan49QKBdtIB_VQV5etsOqfpJ3tPScTbz6ukIbZ8-JSiMq_1M5d6bqasc=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -374,6 +420,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'FEVERCELL',
+    subtitle: '피버셀',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/Wv3bsg8dpVoGLxUbff_KE-MkQLxJzIeaLG3wUmEfBz2u_YeE-bHmo8Q-8O1bpZf-VDrLo_w6ZQ=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -382,6 +429,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'PROPIC',
+    subtitle: '프로픽',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/ytc/AIdro_l0u9AW8u6R5XmB_Y27Sals_G4wkHZ9Zk-BiEDVjJ5Amw0=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -390,6 +438,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'RAUM ACADEMY',
+    subtitle: '라움 아카데미',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/t4zXZvU2DQj_5ilVUU0E6cnU_DDLbRhTbdl540_Eibpr8TYQRb4KJ3rONlKWh9uvYp2YFbfd=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -398,6 +447,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'BWs Darakbang',
+    subtitle: '병우쌤의 다락방',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/qtTXJ4r9thE9B4uFf3U8_MSD8uHmMr_pM-Sdm9ylFTYMcvDVYfc_lwM8eNHUyThV45floHTGiv0=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
@@ -406,6 +456,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   } as any,
   {
     title: 'OSSEM',
+    subtitle: '오쌤 인체해부학',
     description: '',
     coverImage: 'https://yt3.googleusercontent.com/ytc/AIdro_l0wn24wRpV6eLegC_yMo6JwgNxrvGS2Q_hE540pWv41Q=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
