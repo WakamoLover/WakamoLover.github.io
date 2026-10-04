@@ -14,7 +14,7 @@ const VIEW_PATHS: Record<string, string> = {
 
 const getViewFromPath = () => {
   const pathname = window.location.pathname.replace(/\/+$/, '') || '/';
-  return Object.entries(VIEW_PATHS).find(([, path]) => path === pathname)?.[0] || 'LIBRARY';
+  return Object.entries(VIEW_PATHS).find(([, path]) => path === pathname)?.[0] || 'GAME';
 };
 
 const getCoverImage = (coverImage?: string): string => {
