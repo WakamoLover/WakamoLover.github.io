@@ -236,97 +236,58 @@ const CardAdmin: React.FC<CardAdminProps> = ({
 
   if (!isSupabaseConfigured) return null;
 
-  return (
-    <>
-      <section className="mb-5 flex flex-wrap items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3">
-        {!adminEmail ? (
-          <p className="text-sm text-amber-800">Set NEXT_PUBLIC_SUPABASE_ADMIN_EMAIL in .env.local to enable administrator access.</p>
-        ) : isAdmin ? (
-          <>
-            <span className="text-sm font-semibold text-emerald-800">Administrator: {user?.email}</span>
-            {isDatabaseEmpty ? (
-              <button type="button" onClick={handleSeed} disabled={isBusy} className="rounded-lg bg-[var(--brand-accent)] px-4 py-2 text-sm font-semibold text-white disabled:opacity-50">
-                {isBusy ? 'Importing…' : 'Import existing cards into Supabase'}
-              </button>
-            ) : !isCardsLoaded || hasCardsError ? (
-              <span className="text-sm text-slate-600">Card editing is unavailable until the Supabase data loads successfully.</span>
-            ) : (
-              <button type="button" onClick={onCreate} disabled={isBusy} className="rounded-lg bg-[var(--brand-accent)] px-4 py-2 text-sm font-semibold text-white disabled:opacity-50">
-                Add card
-              </button>
-            )}
-            <button type="button" onClick={handleSignOut} disabled={isBusy} className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 disabled:opacity-50">
-              Sign out
+return (
+    <section className="mb-5 flex flex-wrap items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3">
+      {!adminEmail ? (
+        <p className="text-sm text-amber-800">Set NEXT_PUBLIC_SUPABASE_ADMIN_EMAIL in .env.local to enable administrator access.</p>
+      ) : isAdmin ? (
+        <>
+          <span className="text-sm font-semibold text-emerald-800">Administrator: {user?.email}</span>
+          {isDatabaseEmpty ? (
+            <button type="button" onClick={handleSeed} disabled={isBusy} className="rounded-lg bg-[var(--brand-accent)] px-4 py-2 text-sm font-semibold text-white disabled:opacity-50">
+              {isBusy ? 'Importing...' : 'Import existing cards into Supabase'}
             </button>
-          </>
-        ) : user ? (
+          ) : !isCardsLoaded || hasCardsError ? (
+            <span className="text-sm text-slate-600">Card editing is unavailable until the Supabase data loads successfully.</span>
+          ) : (
+            <button type="button" onClick={onCreate} disabled={isBusy} className="rounded-lg bg-[var(--brand-accent)] px-4 py-2 text-sm font-semibold text-white disabled:opacity-50">
+              Add card
+            </button>
+          )}
+          <button type="button" onClick={handleSignOut} disabled={isBusy} className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 disabled:opacity-50">
+            Sign out
+          </button>
+        </>
+      ) : user ? (
+        <>
+          <span className="text-sm text-slate-600">Signed in as {user.email}; this account is not the configured administrator.</span>
+          <button type="button" onClick={handleSignOut} disabled={isBusy} className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 disabled:opacity-50">Sign out</button>
+        </>
+      ) : (
+        showAdminBtn && (
           <>
-            <span className="text-sm text-slate-600">Signed in as {user.email}; this account is not the configured administrator.</span>
-            <button type="button" onClick={handleSignOut} disabled={isBusy} className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 disabled:opacity-50">Sign out</button>
-          </>
-        ) : (
-          <>
-            {showAdminBtn && (
-              <>
-                <button type="button" onClick={() => { setLoginOpen((open) => !open); setErrorMessage(''); }} className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700">
-                  Administrator sign in
-                </button>
-                {loginOpen && (
-                  <form onSubmit={handleSignIn} className="flex w-full flex-wrap items-end gap-3">
-                    <label className={labelClassName}>
-                      Email
-                      <input type="email" required autoComplete="username" value={email} onChange={(event) => setEmail(event.target.value)} className={inputClassName} />
-                    </label>
-                    <label className={labelClassName}>
-                      Password
-                      <input type="password" required autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} className={inputClassName} />
-                    </label>
-                    <button type="submit" disabled={isBusy} className="rounded-lg bg-[var(--brand-accent)] px-4 py-2 text-sm font-semibold text-white disabled:opacity-50">{isBusy ? 'Signing in...' : 'Sign in'}</button>
-                  </form>
-                )}
-              </>
+            <button type="button" onClick={() => { setLoginOpen((open) => !open); setErrorMessage(''); }} className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700">
+              Administrator sign in
+            </button>
+            {loginOpen && (
+              <form onSubmit={handleSignIn} className="flex w-full flex-wrap items-end gap-3">
+                <label className={labelClassName}>
+                  Email
+                  <input type="email" required autoComplete="username" value={email} onChange={(event) => setEmail(event.target.value)} className={inputClassName} />
+                </label>
+                <label className={labelClassName}>
+                  Password
+                  <input type="password" required autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} className={inputClassName} />
+                </label>
+                <button type="submit" disabled={isBusy} className="rounded-lg bg-[var(--brand-accent)] px-4 py-2 text-sm font-semibold text-white disabled:opacity-50">{isBusy ? 'Signing in...' : 'Sign in'}</button>
+              </form>
             )}
-        {isDatabaseEmpty && isAdmin && <p className="w-full text-sm text-slate-600">The Supabase table is empty. Import the current cards before editing them.</p>}
-        {errorMessage && <p role="alert" className="w-full text-sm text-red-700">{errorMessage}</p>}
-      </section>
-
-      {editorOpen && isAdmin && isCardsLoaded && !hasCardsError && !isDatabaseEmpty && (
-        <div className="fixed inset-0 z-[70] overflow-y-auto bg-slate-950/60 p-4" role="presentation" onMouseDown={(event) => {
-          if (event.target === event.currentTarget) onCloseEditor();
-        }}>
-          <form onSubmit={handleSave} className="mx-auto my-8 max-w-3xl space-y-4 rounded-2xl bg-white p-5 shadow-2xl sm:p-7">
-            <div className="flex items-center justify-between">
-              <h2 className="text-xl font-bold text-slate-900">{editingPost ? 'Edit card' : 'Add card'}</h2>
-              <button type="button" onClick={onCloseEditor} className="rounded-lg px-3 py-2 text-sm text-slate-600 hover:bg-slate-100">Close</button>
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <label className={labelClassName}>Title<input required value={values.title} onChange={(event) => updateField('title', event.target.value)} className={inputClassName} /></label>
-              <label className={labelClassName}>Subtitle<input value={values.subtitle} onChange={(event) => updateField('subtitle', event.target.value)} className={inputClassName} /></label>
-              <label className={labelClassName}>Type<select value={values.type} onChange={(event) => {
-                const selectedType = event.target.value;
-                if (isCardType(selectedType)) updateField('type', selectedType);
-              }} className={inputClassName}>{Object.values(ContentType).map((type) => <option key={type} value={type}>{type}</option>)}</select></label>
-              <label className={labelClassName}>Category<input value={values.category} onChange={(event) => updateField('category', event.target.value)} className={inputClassName} /></label>
-              <label className={`${labelClassName} sm:col-span-2`}>Description<textarea rows={3} value={values.description} onChange={(event) => updateField('description', event.target.value)} className={inputClassName} /></label>
-              <label className={labelClassName}>Cover image URL or filename<input value={values.coverImage} onChange={(event) => updateField('coverImage', event.target.value)} className={inputClassName} /></label>
-              <label className={labelClassName}>Icon image URL or filename<input value={values.iconImage} onChange={(event) => updateField('iconImage', event.target.value)} className={inputClassName} /></label>
-              <label className={labelClassName}>Tags (comma separated)<input value={values.tags} onChange={(event) => updateField('tags', event.target.value)} className={inputClassName} /></label>
-              <label className={labelClassName}>Image index<input type="number" step="1" value={values.imageIndex} onChange={(event) => updateField('imageIndex', event.target.value)} className={inputClassName} /></label>
-              <label className={labelClassName}>Video URL<input value={values.videoUrl} onChange={(event) => updateField('videoUrl', event.target.value)} className={inputClassName} /></label>
-              <label className={labelClassName}>Channel URL<input value={values.channelUrl} onChange={(event) => updateField('channelUrl', event.target.value)} className={inputClassName} /></label>
-              <label className={labelClassName}>External link<input value={values.externalLink} onChange={(event) => updateField('externalLink', event.target.value)} className={inputClassName} /></label>
-              <label className={labelClassName}>Game links (one “label | URL” per line)<textarea rows={3} value={values.gameLinks} onChange={(event) => updateField('gameLinks', event.target.value)} className={inputClassName} /></label>
-              <label className={`${labelClassName} sm:col-span-2`}>Slider image URLs (one per line)<textarea rows={3} value={values.sliderImages} onChange={(event) => updateField('sliderImages', event.target.value)} className={inputClassName} /></label>
-            </div>
-            {errorMessage && <p role="alert" className="text-sm text-red-700">{errorMessage}</p>}
-            <div className="flex justify-end gap-3">
-              <button type="button" onClick={onCloseEditor} className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700">Cancel</button>
-              <button type="submit" disabled={isBusy} className="rounded-lg bg-[var(--brand-accent)] px-5 py-2 text-sm font-semibold text-white disabled:opacity-50">{isBusy ? 'Saving…' : 'Save card'}</button>
-            </div>
-          </form>
-        </div>
+          </>
+        )
       )}
-    </>
+      {isDatabaseEmpty && isAdmin && <p className="w-full text-sm text-slate-600">The Supabase table is empty. Import the current cards before editing them.</p>}
+      {errorMessage && <p role="alert" className="w-full text-sm text-red-700">{errorMessage}</p>}
+    </section>
   );
 };
 
