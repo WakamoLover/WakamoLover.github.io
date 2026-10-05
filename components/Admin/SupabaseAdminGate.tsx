@@ -10,6 +10,11 @@ type AuthorizationState = 'checking' | 'admin' | 'denied' | 'error';
 
 const inputClassName = 'w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900';
 
+const hasAdminFlag = (record: Record<string, unknown> | null): boolean => {
+  const value = record?.is_admin;
+  return value === true || (typeof value === 'string' && value.trim().toLowerCase() === 'true');
+};
+
 const SupabaseAdminGate: React.FC<SupabaseAdminGateProps> = ({ children }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [sessionReady, setSessionReady] = useState(false);
@@ -69,17 +74,36 @@ const SupabaseAdminGate: React.FC<SupabaseAdminGateProps> = ({ children }) => {
 
     void (async () => {
       try {
-        const { data, error } = await supabase
+        const user = session.user;
+        if (import.meta.env.DEV) {
+          console.log('Logged In Auth User ID:', user.id);
+        }
+
+        let { data, error } = await supabase
           .from('admin_users')
-          .select('is_admin')
-          .eq('user_id', session.user.id)
+          .select('*')
+          .eq('user_id', user.id)
           .maybeSingle();
+
+        if ((error || !data) && user.email) {
+          const emailResult = await supabase
+            .from('admin_users')
+            .select('*')
+            .eq('email', user.email)
+            .maybeSingle();
+          data = emailResult.data;
+          error = emailResult.error;
+        }
+
         if (!isCurrent) return;
+        if (import.meta.env.DEV) {
+          console.log('Admin Table Record:', data);
+        }
         if (error) {
           setMessage(`관리자 권한을 확인하지 못했습니다: ${error.message}`);
           setAuthorization('error');
         } else {
-          setAuthorization(data?.is_admin === true ? 'admin' : 'denied');
+          setAuthorization(hasAdminFlag(data) ? 'admin' : 'denied');
         }
       } catch (error: unknown) {
         if (!isCurrent) return;
