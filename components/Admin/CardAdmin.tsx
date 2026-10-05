@@ -114,6 +114,7 @@ const CardAdmin: React.FC<CardAdminProps> = ({
   onSave,
   onSeed,
 }) => {
+  const adminEmail = import.meta.env.VITE_SUPABASE_ADMIN_EMAIL || '';
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const [loginOpen, setLoginOpen] = useState(false);
   const [email, setEmail] = useState(adminEmail);
