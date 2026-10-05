@@ -18,7 +18,7 @@ export interface Post {
   coverImage: string;
   iconImage?: string;
   type: ContentType;
-  category?: string;
+  category?: string | string[];
   
   tags?: string[]; 
   

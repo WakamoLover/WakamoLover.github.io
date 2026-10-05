@@ -2,9 +2,11 @@ import React, { useState, useMemo, useEffect, useRef } from 'react';
 import Header from './components/Layout';
 import PostCard from './components/Content/PostCard';
 import ImageModal from './components/Content/ImageModal';
-import GitHubCardAdmin from './components/Admin/GitHubCardAdmin';
-import { MOCK_POSTS, CATEGORY_TABS } from './constants/index';
-import { ContentType, type Post } from './types';
+import SupabaseAdminGate from './components/Admin/SupabaseAdminGate';
+import SupabaseCardAdmin from './components/Admin/SupabaseCardAdmin';
+import { CATEGORY_TABS } from './constants/categories';
+import { useRealtimePosts } from './src/hooks/useRealtimePosts';
+import { ContentType } from './types';
 
 const VIEW_PATHS: Record<string, string> = {
   CREATOR: '/creator',
@@ -34,7 +36,7 @@ const App: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentCategory, setCurrentCategory] = useState('All');
   const [visibleCount, setVisibleCount] = useState(24);
-  const [posts, setPosts] = useState<Post[]>(MOCK_POSTS);
+  const { posts, setPosts, isLoading, error } = useRealtimePosts();
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [currentImageUrl, setCurrentImageUrl] = useState('');
@@ -113,16 +115,17 @@ const App: React.FC = () => {
     const typeMap: Record<string, ContentType> = {
       GAME: ContentType.GAME, REF: ContentType.REF, MEDIA: ContentType.MEDIA, CREATOR: ContentType.CREATOR,
     };
-    if (typeMap[currentView]) {
-      result = result.filter(p => p.type === typeMap[currentView]);
+    const selectedType = typeMap[currentView.toUpperCase()];
+    if (selectedType) {
+      result = result.filter(p => p.type.trim().toUpperCase() === selectedType);
     }
 
     if (currentCategory !== 'All') {
       result = result.filter(p => {
         if (Array.isArray(p.category)) {
-          return p.category.includes(currentCategory);
+          return p.category.some(category => category.toLocaleLowerCase() === currentCategory.toLocaleLowerCase());
         } else {
-          return p.category === currentCategory;
+          return p.category?.toLocaleLowerCase() === currentCategory.toLocaleLowerCase();
         }
       });
     }
@@ -168,17 +171,25 @@ const App: React.FC = () => {
         onSearchChange={handleSearchChange}
       />
       {isAdminRoute && (
-        <GitHubCardAdmin
-          posts={posts}
-          onPostsChange={(updatedPosts) => {
-            setPosts(updatedPosts);
-            setVisibleCount(24);
-          }}
-        />
+        <SupabaseAdminGate>
+          <SupabaseCardAdmin
+            posts={posts}
+            isLoading={isLoading}
+            onPostsChange={(updatedPosts) => {
+              setPosts(updatedPosts);
+              setVisibleCount(24);
+            }}
+          />
+        </SupabaseAdminGate>
       )}
 
       <main className="min-h-[calc(100vh-4rem)] w-full px-4 py-4 sm:px-6 md:py-6 xl:px-8">
           <section className="min-w-0">
+                {error && (
+                  <p role="alert" className="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+                    Could not load live posts: {error}
+                  </p>
+                )}
                 {tabs.length > 0 && !searchTerm && (
                   <nav aria-label="Categories" className="scrollbar-hide mb-5 flex gap-2 overflow-x-auto border-b border-slate-200 pb-3">
                     {tabs.map(tab => (
@@ -196,7 +207,9 @@ const App: React.FC = () => {
                 )}
 
                 <div className="min-h-[500px]">
-                    {visiblePosts.length > 0 ? (
+                    {isLoading ? (
+                      <p role="status" className="py-32 text-center text-sm text-slate-500">Loading posts...</p>
+                    ) : visiblePosts.length > 0 ? (
                       <div className={`grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 ${currentView === 'MEDIA' || currentView === 'REF' ? 'xl:grid-cols-5' : 'xl:grid-cols-4'}`}>
                         {visiblePosts.map((post) => (
                           <div key={post.id} className="min-w-0">
@@ -216,7 +229,9 @@ const App: React.FC = () => {
                         ))}
                       </div>
                     ) : (
-                      <div className="py-32 text-center text-gray-500">No content found.</div>
+                      <div className="py-32 text-center text-gray-500">
+                        {error ? 'Posts could not be loaded. Check the error above and try again.' : 'No content found.'}
+                      </div>
                     )}
 
                     {visibleCount < displayPosts.length && (
