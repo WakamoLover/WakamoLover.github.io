@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { commitCardsFile, type GitHubRepositorySettings } from '../../lib/githubContents';
+import { commitCardsFile, getImageFileName, uploadImageToGitHub, type GitHubRepositorySettings } from '../../lib/githubContents';
 import { ContentType, type Post } from '../../types';
 
 interface GitHubCardAdminProps {
@@ -57,6 +57,7 @@ const DEFAULT_SETTINGS: GitHubRepositorySettings = {
   repo: 'WakamoLover.github.io',
   branch: 'main',
   token: '',
+  uploadPath: 'public/media',
 };
 
 const GitHubCardAdmin: React.FC<GitHubCardAdminProps> = ({ posts, onPostsChange }) => {
@@ -67,6 +68,10 @@ const GitHubCardAdmin: React.FC<GitHubCardAdminProps> = ({ posts, onPostsChange 
   const [form, setForm] = useState<CardForm>(emptyForm);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [imageFileName, setImageFileName] = useState('');
+  const [isDraggingImage, setIsDraggingImage] = useState(false);
   const [message, setMessage] = useState('');
   const [search, setSearch] = useState('');
   const skipNextSettingsSave = useRef(false);
@@ -95,6 +100,9 @@ const GitHubCardAdmin: React.FC<GitHubCardAdminProps> = ({ posts, onPostsChange 
           repo: parsed.repo,
           branch: parsed.branch,
           token: parsed.token,
+          uploadPath: 'uploadPath' in parsed && typeof parsed.uploadPath === 'string'
+            ? parsed.uploadPath
+            : DEFAULT_SETTINGS.uploadPath,
         });
       }
     } catch (error) {
@@ -128,6 +136,8 @@ const GitHubCardAdmin: React.FC<GitHubCardAdminProps> = ({ posts, onPostsChange 
   const resetForm = () => {
     setForm(emptyForm());
     setEditingId(null);
+    setSelectedImage(null);
+    setImageFileName('');
   };
 
   const clearSavedSettings = () => {
@@ -138,6 +148,40 @@ const GitHubCardAdmin: React.FC<GitHubCardAdminProps> = ({ posts, onPostsChange 
       setSettingsError('');
     } catch (error) {
       setSettingsError(error instanceof Error ? `저장된 GitHub 설정을 삭제하지 못했습니다: ${error.message}` : '저장된 GitHub 설정을 삭제하지 못했습니다.');
+    }
+  };
+
+  const selectImage = (file?: File) => {
+    if (!file) return;
+    setSelectedImage(file);
+    setImageFileName(file.name);
+    setMessage('');
+  };
+
+  const handleImageUpload = async () => {
+    if (!selectedImage) {
+      setMessage('먼저 업로드할 이미지를 선택해 주세요.');
+      return;
+    }
+    setIsUploading(true);
+    setMessage('');
+    try {
+      const imageUrl = await uploadImageToGitHub({
+        ...settings,
+        owner: settings.owner.trim(),
+        repo: settings.repo.trim(),
+        branch: settings.branch.trim(),
+        token: settings.token.trim(),
+        uploadPath: settings.uploadPath.trim(),
+      }, selectedImage, imageFileName);
+      setForm((previous) => ({ ...previous, coverImage: imageUrl }));
+      setSelectedImage(null);
+      setImageFileName('');
+      setMessage(`이미지 업로드 완료: ${imageUrl}`);
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : String(error));
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -184,6 +228,7 @@ const GitHubCardAdmin: React.FC<GitHubCardAdminProps> = ({ posts, onPostsChange 
         repo: settings.repo.trim(),
         branch: settings.branch.trim(),
         token: settings.token.trim(),
+        uploadPath: settings.uploadPath.trim(),
       }, type, updatedPosts);
       onPostsChange(updatedPosts);
       setMessage('저장 후 GitHub에 커밋했습니다. GitHub Pages 배포에는 잠시 시간이 걸릴 수 있습니다.');
@@ -266,6 +311,16 @@ const GitHubCardAdmin: React.FC<GitHubCardAdminProps> = ({ posts, onPostsChange 
               <label className={labelClassName}>Repository<input className={fieldClassName} value={settings.repo} onChange={(event) => setSettings((previous) => ({ ...previous, repo: event.target.value }))} /></label>
               <label className={labelClassName}>Branch<input className={fieldClassName} value={settings.branch} onChange={(event) => setSettings((previous) => ({ ...previous, branch: event.target.value }))} /></label>
             </div>
+            <label className={labelClassName}>
+              이미지 저장 경로 (저장소 기준)
+              <input
+                className={fieldClassName}
+                value={settings.uploadPath}
+                onChange={(event) => setSettings((previous) => ({ ...previous, uploadPath: event.target.value }))}
+                placeholder="public/media"
+              />
+            </label>
+            <p className="text-xs text-slate-500">경로는 public/ 아래여야 합니다. 예: public/media/uploads</p>
             <p className="text-xs text-slate-500">현재 GitHub Pages 배포 workflow는 main 브랜치의 변경에 반응합니다.</p>
             <label className={labelClassName}>
               Fine-grained PAT
@@ -293,7 +348,72 @@ const GitHubCardAdmin: React.FC<GitHubCardAdminProps> = ({ posts, onPostsChange 
                 </label>
                 {input('subtitle', '부제')}
                 {input('category', '카테고리')}
-                {input('coverImage', '커버 이미지 URL', true)}
+                <label className={labelClassName}>
+                  커버 이미지 URL
+                  <input
+                    className={fieldClassName}
+                    value={form.coverImage}
+                    required
+                    onChange={(event) => setForm((previous) => ({ ...previous, coverImage: event.target.value }))}
+                  />
+                  <div
+                    className={`rounded-lg border-2 border-dashed p-3 ${isDraggingImage ? 'border-[var(--brand-accent)] bg-white' : 'border-slate-300'}`}
+                    onDragOver={(event) => {
+                      event.preventDefault();
+                      setIsDraggingImage(true);
+                    }}
+                    onDragLeave={(event) => {
+                      event.preventDefault();
+                      setIsDraggingImage(false);
+                    }}
+                    onDrop={(event) => {
+                      event.preventDefault();
+                      setIsDraggingImage(false);
+                      selectImage(event.dataTransfer.files[0]);
+                    }}
+                  >
+                    <label className="flex cursor-pointer flex-col gap-2 text-xs font-normal text-slate-600">
+                      <span>{selectedImage ? selectedImage.name : '이미지를 선택하거나 이곳에 드래그 앤 드롭하세요.'}</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        disabled={isUploading || isSaving}
+                        className="text-xs"
+                        aria-label="업로드할 이미지 선택"
+                        onChange={(event) => {
+                          selectImage(event.currentTarget.files?.[0]);
+                          event.currentTarget.value = '';
+                        }}
+                      />
+                    </label>
+                    {selectedImage && (
+                      <div className="mt-3 flex flex-col gap-2">
+                        <label className={labelClassName}>
+                          저장할 파일 이름
+                          <input
+                            className={fieldClassName}
+                            value={imageFileName}
+                            disabled={isUploading || isSaving}
+                            placeholder={getImageFileName(selectedImage, '')}
+                            onChange={(event) => setImageFileName(event.target.value)}
+                          />
+                        </label>
+                        <p className="text-xs font-normal text-slate-500">
+                          확장자를 생략하면 원본 이미지 확장자를 사용합니다. 같은 이름의 파일은 덮어쓰지 않습니다.
+                        </p>
+                        <button
+                          type="button"
+                          disabled={isUploading || isSaving}
+                          onClick={() => void handleImageUpload()}
+                          className="w-fit rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 disabled:opacity-50"
+                        >
+                          {isUploading ? '이미지 업로드 중...' : '이 이름으로 업로드'}
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                  {isUploading && <span role="status" className="font-normal text-slate-500">이미지를 GitHub에 업로드 중...</span>}
+                </label>
                 {input('externalLink', '외부 링크')}
                 {input('channelUrl', '채널 URL')}
                 {input('videoUrl', '미디어 URL')}
@@ -316,8 +436,8 @@ const GitHubCardAdmin: React.FC<GitHubCardAdminProps> = ({ posts, onPostsChange 
                 <textarea className={fieldClassName} rows={3} value={form.description} onChange={(event) => setForm((previous) => ({ ...previous, description: event.target.value }))} />
               </label>
               <div className="flex flex-wrap gap-2">
-                <button type="submit" disabled={isSaving} className="rounded-lg bg-[var(--brand-accent)] px-4 py-2 text-sm font-semibold text-white disabled:opacity-50">
-                  {isSaving ? 'GitHub 저장 중...' : editingId ? '수정 후 커밋' : '추가 후 커밋'}
+                <button type="submit" disabled={isSaving || isUploading} className="rounded-lg bg-[var(--brand-accent)] px-4 py-2 text-sm font-semibold text-white disabled:opacity-50">
+                  {isSaving ? 'GitHub 저장 중...' : isUploading ? '이미지 업로드 중...' : editingId ? '수정 후 커밋' : '추가 후 커밋'}
                 </button>
                 {editingId && <button type="button" onClick={resetForm} className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700">취소</button>}
               </div>

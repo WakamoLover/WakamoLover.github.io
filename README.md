@@ -17,7 +17,11 @@ same-origin JavaScript can access the token, so use a dedicated, narrowly scoped
 and clear saved settings on shared devices. A successful save creates a commit on the
 selected branch, after which GitHub Pages rebuilds and deploys the site. The current
 deployment workflow deploys commits pushed to `main`; use that branch for changes that
-should go live.
+should go live. Set the image upload folder to a repository path under `public/` (for
+example, `public/media/uploads`). The selected image's original filename is used by
+default, and admins can edit it before upload. A missing extension is taken from the
+original image; if the chosen path already exists, the upload is rejected rather than
+overwriting it. The resulting site URL is filled into the cover image field.
 ### Local to Git
 ```bash
 git add .
