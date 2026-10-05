@@ -7,7 +7,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'X',
     subtitle: 'Twitter',
-    description: 'From breaking news and entertainment to sports and politics, get the full story with all the live commentary.',
+    description: '실시간 소식과 다양한 분야의 이야기를 확인하고, 관심 있는 계정을 팔로우하며 의견을 나눌 수 있는 소셜 플랫폼입니다.',
     coverImage: 'ref/x.webp',
     type: ContentType.REF,
     category: 'Social',
@@ -16,7 +16,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'DeviantArt',
     subtitle: '데비안아트',
-    description: 'Explore our archive of past community events, celebrating the incredible projects, contests, and gatherings that have brought us together.',
+    description: '일러스트와 사진, 공예 등 다양한 창작 작품을 게시하고 작가와 작품을 발견할 수 있는 온라인 아트 커뮤니티입니다.',
     coverImage: 'ref/devianart.webp',
     type: ContentType.REF,
     category: 'Social',
@@ -25,7 +25,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'ArtStation',
     subtitle: '아트스테이션',
-    description: 'The leading showcase platform for games, film, media & entertainment artists.',
+    description: '게임·영화·엔터테인먼트 분야의 콘셉트 아트와 포트폴리오를 감상하고 공유하는 창작자 플랫폼입니다.',
     coverImage: 'ref/artstation.webp',
     type: ContentType.REF,
     category: 'Social',
@@ -34,7 +34,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Pixiv',
     subtitle: '픽시브',
-    description: 'A leading domestic creative communication platform where users can post and browse illustrations, manga, and novels.',
+    description: '일러스트와 만화, 소설을 올리고 다른 창작자의 작품을 감상할 수 있는 일본의 창작 커뮤니티입니다.',
     coverImage: 'ref/pixiv.webp',
     type: ContentType.REF,
     category: 'Social',
@@ -43,7 +43,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Bluesky',
     subtitle: '블루스카이',
-    description: 'Find your community among millions of users, unleash your creativity, and have some fun again.',
+    description: '관심사에 따라 사람들과 소통하고 게시물을 공유할 수 있으며, 사용자 맞춤 피드도 이용할 수 있는 소셜 네트워크입니다.',
     coverImage: 'ref/bluesky.webp',
     type: ContentType.REF,
     category: 'Social',
@@ -52,7 +52,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Behance',
     subtitle: '비핸스',
-    description: 'Help hirers and creators navigate the creative world from discovering inspiration, to connecting with one another · Popular Tools.',
+    description: '디자인과 사진, 일러스트 등 창작 프로젝트를 포트폴리오로 선보이고 전 세계 창작자와 교류할 수 있는 플랫폼입니다.',
     coverImage: 'ref/behance.webp',
     type: ContentType.REF,
     category: 'Social',
@@ -63,7 +63,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Cosmos',
     subtitle: '코스모스',
-    description: 'Resurface your elements instantly. Find anything in your library with ease.',
+    description: '이미지와 디자인 자료를 수집하고 보드로 정리해, 영감이 되는 시각 자료를 쉽게 찾아볼 수 있는 라이브러리입니다.',
     coverImage: 'ref/cosmos.webp',
     type: ContentType.REF,
     category: 'Image',
@@ -72,7 +72,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'FilmGrab',
     subtitle: '필름그랩',
-    description: 'The largest growing archive of stills from the best films ever.',
+    description: '영화 장면 스틸 이미지를 모아 둔 아카이브로, 영화별 화면 구성과 색감, 조명 연출을 참고할 수 있습니다.',
     coverImage: 'ref/filmgrab.webp',
     type: ContentType.REF,
     category: 'Image',
@@ -81,7 +81,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'PhotoBash',
     subtitle: '포토배시',
-    description: 'High Quality Reference Photos & Masked webps for Artists & Creatives.',
+    description: '작가와 디자이너를 위한 고화질 사진 및 배경이 제거된 이미지 자료를 제공하는 사이트입니다.',
     coverImage: 'ref/photobash.webp',
     type: ContentType.REF,
     category: 'Image',
@@ -90,7 +90,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Pinterest',
     subtitle: '핀터레스트',
-    description: 'Create boards, save Pins and make collages of all your inspiration.',
+    description: '관심 있는 이미지와 아이디어를 핀으로 저장하고 보드와 콜라주로 정리해 시각 자료를 모을 수 있습니다.',
     coverImage: 'ref/pinterest.webp',
     type: ContentType.REF,
     category: 'Image',
@@ -99,7 +99,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Pixabay',
     subtitle: '픽사베이',
-    description: 'Stunning royalty-free images & royalty-free stock',
+    description: '사진과 일러스트, 영상 등 다양한 무료 스톡 콘텐츠를 검색하고 내려받을 수 있는 사이트입니다.',
     coverImage: 'ref/pixabay.webp',
     type: ContentType.REF,
     category: 'Image',
@@ -108,7 +108,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Unsplash',
     subtitle: '언스플래시',
-    description: 'A website dedicated to proprietary stock photography.',
+    description: '다양한 작가가 촬영한 고품질 사진을 찾아보고 프로젝트의 시각 자료로 활용할 수 있는 사진 플랫폼입니다.',
     coverImage: 'ref/unsplash.webp',
     type: ContentType.REF,
     category: 'Image',
@@ -119,7 +119,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Pose Maniacs',
     subtitle: '포즈 매니악스',
-    description: '',
+    description: '인체의 근육과 관절이 드러나는 3D 모델을 돌려 보며 포즈와 신체 구조를 관찰할 수 있는 크로키 참고 사이트입니다.',
     coverImage: '',
     type: ContentType.REF,
     category: 'Pose',
@@ -137,7 +137,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Magic Poser',
     subtitle: '매직 포저',
-    description: '',
+    description: '3D 인체 모델의 자세와 관절을 조정해 원하는 포즈를 만들고, 구도와 인체 표현을 참고할 수 있는 도구입니다.',
     coverImage: '',
     type: ContentType.REF,
     category: 'Pose',
@@ -146,7 +146,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Lineo Action',
     subtitle: '',
-    description: '',
+    description: '다양한 인물 사진을 보며 시간 제한 크로키를 연습하고, 몸짓과 동작을 빠르게 관찰할 수 있는 드로잉 연습 사이트입니다.',
     coverImage: '',
     type: ContentType.REF,
     category: 'Pose',
@@ -155,7 +155,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Sixiang',
     subtitle: '',
-    description: '',
+    description: '인물 사진을 중심으로 크로키와 포즈 드로잉에 참고할 수 있는 자료를 모아 둔 페이지입니다.',
     coverImage: '',
     type: ContentType.REF,
     category: 'Pose',
@@ -166,7 +166,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'OKLCH',
     subtitle: '',
-    description: '',
+    description: 'OKLCH 색상 공간을 이용해 색상과 밝기, 채도를 조절하고 웹 색상 코드를 확인할 수 있는 컬러 피커입니다.',
     coverImage: '',
     type: ContentType.REF,
     category: 'Color',
@@ -175,7 +175,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'CCS Color',
     subtitle: '',
-    description: '',
+    description: 'CSS 색상 값과 Oklab·OKLCH 색상 공간의 문법 및 브라우저 사용법을 설명하는 MDN 문서입니다.',
     coverImage: '',
     type: ContentType.REF,
     category: 'Color',
@@ -184,7 +184,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Kor Tone',
     subtitle: '',
-    description: '',
+    description: '한국 전통색의 유래와 색 조화를 살펴보고, 전통색을 바탕으로 색상 팔레트를 만들어 볼 수 있는 자료입니다.',
     coverImage: '',
     type: ContentType.REF,
     category: 'Color',
@@ -195,7 +195,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Design Spiration',
     subtitle: '',
-    description: '',
+    description: '다양한 디자인 이미지를 탐색하고 저장해 그래픽·브랜딩·일러스트 작업의 시각적 영감을 얻을 수 있는 사이트입니다.',
     coverImage: 'ref/designspiration.webp',
     type: ContentType.REF,
     category: 'Design',
@@ -204,7 +204,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Design Boom',
     subtitle: '',
-    description: '',
+    description: '건축과 디자인, 예술 분야의 프로젝트와 최신 소식을 소개하는 온라인 매거진입니다.',
     coverImage: 'ref/designboom.webp',
     type: ContentType.REF,
     category: 'Design',
@@ -213,7 +213,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Dribbble',
     subtitle: '',
-    description: '',
+    description: '디자이너와 창작자가 UI, 그래픽, 일러스트 등 작업물을 선보이고 서로 피드백을 나누는 커뮤니티입니다.',
     coverImage: 'ref/dribbble.webp',
     type: ContentType.REF,
     category: 'Design',
@@ -222,7 +222,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Envato',
     subtitle: '',
-    description: '',
+    description: '그래픽 템플릿과 사진, 영상, 폰트 등 디자인 및 제작 프로젝트에 활용할 디지털 에셋을 제공하는 마켓플레이스입니다.',
     coverImage: 'ref/envato.webp',
     type: ContentType.REF,
     category: 'Design',
@@ -231,7 +231,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Fuse Kiwi',
     subtitle: '',
-    description: '',
+    description: '흥미로운 웹사이트와 온라인 프로젝트를 소개해 새로운 인터넷 콘텐츠를 발견할 수 있도록 돕는 큐레이션 사이트입니다.',
     coverImage: '',
     type: ContentType.REF,
     category: 'Design',
@@ -240,7 +240,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Hvnter',
     subtitle: '',
-    description: '',
+    description: '상업 프로젝트에 활용할 수 있는 그래픽 에셋과 디자인 자료를 판매하는 크리에이티브 마켓입니다.',
     coverImage: '',
     type: ContentType.REF,
     category: 'Design',
@@ -249,7 +249,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Medium Design',
     subtitle: '',
-    description: '',
+    description: '디자인 분야의 작업과 이야기를 살펴보고 시각적 영감을 얻을 수 있는 디자인 콘텐츠 사이트입니다.',
     coverImage: 'ref/mediumdesign.webp',
     type: ContentType.REF,
     category: 'Design',
@@ -258,7 +258,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Notefolio',
     subtitle: '',
-    description: '',
+    description: '국내 창작자들이 일러스트와 디자인, 사진 등 작업물을 포트폴리오로 등록하고 소개하는 플랫폼입니다.',
     coverImage: 'ref/notefolio.webp',
     type: ContentType.REF,
     category: 'Design',
@@ -267,7 +267,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Typographic Posters',
     subtitle: '',
-    description: '',
+    description: '세계 여러 디자이너의 타이포그래피 포스터를 모아 보여 주는 아카이브로, 글자와 레이아웃 디자인을 참고할 수 있습니다.',
     coverImage: '',
     type: ContentType.REF,
     category: 'Design',
@@ -276,7 +276,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
     {
     title: 'The Inspiration Grid',
     subtitle: '',
-    description: '',
+    description: '그래픽과 일러스트, 사진, 패션 등 다양한 분야의 창작 사례를 모아 소개하는 영감 큐레이션 사이트입니다.',
     coverImage: '',
     type: ContentType.REF,
     category: 'Design',
@@ -287,7 +287,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Booth',
     subtitle: '부스',
-    description: '',
+    description: '일러스트와 모델, 의상, 디지털 자료 등 창작자가 만든 상품을 판매하고 구매할 수 있는 온라인 마켓입니다.',
     coverImage: 'ref/booth.webp',
     type: ContentType.REF,
     category: 'Market',
@@ -296,7 +296,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'DLsite',
     subtitle: '디엘사이트',
-    description: 'Doujinshi, doujin games, doujin audio and ASMR, updated daily and available for immediate download.',
+    description: '동인지와 인디 게임, 음성·ASMR 등 다양한 창작 콘텐츠를 구매하고 내려받을 수 있는 디지털 마켓입니다.',
     coverImage: 'ref/dlsite.webp',
     type: ContentType.REF,
     category: 'Market',
@@ -305,7 +305,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Pixiv Fanbox',
     subtitle: '픽시브 팬박스',
-    description: 'A community where creators can receive continuous support from their fans.',
+    description: '창작자가 작품과 후원자 전용 콘텐츠를 공개하고, 팬으로부터 정기적인 후원을 받을 수 있는 서비스입니다.',
     coverImage: 'ref/pixivfanbox.webp',
     type: ContentType.REF,
     category: 'Market',
@@ -316,7 +316,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Character Designs',
     subtitle: '',
-    description: '',
+    description: '캐릭터 디자인 수업에서 탄생한 학생 작품과 캐릭터 콘셉트 아트를 소개하는 갤러리입니다.',
     coverImage: '',
     type: ContentType.REF,
     category: 'Others',
@@ -325,7 +325,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Textures',
     subtitle: '',
-    description: '',
+    description: '사진과 3D 작업에 활용할 수 있는 텍스처 및 재질 이미지를 찾아볼 수 있는 자료 사이트입니다.',
     coverImage: 'ref/textures.webp',
     type: ContentType.REF,
     category: 'Others',
@@ -334,7 +334,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Sketchfab',
     subtitle: '',
-    description: '',
+    description: '웹에서 3D 모델을 회전·확대해 살펴보고, 창작자가 공유한 다양한 모델을 탐색할 수 있는 플랫폼입니다.',
     coverImage: 'ref/sketchfab.webp',
     type: ContentType.REF,
     category: 'Others',
@@ -343,7 +343,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: '​Game Gui',
     subtitle: '',
-    description: '',
+    description: '여러 게임의 인터페이스 화면을 모아 둔 데이터베이스로, 메뉴와 HUD 등 게임 UI 디자인을 참고할 수 있습니다.',
     coverImage: '',
     type: ContentType.REF,
     category: 'Others',
@@ -352,7 +352,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Bone Clones',
     subtitle: '',
-    description: '',
+    description: '실제 동물의 골격과 해부 구조를 본뜬 표본 및 모형을 소개하는 사이트로, 동물 뼈대 형태를 참고할 수 있습니다.',
     coverImage: 'ref/boneclones.webp',
     type: ContentType.REF,
     category: 'Others',
@@ -361,7 +361,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'X6ud',
     subtitle: '',
-    description: '',
+    description: '동물 사진을 검색해 볼 수 있어 동물의 형태와 자세를 그릴 때 참고 자료로 활용할 수 있는 사이트입니다.',
     coverImage: '',
     type: ContentType.REF,
     category: 'Others',

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ContentType } from '../../types';
 import { ExternalLink, Play, Youtube } from 'lucide-react';
+import CardScrollArea from './CardScrollArea';
 import ResolutionLimitedImage from './ResolutionLimitedImage';
 import { optimizeImageUrl } from '../../utils/optimizeImageUrl';
 
@@ -73,8 +74,22 @@ const PlatformIcon: React.FC<{ category?: string | string[]; iconImage?: string 
 
 const PostCard: React.FC<PostCardProps> = ({ post, viewMode, onImageClick }) => {
   const [imageError, setImageError] = useState(false);
-  
-  const displayImage = post.thumbnail || post.coverImage;
+
+  const rawImage = 
+    post.thumbnail || 
+    post.coverImage || 
+    (post as any).coverimage || 
+    (post as any).cover_image;
+
+  const formatImagePath = (path?: string) => {
+    if (!path) return '';
+    if (path.startsWith('http')) return path;
+    if (path.startsWith('/media/')) return path;
+    if (path.startsWith('media/')) return `/${path}`;
+    return `/media/${path.replace(/^\//, '')}`;
+  };
+
+const displayImage = formatImagePath(rawImage);
   
   let contentUrl = '';
   if (post.type === ContentType.VIDEO) {
@@ -91,6 +106,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, onImageClick }) => 
   const isArtist = viewMode === 'LIBRARY' || post.type === ContentType.IMAGE;
   const isMediaOrReference = viewMode === 'VIDEO' || viewMode === 'REF';
   const isVisualGrid = viewMode === 'LIBRARY';
+  const hasDescription = typeof post.description === 'string' && post.description.trim().length > 0;
   const categoryLabel = Array.isArray(post.category) ? post.category[0] : post.category;
   const hasPlatformIcon = Boolean(
     post.iconImage || /youtube|bilibili|pixiv|twitter/i.test(categoryLabel || '') || categoryLabel?.toLowerCase() === 'x'
@@ -109,7 +125,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, onImageClick }) => 
 
     return (
       <div
-        className={`group flex flex-row gap-4 p-4 rounded-2xl border transition-all min-h-[140px] bg-white border-slate-200 ${
+        className={`group flex h-[140px] flex-row gap-4 overflow-hidden rounded-2xl border bg-white p-4 transition-all sm:h-36 ${
           isGame ? '' : 'cursor-pointer hover:border-slate-400 hover:bg-slate-50'
         }`}
         onClick={isGame ? undefined : handleCardClick}
@@ -138,7 +154,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, onImageClick }) => 
           />
         </div>
 
-        <div className="flex-1 flex flex-col min-w-0 justify-start pt-0.5">
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col justify-start pt-0.5">
           <h3 className={`flex min-w-0 items-baseline gap-1.5 font-semibold text-sm sm:text-base leading-tight transition-colors mb-1 text-slate-900 ${
             isGame ? '' : 'group-hover:text-[var(--brand-accent)]'
           }`}>
@@ -146,17 +162,23 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, onImageClick }) => 
             {post.subtitle && <span className="card-subtitle shrink-0">{post.subtitle}</span>}
           </h3>
 
-          <div className="mb-3">
-            <p className="text-xs sm:text-sm leading-relaxed line-clamp-2 text-slate-600">
-              {post.description}
-            </p>
-          </div>
+          {hasDescription && (
+            <CardScrollArea className="mb-2 max-h-9 shrink-0">
+              <p className="text-xs leading-relaxed text-slate-600 sm:text-sm">
+                {post.description}
+              </p>
+            </CardScrollArea>
+          )}
 
-          <div className="mt-2 flex flex-wrap gap-2 relative z-30">
-            {isGame && post.gameLinks?.map((link: any, idx: number) => (
-              <Chip key={`game-link-${post.id}-${idx}`} label={link.label} url={link.url} />
-            ))}
-          </div>
+          {isGame && post.gameLinks?.length > 0 && (
+            <CardScrollArea className={`relative z-30 ${hasDescription ? 'mt-1 max-h-9 shrink-0' : 'mt-1 min-h-0 flex-1'}`}>
+              <div className="flex flex-wrap gap-2">
+                {post.gameLinks.map((link: any, idx: number) => (
+                  <Chip key={`game-link-${post.id}-${idx}`} label={link.label} url={link.url} />
+                ))}
+              </div>
+            </CardScrollArea>
+          )}
         </div>
       </div>
     );

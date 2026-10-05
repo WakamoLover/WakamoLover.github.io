@@ -1,9 +1,13 @@
-import React, { useState, useMemo, useEffect, useRef } from 'react';
+import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import Header from './components/Layout';
 import PostCard from './components/Content/PostCard';
 import ImageModal from './components/Content/ImageModal';
+import CardAdmin from './components/Admin/CardAdmin';
 import { MOCK_POSTS, CATEGORY_TABS } from './constants/index';
-import { ContentType } from './types';
+import { ContentType, type Post } from './types';
+import { deleteCard as deleteCardFromDatabase, fetchCards, insertCard, seedCards, updateCard } from './lib/cards';
+import { type EditableCard } from './lib/cards';
+import { adminEmail, isSupabaseConfigured, supabase } from './lib/supabase';
 
 const VIEW_PATHS: Record<string, string> = {
   LIBRARY: '/creator',
@@ -31,9 +35,69 @@ const App: React.FC = () => {
   const [currentCategory, setCurrentCategory] = useState('All');
   const [visibleCount, setVisibleCount] = useState(24);
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
+  const [cards, setCards] = useState<Post[]>(isSupabaseConfigured ? [] : MOCK_POSTS);
+  const [isCardsLoaded, setIsCardsLoaded] = useState(!isSupabaseConfigured);
+  const [isDatabaseEmpty, setIsDatabaseEmpty] = useState(false);
+  const [cardsError, setCardsError] = useState('');
+  const [adminError, setAdminError] = useState('');
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [editorOpen, setEditorOpen] = useState(false);
+  const [editingPost, setEditingPost] = useState<Post | null>(null);
   
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [currentImageUrl, setCurrentImageUrl] = useState('');
+
+  useEffect(() => {
+    if (!isSupabaseConfigured) return;
+    let isMounted = true;
+    void fetchCards().then((databaseCards) => {
+      if (!isMounted) return;
+      setIsCardsLoaded(true);
+      setIsDatabaseEmpty(databaseCards.length === 0);
+      setCards(databaseCards);
+    }).catch((error: unknown) => {
+      if (!isMounted) return;
+      setCardsError(error instanceof Error ? error.message : String(error));
+      setCards(MOCK_POSTS);
+      setIsCardsLoaded(true);
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const handleAdminChange = useCallback((active: boolean) => {
+    setIsAdmin(active);
+  }, []);
+
+  const handleSaveCard = async (post: EditableCard, id?: string) => {
+    setAdminError('');
+    const savedCard = id ? await updateCard(id, post) : await insertCard(post);
+    setCards((currentCards) => id
+      ? currentCards.map((card) => card.id === id ? savedCard : card)
+      : [...currentCards, savedCard]);
+    setIsDatabaseEmpty(false);
+    setVisibleCount(24);
+  };
+
+  const handleDeleteCard = async (post: Post) => {
+    if (!window.confirm(`Delete “${post.title}”?`)) return;
+    setAdminError('');
+    try {
+      await deleteCardFromDatabase(post.id);
+      setCards((currentCards) => currentCards.filter((card) => card.id !== post.id));
+    } catch (error) {
+      setAdminError(error instanceof Error ? error.message : String(error));
+    }
+  };
+
+  const handleSeedCards = async () => {
+    const importedCards = await seedCards(MOCK_POSTS);
+    setCards(importedCards);
+    setIsDatabaseEmpty(false);
+    setIsCardsLoaded(true);
+  };
+
   const handleNavigate = (view: string) => {
     const nextView = VIEW_PATHS[view] ? view : 'GAME';
     const nextPath = VIEW_PATHS[nextView];
@@ -82,14 +146,14 @@ const App: React.FC = () => {
   };
 
   const allFilteredPosts = useMemo(() => {
-    let result = (MOCK_POSTS || []).map((post: any) => {
+    let result = cards.map((post) => {
       let url = '';
       if (post.type === ContentType.VIDEO) {
         url = post.externalLink || post.channelUrl || post.videoUrl || '';
       } else if (post.type === ContentType.GAME) {
         url = '';
       } else {
-        url = post.externalLink || post.channelUrl || post.videoUrl || post.link || post.url || '';
+        url = post.externalLink || post.channelUrl || post.videoUrl || '';
       }
 
       const thumbnail = getCoverImage(post.coverImage);
@@ -128,7 +192,7 @@ const App: React.FC = () => {
     }
 
     return [...result].sort((a, b) => a.title.localeCompare(b.title, undefined, { sensitivity: 'base' }));
-  }, [currentView, currentCategory, searchTerm]);
+  }, [cards, currentView, currentCategory, searchTerm]);
 
   const displayPosts = allFilteredPosts;
 
@@ -159,6 +223,32 @@ const App: React.FC = () => {
         onSearchChange={handleSearchChange}
       />
 
+      <div className="px-4 pt-4 sm:px-6 xl:px-8">
+        <CardAdmin
+          isCardsLoaded={isCardsLoaded}
+          isDatabaseEmpty={isDatabaseEmpty}
+          hasCardsError={Boolean(cardsError)}
+          editorOpen={editorOpen}
+          editingPost={editingPost}
+          onAdminChange={handleAdminChange}
+          onCreate={() => {
+            setEditingPost(null);
+            setEditorOpen(true);
+          }}
+          onCloseEditor={() => setEditorOpen(false)}
+          onSave={handleSaveCard}
+          onSeed={handleSeedCards}
+        />
+        {(cardsError || adminError) && (
+          <p role="alert" className="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+            {cardsError ? `Could not load cards from Supabase: ${cardsError}` : `Card operation failed: ${adminError}`}
+          </p>
+        )}
+        {isSupabaseConfigured && !isCardsLoaded && (
+          <p role="status" className="mb-4 text-sm text-slate-500">Loading cards from Supabase...</p>
+        )}
+      </div>
+
       <main className="min-h-[calc(100vh-4rem)] w-full px-4 py-4 sm:px-6 md:py-6 xl:px-8">
           <section className="min-w-0">
                 {tabs.length > 0 && !searchTerm && (
@@ -180,20 +270,30 @@ const App: React.FC = () => {
                 <div className="min-h-[500px]">
                     {visiblePosts.length > 0 ? (
                       <div className={`grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 ${currentView === 'VIDEO' || currentView === 'REF' ? 'xl:grid-cols-5' : 'xl:grid-cols-4'}`}>
-                        {visiblePosts.map((post: any) => (
-                          <PostCard 
-                            key={post.id} 
-                            post={post} 
-                            viewMode={currentView} 
-                            onImageClick={(imgUrl: string) => {
-                              if (post.type === ContentType.IMAGE && post.originalUrl.includes('x.com')) {
-                                window.open(post.originalUrl, '_blank');
-                              } else {
-                                setCurrentImageUrl(imgUrl); 
-                                setIsImageModalOpen(true);
-                              }
-                            }}
-                          />
+                        {visiblePosts.map((post) => (
+                          <div key={post.id} className="min-w-0">
+                            {isAdmin && isCardsLoaded && !cardsError && !isDatabaseEmpty && (
+                              <div className="mb-2 flex justify-end gap-2">
+                                <button type="button" onClick={() => {
+                                  setEditingPost(post);
+                                  setEditorOpen(true);
+                                }} className="rounded-md border border-slate-300 px-3 py-1 text-xs font-semibold text-slate-700 hover:bg-slate-100">Edit</button>
+                                <button type="button" onClick={() => void handleDeleteCard(post)} className="rounded-md border border-red-200 px-3 py-1 text-xs font-semibold text-red-700 hover:bg-red-50">Delete</button>
+                              </div>
+                            )}
+                            <PostCard
+                              post={post}
+                              viewMode={currentView}
+                              onImageClick={(imgUrl: string) => {
+                                if (post.type === ContentType.IMAGE && post.originalUrl.includes('x.com')) {
+                                  window.open(post.originalUrl, '_blank');
+                                } else {
+                                  setCurrentImageUrl(imgUrl);
+                                  setIsImageModalOpen(true);
+                                }
+                              }}
+                            />
+                          </div>
                         ))}
                       </div>
                     ) : (

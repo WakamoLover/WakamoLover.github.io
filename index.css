@@ -14,6 +14,18 @@
   display: none;
 }
 
+.card-scroll-native {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.card-scroll-native::-webkit-scrollbar,
+.card-scroll-native::-webkit-scrollbar-button {
+  display: none !important;
+  width: 0;
+  height: 0;
+}
+
 .search-input::-webkit-search-cancel-button,
 .search-input::-webkit-search-decoration,
 .search-input::-webkit-search-results-button,

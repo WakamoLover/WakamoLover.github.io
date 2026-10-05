@@ -5,7 +5,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'MODARE',
     subtitle: '모군',
-    description: '',
+    description: '중국 일러스트레이터 모군의 작품과 디지털 페인팅 과정을 소개하는 채널입니다.',
     coverImage: 'https://i0.hdslb.com/bfs/face/5237b268dd7bae556e5c5642ca32efedf19e7692.jpg@96w_96h.webp',
     type: ContentType.VIDEO,
     category: 'Bilibili',
@@ -14,7 +14,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Matcha',
     subtitle: '',
-    description: '',
+    description: '일러스트 작품과 그림을 그리는 과정을 영상으로 공유하는 채널입니다.',
     coverImage: 'https://i0.hdslb.com/bfs/garb/86ece6d65ee0730b494c6a962afae15c0d27316b.png@96w_96h.webp',
     type: ContentType.VIDEO,
     category: 'Bilibili',
@@ -23,7 +23,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'IYun',
     subtitle: '',
-    description: '',
+    description: '디지털 일러스트와 캐릭터 그림 등 창작 작업을 소개하는 채널입니다.',
     coverImage: 'https://i0.hdslb.com/bfs/face/1ee4b0cfccd340cbf070a822032c7310b6ee3b08.jpg@160w_160h_1c_1s.webp',
     type: ContentType.VIDEO,
     category: 'Bilibili',
@@ -34,7 +34,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'SINI42',
     subtitle: '시니42',
-    description: '',
+    description: '그림멘탈선생 시니의 채널로, 그림을 꾸준히 그리는 방법과 창작자의 고민에 관한 이야기를 나눕니다.',
     coverImage: 'https://yt3.googleusercontent.com/TDZL3_bz8U5WhiUZTgzKTf8lHDsENcBWAd82anlzxb4NhZNnfpxJgTIUaYJtWgk7cVBXN1vi=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -43,7 +43,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'HxxG',
     subtitle: '',
-    description: '',
+    description: '얼굴과 신체를 그리는 방법을 중심으로 인체 드로잉과 일러스트 기법을 알려 주는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/Ha7So-t8QYKEsUALn0eIm-uXhYBC6SSTwvqytmgu8g_LyW31FncpuPiLIaZ7q8mvAkysMUwU=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -52,7 +52,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Naoki Saito',
     subtitle: '',
-    description: '',
+    description: '사이토 나오키가 그림 실력을 높이는 요령과 일러스트 제작 팁을 알기 쉽게 소개하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/gZ4ZQwhqle9_SehIS96ALDaeSvxOAN10sfeQPHYdCB1Skk87NYfWKjD1P5xvifFZZXKsC_2vVng=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -61,7 +61,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'hide channel',
     subtitle: '',
-    description: '',
+    description: '얼굴과 신체를 그리는 방법, 인체 표현의 기초를 강의 형식으로 소개하는 일본어 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/ytc/AIdro_lFCgPZEcMaLPjZfeamxUBICw610j3DqpGjgcuPU0Q=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -70,7 +70,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Leviathan',
     subtitle: '',
-    description: '',
+    description: '일러스트와 캐릭터 아트 작품, 디지털 드로잉 작업을 공유하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/ytc/AIdro_l21JVYWjsSufP_gRqYh5uv34qWvN_UmNwQ3J3Ur9ZOe7k=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -79,7 +79,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Nekojira',
     subtitle: '',
-    description: '',
+    description: '일러스트레이터 네코지라의 캐릭터 그림과 창작 활동을 소개하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/DsLwmbT5mXKFNNunXLCg65DCsk4TSb7i2NGqU_K3RPDp8gVKsVuVWWCtlkYdK6JkS0TWTfU80Q=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -88,7 +88,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Nvqsvr',
     subtitle: '',
-    description: '',
+    description: '캐릭터 일러스트와 디지털 페인팅 등 창작 작업물을 선보이는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/lForZKUYppWJpRNh_EU8qr7THknY5M6LLI8IbrHNiovMt5pxMimx34i96__P0PENbe01HM5AJw=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -97,7 +97,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'redjuice',
     subtitle: '',
-    description: '',
+    description: '일러스트레이터 redjuice의 캐릭터 디자인과 작품, 창작 활동을 소개하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/ytc/AIdro_mNECUBbWZwtbFD7JUvShzJxMvR4mAYQSIvMO45rdzsEWA=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -106,7 +106,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'RITY',
     subtitle: '',
-    description: '',
+    description: '일러스트와 애니메이션 작업 등 RITY의 창작 작품과 제작 과정을 소개하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/4AVr2m-gwXLN2_6wgCpOuOHPL8D_NIlZMjLefAysmR2KeBUV31aH8Omt5bYqiNpimILi85fp=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -115,7 +115,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'rurudo',
     subtitle: '',
-    description: '',
+    description: '일러스트레이터 rurudo의 캐릭터 일러스트와 작품 활동을 감상할 수 있는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/iPABH9tEiZOZvxOuaaoGFFjAbH8bMtKGJ7JFvzspRjwjC00O4net65HHn-mSCcIsNPBxfuL8kQ=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -124,7 +124,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Toga',
     subtitle: '',
-    description: '',
+    description: '캐릭터 일러스트와 그림 작업 등 Toga의 창작 활동을 소개하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/hrGMB1Q_RiR4H_GQkuM1kSwnHfO7o3EJELGAvevRaYczeMOBHYYV0VSg_Ru3pHNH1XkL4Vke7B4=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -133,7 +133,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'yu-ri',
     subtitle: '',
-    description: '',
+    description: '일러스트 제작과 창작자의 작업 일상을 영상으로 공유하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/ItlcsBAn7xzWdaFuzT9jmh7b8-o62OS6-KTSoIt2UQGPDBHnoFkcf6a6Ul-5IX8rDqcMXo3_4A=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -142,7 +142,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'kyockcho',
     subtitle: '',
-    description: '',
+    description: '캐릭터 중심의 일러스트와 디지털 드로잉 작업을 소개하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/lyR4YyfIR-xal3o_OIzEIxc3Inl_TBknJc7j4_0Z56lb7EaJxuPplEAejatyKsbo9PI-rpN6FQ=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -151,7 +151,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Agyou',
     subtitle: '',
-    description: '',
+    description: '일러스트와 영상 작업 등 Agyou의 창작 활동과 작품을 공유하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/DILMG74p4unZuGg-NC9edmgiUGbALvm97v1WHV-68mYCO4xQ9bkcVuSWAh5oImZwjATEAFZtn6c=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -160,7 +160,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Kionaoki',
     subtitle: '',
-    description: '',
+    description: '캐릭터 일러스트와 그림 작업 과정을 영상으로 소개하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/05U05L-U5JSicy4zf6vhTNEf6vzvQbHv8vy89XjMt1jqcrylPfturuFNi8HtFQDawU19zWLWR2k=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -169,7 +169,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'mm',
     subtitle: 'ㅁㅁ',
-    description: '',
+    description: '디지털 일러스트와 캐릭터 드로잉 등 창작 작업을 공유하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/Us4UAOn4v0EttcdqJnSPXIk1VSfvVr_5YUpcKMhh5DaA8zBc546q6nXgl5_kP0A8k7Rmfbf7=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -178,7 +178,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'gozenjuziame',
     subtitle: '',
-    description: '',
+    description: '일러스트레이터 오전십시우의 그림과 캐릭터 창작 활동을 소개하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/ytc/AIdro_mn-ChSqxbmeGdCZZVSF7w1MqonFBWZnt3q_uGV9iNKBw=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -187,7 +187,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'lack',
     subtitle: '',
-    description: '',
+    description: '일러스트레이터 lack의 캐릭터 작품과 그림 작업, 창작 활동을 소개하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/ytc/AIdro_nwPEVygomIpt4e0GTFSmf5cFoKTa9GyrLSwJM73zNe5A=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -196,7 +196,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Zumizumi',
     subtitle: '',
-    description: '',
+    description: '캐릭터 일러스트와 디지털 페인팅 작품을 공유하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/p3gSELnRCRGpqb9dy_La-KsNPj5oQxxdWhuwrj_DHYtedpuLZY204tkL3devcf8wyKAhcNdApQ=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -205,7 +205,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'ki minwoo',
     subtitle: '기민우',
-    description: '',
+    description: '일러스트레이터 기민우의 작품과 캐릭터 드로잉 작업을 소개하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/0o_hmNgE0ZtLyZtZMwHbAjd-CNBRd5qKPmz8HnrygSZCLQCUVqZiKvK5ezBk2o1t_U_1377T=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -214,7 +214,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Rockhe Kim',
     subtitle: '',
-    description: '',
+    description: '김록희 작가의 일러스트와 캐릭터 디자인 등 창작 작품을 소개하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/ytc/AIdro_kypDi6xOcffNAukO3wxRV4n3t4-oDartNuBwrPg7QapyE=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -223,7 +223,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'DDUCK KONG',
     subtitle: '떡콩',
-    description: '',
+    description: '일러스트레이터 떡콩의 캐릭터 그림과 창작 작업을 공유하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/tzNSAWVVzQQ8Yinvj_hLIjTs2DIHxaEIkgorwVBcUP_jBnB70iWyei4Ia_C__9QGJvTVGI69fpY=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -232,7 +232,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'D.Ramz',
     subtitle: '람지의 작업실',
-    description: '',
+    description: '람지의 작업실에서 일러스트를 그리고 창작하는 과정과 작품을 소개하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/FlIetHiE044atfnt8Bw5rgfna0ZRzXiRsOO2II6Pk-f55TvS4XNeWNifhFaWJphWFWbYGOAV=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -241,7 +241,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'seorang',
     subtitle: '서랑그림',
-    description: '',
+    description: '서랑의 일러스트 작품과 그림을 그리는 과정을 공유하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/tUAP_psBReKdm946Rflyjidr1ktoYenJr4c_ZBAxx7evJJeXUC70deCKApXFJlMQ6lvm2GyYtKI=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -250,7 +250,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Sjoop',
     subtitle: '수줍',
-    description: '',
+    description: '일러스트레이터 수줍의 캐릭터 그림과 창작 작업을 소개하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/cmvzSlAI1cXArLJ4Dj2XvgVrcEWdrFlty3SHZhMaTIoWlKnnbzmxOLPyelVCyKQQqqXFSCSQ4g=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -259,7 +259,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Toki Murasaki',
     subtitle: '',
-    description: '',
+    description: '일러스트레이터 토키 무라사키의 작품과 디지털 드로잉을 소개하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/Qgen2AAH2JsO3wdS2SZNkZ0L-X_RMmxXvAqj-d23N13WgpL7oJXexJwuz8dLamTp5QGUz8n2=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -268,7 +268,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Yenkoes',
     subtitle: '',
-    description: '',
+    description: '캐릭터 일러스트와 창작 그림 작업을 영상으로 공유하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/c2cDAF3J0JTKe2vO4b1sezp9rF1X76Jrr993TU-xyB4p7cE_b_AYeWh1dy_w6VQtPg693WiXMA=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -277,7 +277,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'kuzuvine',
     subtitle: '',
-    description: '',
+    description: '일러스트와 캐릭터 아트 등 디지털 창작 작업을 소개하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/7kRSKuBJVkuyX0p7YMgnuj3kuyaLwPFkBIPOykvHxyl7ecqQqJsYo-0v5DLREsYMTn8D8xRYTw=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -286,7 +286,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Yotsumi Shiro',
     subtitle: '',
-    description: '',
+    description: '일러스트레이터 요츠미 시로의 작품과 캐릭터 창작 활동을 소개하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/qd1xxEMHaLVR7aOqiOoNAgHWBhpwsJSAqMQh-VJuAABidu367nnJR18z0R8AzRwjOUcV9uwffg=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -295,7 +295,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'kakage',
     subtitle: '',
-    description: '',
+    description: '일러스트레이터 kakage의 캐릭터 그림과 작품 활동을 감상할 수 있는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/ytc/AIdro_kJqgJLG0BdJZtaWtjkRqvfdMBoo_Ux9zpdnHqmJJDF4lo=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -304,7 +304,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Ixy',
     subtitle: '',
-    description: '',
+    description: '일러스트레이터 Ixy의 캐릭터 일러스트와 창작 작품을 소개하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/YGF9URNFhAlrgqqig0eqVXynVMff07um_4r4UTM5JIGB4oWoSzPNcKF_J-OlUwFRlnFSCaGD=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -313,7 +313,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Neg',
     subtitle: '',
-    description: '',
+    description: '일러스트레이터 Neg의 작품과 디지털 캐릭터 드로잉을 공유하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/ytc/AIdro_lCQSTtMJ-Jue0fRNhdZDjdNZ6kyCORin47ugkkoP3oqQ=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -322,7 +322,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'SUNGMOOMOO',
     subtitle: '',
-    description: '',
+    description: '일러스트레이터 성무무의 캐릭터 그림과 창작 작업을 소개하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/tIhz8OIOHmVQWFQsZs2TeNcKiH0Zt2JMKdDj3vlcfqF4zKFFzeeUDeyCpvTcX4RhVjC8RKmK=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -331,7 +331,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'ANIZI',
     subtitle: '',
-    description: '',
+    description: '일러스트와 캐릭터 디자인 등 ANIZI의 창작 작품을 공유하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/1TmGbO8DbY6VwEw60Tobs_uPpyGKasAjmlzGipY5iQEbkQtpQz15ARujg3g5euDz9X0mxs6zmVY=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -340,7 +340,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'floomf',
     subtitle: '',
-    description: '',
+    description: '캐릭터 일러스트와 디지털 그림 작업을 소개하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/K8mLFJU2uImbSZp6vXqyyTlpuPcTc7He0zQCHWTnbjEt3zDnGHOJL3kW-g70Po2cWnpRIVVRBA=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -349,7 +349,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'seeshin',
     subtitle: '',
-    description: '',
+    description: '일러스트 작업과 캐릭터 창작 등 seeshin의 작품 활동을 소개하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/SJZFBOTiiVi0XYEHYf_zBrJpZnEARvGo0o03BzLIxqVZnFWC0uhVuY5A-E4IszTmrhDxigPxlA=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -358,7 +358,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Monoco55',
     subtitle: '',
-    description: '',
+    description: '일러스트레이터 Monoco55의 그림과 캐릭터 창작 작업을 공유하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/hASkB8by9B5dc3n44OWxb-tP99XjCaHmaMcvgsCiY-6hGS9rraBJ8tnE7yKj_YnJE_MQ6Y8fmH4=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -367,7 +367,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'ye_jji',
     subtitle: '',
-    description: '',
+    description: '일러스트와 캐릭터 드로잉 등 창작 작업 과정을 소개하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/cpgwt51wJ5lt05GWYhmscjlBXlIq82r9jMHVJWuAvpMQa0-k9s6UCVUsWD_-vruRr-SqLFoSQTk=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -376,7 +376,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'happyend404',
     subtitle: '',
-    description: '',
+    description: '일러스트와 캐릭터 그림을 중심으로 창작 작품을 공유하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/ElpDN3uoTSCdbwFEKKaDAg9hJSM8_VG7VxHxEyJRIXqgEsu9MCKHSP8tieSZ99T36lXvs6hO3w=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -385,7 +385,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'foritis wang',
     subtitle: '',
-    description: '',
+    description: '일러스트레이터 foritis wang의 그림과 디지털 창작 활동을 소개하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/ytc/AIdro_lMX2M9JogJxULuco3GDEHKcfRBLtOGaW6Xs2SmD7vektA=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -394,7 +394,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Kitazume Kumin',
     subtitle: '',
-    description: '',
+    description: '일러스트레이터 키타즈메 쿠민의 작품과 캐릭터 일러스트를 소개하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/IFYLn51brJ2D9UPtx2L3YoGUN7p3HPQajjsyTM68WH6wdCkkVX_Hq5kN-gJ3TuowHcqAe1Le=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -403,7 +403,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'azit',
     subtitle: '',
-    description: '',
+    description: '캐릭터 일러스트와 디지털 페인팅 등 창작 작업을 공유하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/gsIDKFmBfQoaXqkB37XiX5yZP1EfHQmkZ8MmyuPumkKhHIvSIMdrO4qt-Y6rUlTxtaYFh3WW=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -412,7 +412,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Macciatto',
     subtitle: '마끼아또',
-    description: '',
+    description: '일러스트레이터 마끼아또의 캐릭터 그림과 작품 활동을 소개하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/M822QmGJ541qmFBqYACan49QKBdtIB_VQV5etsOqfpJ3tPScTbz6ukIbZ8-JSiMq_1M5d6bqasc=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -421,7 +421,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'FEVERCELL',
     subtitle: '피버셀',
-    description: '',
+    description: '일러스트 작업과 창작 관련 콘텐츠를 선보이는 피버셀의 공식 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/Wv3bsg8dpVoGLxUbff_KE-MkQLxJzIeaLG3wUmEfBz2u_YeE-bHmo8Q-8O1bpZf-VDrLo_w6ZQ=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -430,7 +430,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'PROPIC',
     subtitle: '프로픽',
-    description: '',
+    description: '프로 일러스트레이터의 강의와 그림 실력 향상을 위한 드로잉 팁을 소개하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/ytc/AIdro_l0u9AW8u6R5XmB_Y27Sals_G4wkHZ9Zk-BiEDVjJ5Amw0=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -439,7 +439,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'RAUM ACADEMY',
     subtitle: '라움 아카데미',
-    description: '',
+    description: '라움 아카데미의 미술·일러스트 교육과 강의, 수강생 작품을 소개하는 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/t4zXZvU2DQj_5ilVUU0E6cnU_DDLbRhTbdl540_Eibpr8TYQRb4KJ3rONlKWh9uvYp2YFbfd=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -448,7 +448,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'BWs Darakbang',
     subtitle: '병우쌤의 다락방',
-    description: '',
+    description: '병우쌤이 그림과 디자인 작업, 창작 노하우를 나누는 작업실 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/qtTXJ4r9thE9B4uFf3U8_MSD8uHmMr_pM-Sdm9ylFTYMcvDVYfc_lwM8eNHUyThV45floHTGiv0=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
@@ -457,7 +457,7 @@ export const MEDIA_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'OSSEM',
     subtitle: '오쌤 인체해부학',
-    description: '',
+    description: '그림에 필요한 인체 해부학과 뼈·근육 구조, 인체 드로잉 방법을 설명하는 교육 채널입니다.',
     coverImage: 'https://yt3.googleusercontent.com/ytc/AIdro_l0wn24wRpV6eLegC_yMo6JwgNxrvGS2Q_hE540pWv41Q=s160-c-k-c0x00ffffff-no-rj',
     type: ContentType.VIDEO,
     category: 'YouTube',
