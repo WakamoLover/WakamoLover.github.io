@@ -6,29 +6,6 @@ npm run dev
 npm run build
 ```
 
-### Migrating constants to Supabase
-
-Run [`supabase/posts-migration.sql`](./supabase/posts-migration.sql) in the Supabase
-SQL Editor first. Then set `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` in the
-ignored local `.env` file and, only if intentionally repeating the migration, run:
-
-```bash
-npx tsx utils/migrate.ts --dry-run
-npx tsx utils/migrate.ts
-```
-
-There is intentionally no `migrate` npm script, to prevent accidental execution of
-this one-time data migration. The standalone `tsx` runner avoids `ts-node` and ESM
-loader conflicts.
-
-The dry run validates the local constants and prints source counts without connecting
-to Supabase. The migration reads Creator, Game, Reference, and Media records and
-upserts them in batches of 500. Card-specific fields such as links, tags, and game
-links are kept in `metadata`; stable `source_key` values make repeat runs update the
-same migrated records instead of inserting duplicates. The script verifies that all
-source records are present after writing. The service-role key bypasses row-level
-security, so keep it only in `.env`, never use a `VITE_` prefix, and never commit it.
-
 ### Live Supabase posts
 
 The site reads `posts` from Supabase and refreshes the displayed cards when rows are

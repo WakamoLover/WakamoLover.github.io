@@ -108,6 +108,7 @@ const mapPostRow = (value: unknown): Post => {
   return {
     ...metadata,
     id: String(id),
+    sourceKey: readString(readField(value, 'source_key', 'sourceKey')),
     title,
     subtitle,
     description: description ?? '',

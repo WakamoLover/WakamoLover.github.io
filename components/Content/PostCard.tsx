@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ContentType } from '../../types';
 import { ExternalLink, Play, Youtube } from 'lucide-react';
 import CardScrollArea from './CardScrollArea';
@@ -74,6 +74,7 @@ const PlatformIcon: React.FC<{ category?: string | string[]; iconImage?: string 
 
 const PostCard: React.FC<PostCardProps> = ({ post, viewMode, onImageClick }) => {
   const [imageError, setImageError] = useState(false);
+  const [usingIndexedFallback, setUsingIndexedFallback] = useState(false);
 
   const rawImage = 
     post.thumbnail || 
@@ -89,7 +90,42 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, onImageClick }) => 
     return `/media/${path.replace(/^\//, '')}`;
   };
 
-const displayImage = formatImagePath(rawImage);
+const displayImage = optimizeImageUrl(formatImagePath(rawImage));
+  useEffect(() => {
+    setImageError(false);
+    setUsingIndexedFallback(false);
+  }, [post.id, rawImage]);
+
+  const getIndexedFallback = (sourceKey?: string): string | undefined => {
+    const match = sourceKey?.match(/^(game|ref):(\d+)$/);
+    if (!match) return undefined;
+
+    const [, type, rawIndex] = match;
+    const sourceIndex = Number(rawIndex);
+    if (!Number.isInteger(sourceIndex) || sourceIndex < 0) return undefined;
+
+    if (type === 'game') {
+      return `/media/game/game_${100001 + sourceIndex}.webp`;
+    }
+
+    const referenceImageIndexes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 20, 21, 22, 23, 26, 27, 30, 31, 32, 34, 35, 37];
+    const assetIndex = referenceImageIndexes.indexOf(sourceIndex);
+    return assetIndex === -1 ? undefined : `/media/ref/ref_${100001 + assetIndex}.webp`;
+  };
+
+  const indexedFallback = getIndexedFallback(post.sourceKey);
+  const imageSource = imageError
+    ? 'https://placehold.co/400x225?text=Image+Failed'
+    : usingIndexedFallback && indexedFallback
+      ? indexedFallback
+      : displayImage;
+  const handleImageError = () => {
+    if (!usingIndexedFallback && indexedFallback && indexedFallback !== displayImage) {
+      setUsingIndexedFallback(true);
+    } else {
+      setImageError(true);
+    }
+  };
   
   let contentUrl = '';
   if (post.type === ContentType.MEDIA) {
@@ -141,15 +177,15 @@ const displayImage = formatImagePath(rawImage);
             if (contentUrl) {
               window.open(contentUrl, '_blank', 'noopener,noreferrer');
             } else {
-              onImageClick && onImageClick(displayImage);
+              onImageClick && onImageClick(imageSource);
             }
           }}
         >
           <ResolutionLimitedImage
-            src={imageError ? 'https://placehold.co/400x225?text=Image+Failed' : displayImage}
+            src={imageSource}
             alt={post.title}
             referrerPolicy="no-referrer"
-            onError={() => setImageError(true)}
+            onError={handleImageError}
             className="w-full h-full object-cover transition-transform duration-500 transform-gpu will-change-transform group-hover:scale-105"
           />
         </div>
@@ -197,10 +233,10 @@ const displayImage = formatImagePath(rawImage);
       <article className="group flex min-h-44 gap-3 rounded-xl bg-slate-50 p-4 transition-colors hover:bg-slate-100 sm:gap-4">
         <div className="h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-white sm:h-[72px] sm:w-[72px]">
           <ResolutionLimitedImage
-            src={imageError ? 'https://placehold.co/160x160?text=Image+Failed' : displayImage}
+            src={imageSource}
             alt={post.title}
             referrerPolicy="no-referrer"
-            onError={() => setImageError(true)}
+            onError={handleImageError}
             className="h-full w-full object-cover transition-transform duration-300 transform-gpu group-hover:scale-110"
           />
         </div>
@@ -243,10 +279,10 @@ const displayImage = formatImagePath(rawImage);
         }}
       >
         <ResolutionLimitedImage
-          src={imageError ? 'https://placehold.co/400x400?text=Image+Failed' : displayImage}
+          src={imageSource}
           alt={post.title}
           referrerPolicy="no-referrer"
-          onError={() => setImageError(true)}
+          onError={handleImageError}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
@@ -298,10 +334,10 @@ const displayImage = formatImagePath(rawImage);
     >
       <div className="relative w-full overflow-hidden bg-slate-100 aspect-[3/4]">
         <ResolutionLimitedImage
-          src={imageError ? 'https://placehold.co/400x225?text=Image+Failed' : displayImage}
+          src={imageSource}
           alt={post.title}
           referrerPolicy="no-referrer"
-          onError={() => setImageError(true)}
+          onError={handleImageError}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 transform-gpu will-change-transform"
         />
 

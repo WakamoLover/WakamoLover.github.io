@@ -12,6 +12,7 @@ export interface GameLink {
 
 export interface Post {
   id: string;
+  sourceKey?: string;
   title: string;
   subtitle?: string;
   description: string;

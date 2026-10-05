@@ -23,11 +23,12 @@ const getViewFromPath = () => {
 const hasAdminQuery = () => new URLSearchParams(window.location.search).has('yukina');
 
 const getCoverImage = (coverImage?: string): string => {
-  if (coverImage && coverImage.trim() !== '') {
-    if (coverImage.startsWith('http')) return coverImage;
-    return `/media/${coverImage}`;
-  }
-  return 'https://placehold.co/400x225?text=No+Cover+Image';
+  const source = coverImage?.trim();
+  if (!source) return 'https://placehold.co/400x225?text=No+Cover+Image';
+  if (/^(https?:|data:|blob:)/i.test(source)) return source;
+  if (source.startsWith('//')) return `https:${source}`;
+  if (source.startsWith('/')) return source;
+  return `/media/${source.replace(/^media\//i, '').replace(/^\/+/, '')}`;
 };
 
 const App: React.FC = () => {

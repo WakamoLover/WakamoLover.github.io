@@ -20,16 +20,52 @@ const SupabaseAdminGate: React.FC<SupabaseAdminGateProps> = ({ children }) => {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    if (!supabase) return;
+    if (!supabase) {
+      setSessionReady(true);
+      return;
+    }
+
+    let isCurrent = true;
+    let hasAuthEvent = false;
+    const sessionTimeout = window.setTimeout(() => {
+      if (!isCurrent || sessionReady) return;
+      setMessage('세션 확인 시간이 초과되었습니다. 페이지를 새로고침하거나 다시 로그인해 주세요.');
+      setSessionReady(true);
+    }, 10000);
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, nextSession) => {
+      hasAuthEvent = true;
       setSession(nextSession);
       setSessionReady(true);
-      setAuthorization('checking');
       setMessage('');
+      window.clearTimeout(sessionTimeout);
     });
 
-    return () => subscription.unsubscribe();
+    void supabase.auth.getSession().then(({ data, error }) => {
+      if (!isCurrent || hasAuthEvent) return;
+      if (error) {
+        setMessage(`세션을 확인하지 못했습니다: ${error.message}`);
+        setSession(null);
+        setAuthorization('denied');
+      } else {
+        setSession(data.session);
+      }
+      setSessionReady(true);
+    }).catch((error: unknown) => {
+      if (!isCurrent || hasAuthEvent) return;
+      setMessage(`세션을 확인하지 못했습니다: ${error instanceof Error ? error.message : String(error)}`);
+      setSession(null);
+      setAuthorization('denied');
+      setSessionReady(true);
+    }).finally(() => {
+      window.clearTimeout(sessionTimeout);
+    });
+
+    return () => {
+      isCurrent = false;
+      window.clearTimeout(sessionTimeout);
+      subscription.unsubscribe();
+    };
   }, []);
 
   useEffect(() => {
@@ -40,6 +76,12 @@ const SupabaseAdminGate: React.FC<SupabaseAdminGateProps> = ({ children }) => {
 
     let isCurrent = true;
     setAuthorization('checking');
+    const authorizationTimeout = window.setTimeout(() => {
+      if (!isCurrent) return;
+      setMessage('관리자 권한 확인 시간이 초과되었습니다. Supabase 연결과 is_admin 정책을 확인해 주세요.');
+      setAuthorization('error');
+    }, 10000);
+
     void (async () => {
       try {
         const { data, error } = await supabase.rpc('is_admin');
@@ -54,11 +96,14 @@ const SupabaseAdminGate: React.FC<SupabaseAdminGateProps> = ({ children }) => {
         if (!isCurrent) return;
         setMessage(`관리자 권한을 확인하지 못했습니다: ${error instanceof Error ? error.message : String(error)}`);
         setAuthorization('error');
+      } finally {
+        window.clearTimeout(authorizationTimeout);
       }
     });
 
     return () => {
       isCurrent = false;
+      window.clearTimeout(authorizationTimeout);
     };
   }, [session?.user.id]);
 

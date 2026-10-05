@@ -1,4 +1,4 @@
--- Run this once in the Supabase SQL Editor before `npm run migrate`.
+-- Run this once in the Supabase SQL Editor before `npx tsx utils/migrate.ts`.
 -- Stable source keys make the constants migration safe to rerun.
 alter table public.posts
   add column if not exists source_key text;
