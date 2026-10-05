@@ -51,13 +51,13 @@ export const MOCK_USERS: User[] = [
   { id: 'u1', name: 'Miyouji', avatar: 'user_100002.png' },
 ];
 
-export const NAV_ITEMS = ['GAME', 'CREATOR', 'VIDEO', 'REF'];
+export const NAV_ITEMS = ['GAME', 'CREATOR', 'MEDIA', 'REF'];
 
 export const CATEGORY_TABS: Record<string, string[]> = {
   'GAME': ['All', 'Hoyoverse', 'HyperGraph', 'Nexon', 'Kuro Games', 'Shift Up', 'Yostar', 'Manjuu', 'Sega', 'Bushroad', 'Hotta Studio', 'QualiArts', 'Others'],
   'CREATOR': ['All', 'Illustrator', 'Cosplayer', 'Mangaka', 'Concept Artist', 'Designer', 'Others'],
   'REF': ['All', 'Social', 'Image', 'Pose', 'Color', 'Design', 'Market', 'Others'],
-  'VIDEO': ['All', 'YouTube', 'Bilibili', 'Niconico', 'Others']
+  'MEDIA': ['All', 'YouTube', 'Bilibili', 'Niconico', 'Others']
 };
 
 export const MOCK_POSTS: Post[] = [

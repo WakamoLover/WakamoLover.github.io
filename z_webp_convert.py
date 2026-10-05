@@ -17,4 +17,4 @@ for filename in os.listdir(folder_path):
 
 print("WebP conversions are done!")
 
-## python z_convert.py
+## python z_webp_convert.py
