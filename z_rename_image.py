@@ -96,4 +96,4 @@ def rename_images_and_update_refs(dry_run=True):
 if __name__ == '__main__':
     rename_images_and_update_refs(dry_run=True)  # Set dry_run=False to apply changes
 
-## python rename_image.py
+## python z_rename_image.py
