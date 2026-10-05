@@ -33,7 +33,7 @@ const mapRowToPost = (row: CardRow): Post => {
 };
 
 const mapPostToRow = (post: EditableCard, id?: string) => ({
-  ...(id ? { id } : {}),
+  id: id || crypto.randomUUID(),
   title: post.title,
   subtitle: post.subtitle || null,
   description: post.description,
