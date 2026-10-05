@@ -40,13 +40,12 @@ const CardAdmin: React.FC<CardAdminProps> = ({
 
   const isAdmin = Boolean(user?.email && adminEmail && user.email.toLowerCase() === adminEmail.toLowerCase());
 
-  // URL 파라미터 감지 로직 강화
   useEffect(() => {
     const checkYukina = () => {
       const url = window.location.href;
       if (url.includes('yukina')) {
         setShowAdminBtn(true);
-        setLoginOpen(true); // 로그인 입력폼 바로 열기
+        setLoginOpen(true);
       }
     };
 
@@ -85,22 +84,28 @@ const CardAdmin: React.FC<CardAdminProps> = ({
   }, []);
 
   const handleSignIn = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!supabase) return;
+      event.preventDefault();
 
-    setIsBusy(true);
-    setErrorMessage('');
+      if (!supabase) {
+        setErrorMessage('Supabase Client not initialized. Please check your .env variables.');
+        return;
+      }
 
-    try {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) throw error;
-      setPassword('');
-    } catch (error: unknown) {
-      setErrorMessage(error instanceof Error ? error.message : String(error));
-    } finally {
-      setIsBusy(false);
-    }
-  };
+      setIsBusy(true);
+      setErrorMessage('');
+
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        
+        console.log('Login completed:', data);
+      } catch (error: unknown) {
+        console.error('Login error:', error);
+        setErrorMessage(error instanceof Error ? error.message : String(error));
+      } finally {
+        setIsBusy(false);
+      }
+    };
 
   const handleSignOut = async () => {
     if (!supabase) return;
