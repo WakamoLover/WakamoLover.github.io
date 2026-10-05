@@ -1,6 +1,6 @@
 import { ContentType, Post } from '../types';
 
-export const LIBRARY_ITEMS: Omit<Post, 'id'>[] = [
+export const CREATOR_ITEMS: Omit<Post, 'id'>[] = [
 // Illustrator ------
   {
     title: 'ASK',

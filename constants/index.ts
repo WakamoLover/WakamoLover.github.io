@@ -2,7 +2,7 @@ import { ContentType, Post, User } from '../types';
 import { GAME_ITEMS as GAME_ITEMS_BASE } from './game';
 import { REF_ITEMS as REF_ITEMS_BASE } from './ref';
 import { MEDIA_ITEMS as MEDIA_ITEMS_BASE } from './media';
-import { LIBRARY_ITEMS as LIBRARY_ITEMS_BASE } from './library';
+import { CREATOR_ITEMS as CREATOR_ITEMS_BASE } from './creator';
 
 const generateIds = (items: any[], prefix: string): Post[] => {
   return items.map((item, index) => ({
@@ -44,18 +44,18 @@ const getPlatformIconImage = (url?: string): string | undefined => {
 const GAME_ITEMS = generateIds(GAME_ITEMS_BASE, 'g');
 const REF_ITEMS = generateIds(REF_ITEMS_BASE, 'r');
 const MEDIA_ITEMS = generateIds(MEDIA_ITEMS_BASE, 'm');
-const LIBRARY_ITEMS = generateIds(LIBRARY_ITEMS_BASE, 'l');
+const CREATOR_ITEMS = generateIds(CREATOR_ITEMS_BASE, 'l');
 
 export const MOCK_USERS: User[] = [
   { id: 'admin', name: 'Miyouji', avatar: 'user_100001.png' },
   { id: 'u1', name: 'Miyouji', avatar: 'user_100002.png' },
 ];
 
-export const NAV_ITEMS = ['GAME', 'LIBRARY', 'VIDEO', 'REF'];
+export const NAV_ITEMS = ['GAME', 'CREATOR', 'VIDEO', 'REF'];
 
 export const CATEGORY_TABS: Record<string, string[]> = {
   'GAME': ['All', 'Hoyoverse', 'HyperGraph', 'Nexon', 'Kuro Games', 'Shift Up', 'Yostar', 'Manjuu', 'Sega', 'Bushroad', 'Hotta Studio', 'QualiArts', 'Others'],
-  'LIBRARY': ['All', 'Illustrator', 'Cosplayer', 'Mangaka', 'Concept Artist', 'Designer', 'Others'],
+  'CREATOR': ['All', 'Illustrator', 'Cosplayer', 'Mangaka', 'Concept Artist', 'Designer', 'Others'],
   'REF': ['All', 'Social', 'Image', 'Pose', 'Color', 'Design', 'Market', 'Others'],
   'VIDEO': ['All', 'YouTube', 'Bilibili', 'Niconico', 'Others']
 };
@@ -64,6 +64,5 @@ export const MOCK_POSTS: Post[] = [
   ...GAME_ITEMS,
   ...REF_ITEMS,
   ...MEDIA_ITEMS,
-  ...LIBRARY_ITEMS,
+  ...CREATOR_ITEMS,
 ];
-

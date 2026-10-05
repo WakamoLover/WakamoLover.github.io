@@ -103,9 +103,9 @@ const displayImage = formatImagePath(rawImage);
   }
   
   const isVideo = post.type === ContentType.VIDEO;
-  const isArtist = viewMode === 'LIBRARY' || post.type === ContentType.IMAGE;
+  const isArtist = viewMode === 'CREATOR' || post.type === ContentType.IMAGE;
   const isMediaOrReference = viewMode === 'VIDEO' || viewMode === 'REF';
-  const isVisualGrid = viewMode === 'LIBRARY';
+  const isVisualGrid = viewMode === 'CREATOR';
   const hasDescription = typeof post.description === 'string' && post.description.trim().length > 0;
   const categoryLabel = Array.isArray(post.category) ? post.category[0] : post.category;
   const hasPlatformIcon = Boolean(
@@ -258,7 +258,7 @@ const displayImage = formatImagePath(rawImage);
         )}
 
         <div className="absolute inset-x-0 bottom-0 p-3 text-white">
-          {viewMode === 'LIBRARY' ? (
+          {viewMode === 'CREATOR' ? (
             <>
               {post.description && (
                 <p className="mb-1 text-[11px] leading-snug text-white/75 line-clamp-1">

@@ -11,7 +11,7 @@ import { type EditableCard } from './lib/cards';
 import { adminEmail, isSupabaseConfigured, supabase } from './lib/supabase';
 
 const VIEW_PATHS: Record<string, string> = {
-  LIBRARY: '/creator',
+  CREATOR: '/creator',
   VIDEO: '/media',
   GAME: '/game',
   REF: '/reference',
@@ -173,7 +173,7 @@ const App: React.FC = () => {
     });
 
     const typeMap: Record<string, ContentType> = {
-      GAME: ContentType.GAME, REF: ContentType.REF, VIDEO: ContentType.VIDEO, LIBRARY: ContentType.IMAGE,
+      GAME: ContentType.GAME, REF: ContentType.REF, VIDEO: ContentType.VIDEO, CREATOR: ContentType.IMAGE,
     };
     if (typeMap[currentView]) {
       result = result.filter(p => p.type === typeMap[currentView]);

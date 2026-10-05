@@ -3,7 +3,7 @@ import { Moon, Search, Sun, X } from 'lucide-react';
 
 const AREA_TABS = [
   { id: 'GAME', label: 'Game' },
-  { id: 'LIBRARY', label: 'Creator' },
+  { id: 'CREATOR', label: 'Creator' },
   { id: 'VIDEO', label: 'Media' },
   { id: 'REF', label: 'Reference' },
 ];
