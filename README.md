@@ -22,6 +22,10 @@ example, `public/media/uploads`). The selected image's original filename is used
 default, and admins can edit it before upload. A missing extension is taken from the
 original image; if the chosen path already exists, the upload is rejected rather than
 overwriting it. The resulting site URL is filled into the cover image field.
+
+The same admin panel can list TypeScript files in `constants/` and its subfolders,
+read and edit a selected file, and commit it. Each file save and card update/delete
+fetches that target file's latest SHA immediately before the Contents API update.
 ### Local to Git
 ```bash
 git add .

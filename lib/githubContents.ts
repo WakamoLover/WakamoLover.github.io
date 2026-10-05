@@ -36,6 +36,162 @@ const encodeBytesBase64 = (bytes: Uint8Array): string => {
   return btoa(binary);
 };
 
+const getApiHeaders = (token: string): HeadersInit => ({
+  Accept: 'application/vnd.github+json',
+  Authorization: `Bearer ${token}`,
+  'X-GitHub-Api-Version': '2022-11-28',
+});
+
+const getContentsEndpoint = (owner: string, repo: string, path: string): string =>
+  `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/contents/${path
+    .split('/')
+    .map(encodeURIComponent)
+    .join('/')}`;
+
+const getGitHubFile = async (
+  settings: GitHubRepositorySettings,
+  path: string,
+): Promise<{ sha: string; content: string }> => {
+  const { owner, repo, branch, token } = settings;
+  const endpoint = getContentsEndpoint(owner, repo, path);
+  const query = new URLSearchParams({ ref: branch });
+  const response = await fetch(`${endpoint}?${query}`, { headers: getApiHeaders(token) });
+  if (!response.ok) {
+    const detail = await response.text();
+    throw new Error(`Could not read ${path} (${response.status}): ${detail}`);
+  }
+
+  const file = await response.json() as { sha?: string; content?: string; encoding?: string };
+  if (!file.sha) throw new Error(`GitHub did not return the current SHA for ${path}.`);
+  if (file.encoding !== 'base64' || typeof file.content !== 'string') {
+    throw new Error(`GitHub did not return editable base64 content for ${path}.`);
+  }
+
+  const binary = atob(file.content.replace(/\s/g, ''));
+  const bytes = Uint8Array.from(binary, (character) => character.charCodeAt(0));
+  return { sha: file.sha, content: new TextDecoder().decode(bytes) };
+};
+
+export interface GitHubTypeScriptFile {
+  name: string;
+  path: string;
+  sha: string;
+  size: number;
+}
+
+const validateConstantsFilePath = (path: string): string => {
+  if (
+    !path.startsWith('constants/')
+    || !path.endsWith('.ts')
+    || path.split('/').some((segment) => !segment || segment === '.' || segment === '..')
+  ) {
+    throw new Error('Only TypeScript files inside constants/ can be edited.');
+  }
+  return path;
+};
+
+export const listGitHubTypeScriptFiles = async (
+  settings: GitHubRepositorySettings,
+): Promise<GitHubTypeScriptFile[]> => {
+  const { owner, repo, branch, token } = settings;
+  if (!owner || !repo || !branch || !token) {
+    throw new Error('Owner, repository, branch, and GitHub PAT are required.');
+  }
+
+  const files: GitHubTypeScriptFile[] = [];
+  const visitedDirectories = new Set<string>();
+  const headers = getApiHeaders(token);
+  const listDirectory = async (directory: string): Promise<void> => {
+    if (visitedDirectories.has(directory)) return;
+    visitedDirectories.add(directory);
+    const endpoint = getContentsEndpoint(owner, repo, directory);
+    const query = new URLSearchParams({ ref: branch });
+    const response = await fetch(`${endpoint}?${query}`, { headers });
+    if (!response.ok) {
+      const detail = await response.text();
+      throw new Error(`Could not list ${directory} (${response.status}): ${detail}`);
+    }
+
+    const entries = await response.json() as Array<{
+      name?: string;
+      path?: string;
+      sha?: string;
+      size?: number;
+      type?: string;
+    }>;
+    for (const entry of entries) {
+      if (entry.type === 'dir' && typeof entry.path === 'string' && entry.path.startsWith('constants/')) {
+        await listDirectory(entry.path);
+      } else if (
+        entry.type === 'file'
+        && typeof entry.name === 'string'
+        && entry.name.endsWith('.ts')
+        && typeof entry.path === 'string'
+        && entry.path.startsWith('constants/')
+        && typeof entry.sha === 'string'
+        && typeof entry.size === 'number'
+      ) {
+        files.push({ name: entry.name, path: entry.path, sha: entry.sha, size: entry.size });
+      }
+    }
+  };
+
+  await listDirectory('constants');
+  return files.sort((left, right) => left.path.localeCompare(right.path));
+};
+
+export const readGitHubTypeScriptFile = async (
+  settings: GitHubRepositorySettings,
+  path: string,
+): Promise<{ sha: string; content: string }> =>
+  getGitHubFile(settings, validateConstantsFilePath(path));
+
+export const updateGitHubTypeScriptFile = async (
+  settings: GitHubRepositorySettings,
+  path: string,
+  content: string,
+): Promise<void> => {
+  const validatedPath = validateConstantsFilePath(path);
+  await putGitHubFile(settings, validatedPath, content, `Update ${validatedPath} from admin`);
+};
+
+const putGitHubFile = async (
+  settings: GitHubRepositorySettings,
+  path: string,
+  content: string,
+  message: string,
+): Promise<void> => {
+  const { owner, repo, branch, token } = settings;
+  if (!owner || !repo || !branch || !token) {
+    throw new Error('Owner, repository, branch, and GitHub PAT are required.');
+  }
+
+  const endpoint = getContentsEndpoint(owner, repo, path);
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    // Always retrieve the current SHA immediately before the write to avoid stale-SHA conflicts.
+    const { sha } = await getGitHubFile(settings, path);
+    const updateResponse = await fetch(endpoint, {
+      method: 'PUT',
+      headers: { ...getApiHeaders(token), 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message,
+        content: encodeBase64(content),
+        sha,
+        branch,
+      }),
+    });
+
+    if (updateResponse.ok) return;
+
+    const detail = await updateResponse.text();
+    if (updateResponse.status === 409 && attempt === 0) continue;
+    const conflictHint = updateResponse.status === 409 || updateResponse.status === 422
+      ? ' The file changed again during the update; reload the latest file and retry.'
+      : '';
+    throw new Error(`Could not commit ${path} (${updateResponse.status}): ${detail}${conflictHint}`);
+  }
+};
+
 const getPublicAssetPath = (uploadPath: string): string => {
   const normalizedPath = uploadPath.trim().replace(/\\/g, '/').replace(/^\/+|\/+$/g, '');
   const segments = normalizedPath.split('/');
@@ -97,11 +253,7 @@ export const uploadImageToGitHub = async (
   const directory = getPublicAssetPath(uploadPath);
   const fileName = getImageFileName(file, requestedName);
   const endpointBase = `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/contents`;
-  const headers = {
-    Accept: 'application/vnd.github+json',
-    Authorization: `Bearer ${token}`,
-    'X-GitHub-Api-Version': '2022-11-28',
-  };
+  const headers = getApiHeaders(token);
   const bytes = new Uint8Array(await file.arrayBuffer());
   const path = `${directory}/${fileName}`;
   const endpoint = `${endpointBase}/${path.split('/').map(encodeURIComponent).join('/')}`;
@@ -169,44 +321,5 @@ export const commitCardsFile = async (
     throw new Error('Owner, repository, branch, and GitHub PAT are required.');
   }
   const { path } = DATA_FILES[type];
-  const endpoint = `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/contents/${path
-    .split('/')
-    .map(encodeURIComponent)
-    .join('/')}`;
-  const headers = {
-    Accept: 'application/vnd.github+json',
-    Authorization: `Bearer ${token}`,
-    'X-GitHub-Api-Version': '2022-11-28',
-  };
-  const query = new URLSearchParams({ ref: branch });
-  const fileResponse = await fetch(`${endpoint}?${query}`, { headers });
-
-  if (!fileResponse.ok) {
-    const detail = await fileResponse.text();
-    throw new Error(`Could not read ${path} (${fileResponse.status}): ${detail}`);
-  }
-
-  const file = (await fileResponse.json()) as { sha?: string };
-  if (!file.sha) {
-    throw new Error(`GitHub did not return the current SHA for ${path}.`);
-  }
-
-  const updateResponse = await fetch(endpoint, {
-    method: 'PUT',
-    headers: { ...headers, 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      message: `Update ${path} from admin`,
-      content: encodeBase64(serializeCardsFile(type, posts)),
-      sha: file.sha,
-      branch,
-    }),
-  });
-
-  if (!updateResponse.ok) {
-    const detail = await updateResponse.text();
-    const conflictHint = updateResponse.status === 409 || updateResponse.status === 422
-      ? ' The file may have changed since it was loaded; reload the page and try again.'
-      : '';
-    throw new Error(`Could not commit ${path} (${updateResponse.status}): ${detail}${conflictHint}`);
-  }
+  await putGitHubFile(settings, path, serializeCardsFile(type, posts), `Update ${path} from admin`);
 };

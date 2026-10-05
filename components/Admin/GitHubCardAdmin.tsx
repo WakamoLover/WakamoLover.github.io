@@ -1,5 +1,14 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { commitCardsFile, getImageFileName, uploadImageToGitHub, type GitHubRepositorySettings } from '../../lib/githubContents';
+import {
+  commitCardsFile,
+  getImageFileName,
+  listGitHubTypeScriptFiles,
+  readGitHubTypeScriptFile,
+  updateGitHubTypeScriptFile,
+  uploadImageToGitHub,
+  type GitHubRepositorySettings,
+  type GitHubTypeScriptFile,
+} from '../../lib/githubContents';
 import { ContentType, type Post } from '../../types';
 
 interface GitHubCardAdminProps {
@@ -74,6 +83,13 @@ const GitHubCardAdmin: React.FC<GitHubCardAdminProps> = ({ posts, onPostsChange 
   const [isDraggingImage, setIsDraggingImage] = useState(false);
   const [message, setMessage] = useState('');
   const [search, setSearch] = useState('');
+  const [constantFiles, setConstantFiles] = useState<GitHubTypeScriptFile[]>([]);
+  const [selectedConstantFile, setSelectedConstantFile] = useState('');
+  const [constantFileContent, setConstantFileContent] = useState('');
+  const [isLoadingFiles, setIsLoadingFiles] = useState(false);
+  const [isLoadingFile, setIsLoadingFile] = useState(false);
+  const [isSavingFile, setIsSavingFile] = useState(false);
+  const [fileEditorMessage, setFileEditorMessage] = useState('');
   const skipNextSettingsSave = useRef(false);
 
   useEffect(() => {
@@ -158,6 +174,62 @@ const GitHubCardAdmin: React.FC<GitHubCardAdminProps> = ({ posts, onPostsChange 
     setMessage('');
   };
 
+  const getGitHubSettings = (): GitHubRepositorySettings => ({
+    ...settings,
+    owner: settings.owner.trim(),
+    repo: settings.repo.trim(),
+    branch: settings.branch.trim(),
+    token: settings.token.trim(),
+    uploadPath: settings.uploadPath.trim(),
+  });
+
+  const handleLoadConstantFiles = async () => {
+    setIsLoadingFiles(true);
+    setFileEditorMessage('');
+    try {
+      const files = await listGitHubTypeScriptFiles(getGitHubSettings());
+      setConstantFiles(files);
+      if (selectedConstantFile && !files.some((file) => file.path === selectedConstantFile)) {
+        setSelectedConstantFile('');
+        setConstantFileContent('');
+      }
+    } catch (error) {
+      setFileEditorMessage(error instanceof Error ? error.message : String(error));
+    } finally {
+      setIsLoadingFiles(false);
+    }
+  };
+
+  const handleSelectConstantFile = async (path: string) => {
+    setSelectedConstantFile(path);
+    setIsLoadingFile(true);
+    setFileEditorMessage('');
+    try {
+      const file = await readGitHubTypeScriptFile(getGitHubSettings(), path);
+      setConstantFileContent(file.content);
+    } catch (error) {
+      setConstantFileContent('');
+      setFileEditorMessage(error instanceof Error ? error.message : String(error));
+    } finally {
+      setIsLoadingFile(false);
+    }
+  };
+
+  const handleSaveConstantFile = async () => {
+    if (!selectedConstantFile) return;
+    setIsSavingFile(true);
+    setFileEditorMessage('');
+    try {
+      await updateGitHubTypeScriptFile(getGitHubSettings(), selectedConstantFile, constantFileContent);
+      await handleLoadConstantFiles();
+      setFileEditorMessage(`${selectedConstantFile} 파일을 최신 SHA로 커밋했습니다.`);
+    } catch (error) {
+      setFileEditorMessage(error instanceof Error ? error.message : String(error));
+    } finally {
+      setIsSavingFile(false);
+    }
+  };
+
   const handleImageUpload = async () => {
     if (!selectedImage) {
       setMessage('먼저 업로드할 이미지를 선택해 주세요.');
@@ -166,14 +238,7 @@ const GitHubCardAdmin: React.FC<GitHubCardAdminProps> = ({ posts, onPostsChange 
     setIsUploading(true);
     setMessage('');
     try {
-      const imageUrl = await uploadImageToGitHub({
-        ...settings,
-        owner: settings.owner.trim(),
-        repo: settings.repo.trim(),
-        branch: settings.branch.trim(),
-        token: settings.token.trim(),
-        uploadPath: settings.uploadPath.trim(),
-      }, selectedImage, imageFileName);
+      const imageUrl = await uploadImageToGitHub(getGitHubSettings(), selectedImage, imageFileName);
       setForm((previous) => ({ ...previous, coverImage: imageUrl }));
       setSelectedImage(null);
       setImageFileName('');
@@ -223,13 +288,7 @@ const GitHubCardAdmin: React.FC<GitHubCardAdminProps> = ({ posts, onPostsChange 
     setIsSaving(true);
     setMessage('');
     try {
-      await commitCardsFile({
-        owner: settings.owner.trim(),
-        repo: settings.repo.trim(),
-        branch: settings.branch.trim(),
-        token: settings.token.trim(),
-        uploadPath: settings.uploadPath.trim(),
-      }, type, updatedPosts);
+      await commitCardsFile(getGitHubSettings(), type, updatedPosts);
       onPostsChange(updatedPosts);
       setMessage('저장 후 GitHub에 커밋했습니다. GitHub Pages 배포에는 잠시 시간이 걸릴 수 있습니다.');
       return true;
@@ -458,6 +517,68 @@ const GitHubCardAdmin: React.FC<GitHubCardAdminProps> = ({ posts, onPostsChange 
                 </li>
               ))}
             </ul>
+          </div>
+          <div className="space-y-3 border-t border-slate-200 pt-4 lg:col-span-2">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <h2 className="font-bold text-slate-900">constants TypeScript 파일</h2>
+                <p className="text-xs text-slate-500">GitHub의 constants/ 폴더와 하위 폴더에서 .ts 파일을 불러와 직접 수정합니다.</p>
+              </div>
+              <button
+                type="button"
+                disabled={isLoadingFiles || isSavingFile}
+                onClick={() => void handleLoadConstantFiles()}
+                className="rounded-lg border border-slate-300 px-3 py-2 text-xs font-semibold text-slate-700 disabled:opacity-50"
+              >
+                {isLoadingFiles ? '파일 목록 불러오는 중...' : '파일 목록 불러오기 / 새로고침'}
+              </button>
+            </div>
+            {constantFiles.length > 0 && (
+              <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+                {constantFiles.map((file) => (
+                  <button
+                    key={file.path}
+                    type="button"
+                    disabled={isLoadingFile || isSavingFile}
+                    onClick={() => void handleSelectConstantFile(file.path)}
+                    aria-pressed={selectedConstantFile === file.path}
+                    className={`min-w-0 rounded-lg border px-3 py-2 text-left text-xs disabled:opacity-50 ${selectedConstantFile === file.path ? 'border-[var(--brand-accent)] bg-white text-slate-900' : 'border-slate-200 bg-white text-slate-700'}`}
+                  >
+                    <span className="block truncate font-semibold">{file.path}</span>
+                    <span className="text-slate-500">{file.size.toLocaleString()} bytes</span>
+                  </button>
+                ))}
+              </div>
+            )}
+            {isLoadingFile && <p role="status" className="text-sm text-slate-500">파일 내용을 불러오는 중...</p>}
+            {selectedConstantFile && !isLoadingFile && (
+              <div className="space-y-2">
+                <label className={labelClassName} htmlFor="constants-file-content">
+                  {selectedConstantFile} 내용
+                  <textarea
+                    id="constants-file-content"
+                    className={`${fieldClassName} font-mono text-xs`}
+                    rows={18}
+                    spellCheck={false}
+                    value={constantFileContent}
+                    onChange={(event) => setConstantFileContent(event.target.value)}
+                  />
+                </label>
+                <button
+                  type="button"
+                  disabled={isSavingFile || isLoadingFile}
+                  onClick={() => void handleSaveConstantFile()}
+                  className="rounded-lg bg-[var(--brand-accent)] px-4 py-2 text-sm font-semibold text-white disabled:opacity-50"
+                >
+                  {isSavingFile ? '최신 SHA 확인 후 커밋 중...' : '파일 저장 및 커밋'}
+                </button>
+              </div>
+            )}
+            {fileEditorMessage && (
+              <p role={fileEditorMessage.includes('커밋했습니다') ? 'status' : 'alert'} className="break-words text-sm text-slate-700">
+                {fileEditorMessage}
+              </p>
+            )}
           </div>
           {message && <p role={message.startsWith('저장 후') ? 'status' : 'alert'} className={`break-words text-sm lg:col-span-2 ${message.startsWith('저장 후') ? 'text-emerald-800' : 'text-red-700'}`}>{message}</p>}
         </div>
