@@ -12,7 +12,7 @@ import { adminEmail, isSupabaseConfigured, supabase } from './lib/supabase';
 
 const VIEW_PATHS: Record<string, string> = {
   CREATOR: '/creator',
-  VIDEO: '/media',
+  MEDIA: '/media',
   GAME: '/game',
   REF: '/reference',
 };
@@ -155,7 +155,7 @@ const App: React.FC = () => {
   const allFilteredPosts = useMemo(() => {
     let result = cards.map((post) => {
       let url = '';
-      if (post.type === ContentType.VIDEO) {
+      if (post.type === ContentType.MEDIA) {
         url = post.externalLink || post.channelUrl || post.videoUrl || '';
       } else if (post.type === ContentType.GAME) {
         url = '';
@@ -173,7 +173,7 @@ const App: React.FC = () => {
     });
 
     const typeMap: Record<string, ContentType> = {
-      GAME: ContentType.GAME, REF: ContentType.REF, VIDEO: ContentType.VIDEO, CREATOR: ContentType.IMAGE,
+      GAME: ContentType.GAME, REF: ContentType.REF, MEDIA: ContentType.MEDIA, CREATOR: ContentType.CREATOR,
     };
     if (typeMap[currentView]) {
       result = result.filter(p => p.type === typeMap[currentView]);
@@ -276,7 +276,7 @@ const App: React.FC = () => {
 
                 <div className="min-h-[500px]">
                     {visiblePosts.length > 0 ? (
-                      <div className={`grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 ${currentView === 'VIDEO' || currentView === 'REF' ? 'xl:grid-cols-5' : 'xl:grid-cols-4'}`}>
+                      <div className={`grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 ${currentView === 'MEDIA' || currentView === 'REF' ? 'xl:grid-cols-5' : 'xl:grid-cols-4'}`}>
                         {visiblePosts.map((post) => (
                           <div key={post.id} className="min-w-0">
                             {isAdmin && isCardsLoaded && !cardsError && !isDatabaseEmpty && (
@@ -292,7 +292,7 @@ const App: React.FC = () => {
                               post={post}
                               viewMode={currentView}
                               onImageClick={(imgUrl: string) => {
-                                if (post.type === ContentType.IMAGE && post.originalUrl.includes('x.com')) {
+                                if (post.type === ContentType.CREATOR && post.originalUrl.includes('x.com')) {
                                   window.open(post.originalUrl, '_blank');
                                 } else {
                                   setCurrentImageUrl(imgUrl);

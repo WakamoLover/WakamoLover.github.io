@@ -5,7 +5,7 @@ create table if not exists public.cards (
   description text not null default '',
   cover_image text not null default '',
   icon_image text,
-  type text not null check (type in ('IMAGE', 'VIDEO', 'REF', 'GAME')),
+  type text not null check (type in ('CREATOR', 'MEDIA', 'REF', 'GAME')),
   category text,
   tags text[] not null default '{}',
   video_url text,

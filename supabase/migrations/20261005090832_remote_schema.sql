@@ -23,4 +23,4 @@ CREATE TABLE IF NOT EXISTS public.cards (
   icon_image text,
   image_index int4,
   slider_images text[]
-);
+); 

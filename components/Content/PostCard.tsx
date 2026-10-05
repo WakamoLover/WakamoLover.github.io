@@ -92,9 +92,9 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, onImageClick }) => 
 const displayImage = formatImagePath(rawImage);
   
   let contentUrl = '';
-  if (post.type === ContentType.VIDEO) {
+  if (post.type === ContentType.MEDIA) {
     contentUrl = post.externalLink || post.channelUrl || post.videoUrl || post.originalUrl || '';
-  } else if (post.type === ContentType.REF || post.type === ContentType.IMAGE) {
+  } else if (post.type === ContentType.REF || post.type === ContentType.CREATOR) {
     contentUrl = post.externalLink || post.originalUrl || '';
   } else if (post.type === ContentType.GAME) {
     contentUrl = '';
@@ -102,9 +102,9 @@ const displayImage = formatImagePath(rawImage);
     contentUrl = post.originalUrl || post.externalLink || post.channelUrl || post.videoUrl || post.link || post.url || '';
   }
   
-  const isVideo = post.type === ContentType.VIDEO;
-  const isArtist = viewMode === 'CREATOR' || post.type === ContentType.IMAGE;
-  const isMediaOrReference = viewMode === 'VIDEO' || viewMode === 'REF';
+  const isVideo = post.type === ContentType.MEDIA;
+  const isArtist = viewMode === 'CREATOR' || post.type === ContentType.CREATOR;
+  const isMediaOrReference = viewMode === 'MEDIA' || viewMode === 'REF';
   const isVisualGrid = viewMode === 'CREATOR';
   const hasDescription = typeof post.description === 'string' && post.description.trim().length > 0;
   const categoryLabel = Array.isArray(post.category) ? post.category[0] : post.category;

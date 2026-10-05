@@ -1,6 +1,6 @@
 export enum ContentType {
-  IMAGE = 'IMAGE',
-  VIDEO = 'VIDEO',
+  CREATOR = 'CREATOR',
+  MEDIA = 'MEDIA',
   REF = 'REF',
   GAME = 'GAME'
 }
