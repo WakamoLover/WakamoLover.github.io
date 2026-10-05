@@ -238,9 +238,7 @@ const CardAdmin: React.FC<CardAdminProps> = ({
 
 return (
     <section className="mb-5 flex flex-wrap items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3">
-      {!adminEmail ? (
-        <p className="text-sm text-amber-800">Set NEXT_PUBLIC_SUPABASE_ADMIN_EMAIL in .env.local to enable administrator access.</p>
-      ) : isAdmin ? (
+      {isAdmin ? (
         <>
           <span className="text-sm font-semibold text-emerald-800">Administrator: {user?.email}</span>
           {isDatabaseEmpty ? (
