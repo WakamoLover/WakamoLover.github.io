@@ -3,6 +3,7 @@ import Header from './components/Layout';
 import PostCard from './components/Content/PostCard';
 import ImageModal from './components/Content/ImageModal';
 import CardAdmin from './components/Admin/CardAdmin';
+import CardEditorModal from './components/Admin/CardEditorModal';
 import { MOCK_POSTS, CATEGORY_TABS } from './constants/index';
 import { ContentType, type Post } from './types';
 import { deleteCard as deleteCardFromDatabase, fetchCards, insertCard, seedCards, updateCard } from './lib/cards';
@@ -314,7 +315,15 @@ const App: React.FC = () => {
           <p>All content belongs to the original rights holders.</p>
         </footer>
 
-      <ImageModal isOpen={isImageModalOpen} onClose={() => setIsImageModalOpen(false)} imageUrl={currentImageUrl} />
+      <ImageModal isOpen={isImageModalOpen} onClose={() => setIsImageModalOpen(false)} imageUrl={currentImageUrl} />[cite: 9]
+
+      {editorOpen && (
+        <CardEditorModal
+          post={editingPost}
+          onClose={() => setEditorOpen(false)}
+          onSave={handleSaveCard}
+        />
+      )}
     </div>
   );
 };
