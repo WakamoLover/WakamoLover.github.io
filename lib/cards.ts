@@ -37,7 +37,7 @@ const mapPostToRow = (post: EditableCard, id?: string) => ({
   title: post.title,
   subtitle: post.subtitle || null,
   description: post.description,
-  cover_image: post.coverImage,
+  cover_image: post.coverImage || '',
   icon_image: post.iconImage || null,
   type: post.type,
   category: post.category || null,
