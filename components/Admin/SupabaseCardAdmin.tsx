@@ -73,7 +73,11 @@ const getImagePreviewUrl = (coverImage: string): string => {
   if (!source) return '';
   if (/^(https?:|data:|blob:)/i.test(source)) return source;
   if (source.startsWith('//')) return `https:${source}`;
-  return `/media/${source.replace(/^\/?media\//i, '').replace(/^\/+/, '')}`;
+  if (source.startsWith('/media/')) return source;
+  if (source.startsWith('media/')) return `/${source}`;
+  if (/^(game|ref)\//i.test(source)) return `/media/${source}`;
+  if (source.startsWith('/')) return source;
+  return supabase?.storage.from(STORAGE_BUCKET).getPublicUrl(source).data.publicUrl || source;
 };
 
 const makeStorageFileName = (file: File): string => {
@@ -329,6 +333,13 @@ const SupabaseCardAdmin: React.FC<SupabaseCardAdminProps> = ({ posts, isLoading,
     setForm((previous) => ({ ...previous, [key]: value }));
   };
 
+  const handleCoverImageChange = (value: string) => {
+    if (localPreviewUrlRef.current) URL.revokeObjectURL(localPreviewUrlRef.current);
+    localPreviewUrlRef.current = null;
+    setLocalImagePreview('');
+    updateField('coverImage', value);
+  };
+
   return (
     <section className="px-4 py-4 sm:px-6 xl:px-8">
       <div className="mx-auto max-w-7xl space-y-5">
@@ -374,6 +385,17 @@ const SupabaseCardAdmin: React.FC<SupabaseCardAdminProps> = ({ posts, isLoading,
 
             <div className="space-y-2">
               <span className={labelClassName}>Cover Image</span>
+              <label className={labelClassName}>
+                Cover Image URL / Path
+                <input
+                  className={fieldClassName}
+                  type="text"
+                  value={form.coverImage}
+                  disabled={isUploadingImage}
+                  placeholder="Paste a public URL or enter a Storage filename"
+                  onChange={(event) => handleCoverImageChange(event.target.value)}
+                />
+              </label>
               <input
                 ref={fileInputRef}
                 type="file"
@@ -409,12 +431,16 @@ const SupabaseCardAdmin: React.FC<SupabaseCardAdminProps> = ({ posts, isLoading,
                 className={`cursor-pointer rounded-xl border-2 border-dashed p-4 transition-colors ${isDraggingImage ? 'border-blue-500 bg-blue-50' : 'border-slate-300 bg-slate-50 hover:border-slate-400'} ${isUploadingImage ? 'cursor-wait opacity-70' : ''}`}
               >
                 <div className="flex flex-col items-center gap-3 text-center sm:flex-row sm:text-left">
-                  {(localImagePreview || form.coverImage) && (
+                  {(localImagePreview || form.coverImage) ? (
                     <img
                       src={localImagePreview || optimizeImageUrl(getImagePreviewUrl(form.coverImage))}
                       alt="Cover image preview"
-                      className="h-24 w-36 shrink-0 rounded-lg bg-white object-cover"
+                      className="aspect-square w-28 shrink-0 rounded-lg bg-white object-cover"
                     />
+                  ) : (
+                    <div className="flex aspect-square w-28 shrink-0 items-center justify-center rounded-lg bg-slate-200 text-xs text-slate-500">
+                      No image
+                    </div>
                   )}
                   <div className="min-w-0 flex-1">
                     <p className="text-sm font-semibold text-slate-800">
@@ -470,7 +496,8 @@ const SupabaseCardAdmin: React.FC<SupabaseCardAdminProps> = ({ posts, isLoading,
                 <label className={labelClassName}>
                   Game Links (JSON array)
                   <textarea
-                    className={`${fieldClassName} min-h-32 font-mono`}
+                    className={`${fieldClassName} min-h-[240px] resize-y font-mono leading-6`}
+                    rows={12}
                     spellCheck={false}
                     value={form.gameLinks}
                     onChange={(event) => updateField('gameLinks', event.target.value)}
