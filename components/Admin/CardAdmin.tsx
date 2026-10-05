@@ -83,29 +83,26 @@ const CardAdmin: React.FC<CardAdminProps> = ({
     };
   }, []);
 
-  const handleSignIn = async (event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
+const handleSignIn = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-      if (!supabase) {
-        setErrorMessage('Supabase Client not initialized. Please check your .env variables.');
-        return;
-      }
+    if (!supabase) {
+      setErrorMessage('Supabase 환경변수(VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY)가 설정되지 않았습니다.');
+      return;
+    }
 
-      setIsBusy(true);
-      setErrorMessage('');
+    setIsBusy(true);
+    setErrorMessage('');
 
-      try {
-        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) throw error;
-        
-        console.log('Login completed:', data);
-      } catch (error: unknown) {
-        console.error('Login error:', error);
-        setErrorMessage(error instanceof Error ? error.message : String(error));
-      } finally {
-        setIsBusy(false);
-      }
-    };
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+    } catch (error: unknown) {
+      setErrorMessage(error instanceof Error ? error.message : String(error));
+    } finally {
+      setIsBusy(false);
+    }
+  };
 
   const handleSignOut = async () => {
     if (!supabase) return;

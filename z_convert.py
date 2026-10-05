@@ -1,7 +1,7 @@
 import os
 from PIL import Image
 
-folder_path = "./public/media/ref"
+folder_path = "./public/media/"  # Replace with your folder path
 
 for filename in os.listdir(folder_path):
     if filename.lower().endswith(".png"):
@@ -17,4 +17,4 @@ for filename in os.listdir(folder_path):
 
 print("WebP conversions are done!")
 
-## python convert.py
+## python z_convert.py
