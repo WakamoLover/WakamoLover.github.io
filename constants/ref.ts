@@ -184,7 +184,7 @@ export const REF_ITEMS: Omit<Post, 'id'>[] = [
   {
     title: 'Kor Tone',
     subtitle: '',
-    description: '한국 전통색의 유래와 색 조화를 살펴보고, 전통색을 바탕으로 색상 팔레트를 만들어 볼 수 있는 자료입니다.',
+    description: '한국 전통색의 유래와 색 조화를 살펴보고, 이를 바탕으로 색상 팔레트를 만들어 볼 수 있는 자료입니다.',
     coverImage: '',
     type: ContentType.REF,
     category: 'Color',
