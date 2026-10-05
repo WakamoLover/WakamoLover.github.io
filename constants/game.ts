@@ -410,22 +410,5 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
         "url": "https://imasgk.gamedbs.jp/"
       }
     ]
-  },
-  {
-    "title": "helloworld",
-    "description": "",
-    "coverImage": "https://api.lunaris.moe/data/assets/avataricon/UI_AvatarIcon_Odette.webp",
-    type: ContentType.GAME,
-    "tags": [],
-    "gameLinks": [
-      {
-        "label": "Official Wallpaper",
-        "url": "https://www.aethergazer.com/gallery"
-      },
-      {
-        "label": "Google Drive Archive",
-        "url": "https://drive.google.com/drive/folders/1QGX6ISyrUHQWZHAKtyWNFU8APgRKhnEK"
-      }
-    ]
   }
 ];
