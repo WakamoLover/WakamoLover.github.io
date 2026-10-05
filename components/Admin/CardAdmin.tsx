@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import type { User as SupabaseUser } from '@supabase/supabase-js';
 import { ContentType, type Post } from '../../types';
 import type { EditableCard } from '../../lib/cards';
-import { adminEmail, isCardType, isSupabaseConfigured, supabase } from '../../lib/supabase';
+import { isCardType, isSupabaseConfigured, supabase } from '../../lib/supabase';
 
 interface CardAdminProps {
   isCardsLoaded: boolean;
@@ -13,126 +13,48 @@ interface CardAdminProps {
   onAdminChange: (isAdmin: boolean) => void;
   onCreate: () => void;
   onCloseEditor: () => void;
-  onSave: (post: EditableCard, id?: string) => Promise<void>;
+  onSave: (card: EditableCard) => Promise<void>;
   onSeed: () => Promise<void>;
 }
 
-interface CardFormValues {
-  title: string;
-  subtitle: string;
-  description: string;
-  coverImage: string;
-  iconImage: string;
-  type: ContentType;
-  category: string;
-  tags: string;
-  videoUrl: string;
-  channelUrl: string;
-  externalLink: string;
-  gameLinks: string;
-  imageIndex: string;
-  sliderImages: string;
-}
-
-const emptyForm: CardFormValues = {
-  title: '',
-  subtitle: '',
-  description: '',
-  coverImage: '',
-  iconImage: '',
-  type: ContentType.GAME,
-  category: '',
-  tags: '',
-  videoUrl: '',
-  channelUrl: '',
-  externalLink: '',
-  gameLinks: '',
-  imageIndex: '',
-  sliderImages: '',
-};
-
-const formFromPost = (post: Post | null): CardFormValues => post ? {
-  title: post.title,
-  subtitle: post.subtitle ?? '',
-  description: post.description,
-  coverImage: post.coverImage,
-  iconImage: post.iconImage ?? '',
-  type: post.type,
-  category: post.category ?? '',
-  tags: post.tags?.join(', ') ?? '',
-  videoUrl: post.videoUrl ?? '',
-  channelUrl: post.channelUrl ?? '',
-  externalLink: post.externalLink ?? '',
-  gameLinks: post.gameLinks?.map(({ label, url }) => `${label} | ${url}`).join('\n') ?? '',
-  imageIndex: post.imageIndex?.toString() ?? '',
-  sliderImages: post.sliderImages?.join('\n') ?? '',
-} : emptyForm;
-
-const toEditableCard = (values: CardFormValues): EditableCard => {
-  const gameLinks = values.gameLinks.split('\n').map((line) => line.trim()).filter(Boolean).map((line) => {
-    const separator = line.indexOf('|');
-    if (separator < 1 || !line.slice(separator + 1).trim()) {
-      throw new Error('Enter each game link as “label | URL”.');
-    }
-    return { label: line.slice(0, separator).trim(), url: line.slice(separator + 1).trim() };
-  });
-  const imageIndex = values.imageIndex.trim() ? Number(values.imageIndex) : undefined;
-  if (imageIndex !== undefined && !Number.isInteger(imageIndex)) {
-    throw new Error('Image index must be a whole number.');
-  }
-
-  return {
-    title: values.title.trim(),
-    subtitle: values.subtitle.trim() || undefined,
-    description: values.description.trim(),
-    coverImage: values.coverImage.trim(),
-    iconImage: values.iconImage.trim() || undefined,
-    type: values.type,
-    category: values.category.trim() || undefined,
-    tags: values.tags.split(',').map((tag) => tag.trim()).filter(Boolean),
-    videoUrl: values.videoUrl.trim() || undefined,
-    channelUrl: values.channelUrl.trim() || undefined,
-    externalLink: values.externalLink.trim() || undefined,
-    gameLinks,
-    imageIndex,
-    sliderImages: values.sliderImages.split('\n').map((image) => image.trim()).filter(Boolean),
-  };
-};
-
-const inputClassName = 'mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none focus:border-[var(--brand-accent)]';
-const labelClassName = 'block text-sm font-medium text-slate-700';
+const labelClassName = 'flex flex-col gap-1 text-xs font-semibold text-slate-600';
+const inputClassName = 'rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm font-normal text-slate-800 outline-none focus:border-slate-500';
 
 const CardAdmin: React.FC<CardAdminProps> = ({
   isCardsLoaded,
   isDatabaseEmpty,
   hasCardsError,
-  editorOpen,
-  editingPost,
-  onAdminChange,
   onCreate,
-  onCloseEditor,
-  onSave,
   onSeed,
+  onAdminChange,
 }) => {
   const adminEmail = import.meta.env.VITE_SUPABASE_ADMIN_EMAIL || '';
+
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const [loginOpen, setLoginOpen] = useState(false);
   const [email, setEmail] = useState(adminEmail);
   const [password, setPassword] = useState('');
-  const [values, setValues] = useState<CardFormValues>(emptyForm);
   const [isBusy, setIsBusy] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const isAdmin = Boolean(user?.email && adminEmail && user.email.toLowerCase() === adminEmail.toLowerCase());
   const [showAdminBtn, setShowAdminBtn] = useState(false);
 
+  const isAdmin = Boolean(user?.email && adminEmail && user.email.toLowerCase() === adminEmail.toLowerCase());
+
+  // URL 파라미터 감지 로직 강화
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    if (params.has('yukina')) {
-      setShowAdminBtn(true);
-      setLoginOpen(true);
-    }
+    const checkYukina = () => {
+      const url = window.location.href;
+      if (url.includes('yukina')) {
+        setShowAdminBtn(true);
+        setLoginOpen(true); // 로그인 입력폼 바로 열기
+      }
+    };
+
+    checkYukina();
+    window.addEventListener('popstate', checkYukina);
+    return () => window.removeEventListener('popstate', checkYukina);
   }, []);
-  
+
   useEffect(() => {
     onAdminChange(isAdmin);
   }, [isAdmin, onAdminChange]);
@@ -140,9 +62,11 @@ const CardAdmin: React.FC<CardAdminProps> = ({
   useEffect(() => {
     if (!isSupabaseConfigured || !supabase) return;
     let isMounted = true;
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+
+    const { data } = supabase.auth.onAuthStateChange((_event, session) => {
       if (isMounted) setUser(session?.user ?? null);
     });
+
     void supabase.auth.getSession().then(({ data, error }) => {
       if (!isMounted) return;
       if (error) {
@@ -156,33 +80,22 @@ const CardAdmin: React.FC<CardAdminProps> = ({
 
     return () => {
       isMounted = false;
-      subscription.unsubscribe();
+      data.subscription.unsubscribe();
     };
   }, []);
-
-  useEffect(() => {
-    if (editorOpen) {
-      setValues(formFromPost(editingPost));
-      setErrorMessage('');
-    }
-  }, [editorOpen, editingPost]);
 
   const handleSignIn = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!supabase) return;
+
     setIsBusy(true);
     setErrorMessage('');
+
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
-      if (data.user.email?.toLowerCase() !== adminEmail.toLowerCase()) {
-        const { error: signOutError } = await supabase.auth.signOut();
-        if (signOutError) throw signOutError;
-        throw new Error('This account is not configured as the card administrator.');
-      }
       setPassword('');
-      setLoginOpen(false);
-    } catch (error) {
+    } catch (error: unknown) {
       setErrorMessage(error instanceof Error ? error.message : String(error));
     } finally {
       setIsBusy(false);
@@ -192,27 +105,9 @@ const CardAdmin: React.FC<CardAdminProps> = ({
   const handleSignOut = async () => {
     if (!supabase) return;
     setIsBusy(true);
-    setErrorMessage('');
     try {
-      const { error } = await supabase.auth.signOut();
-      if (error) throw error;
-    } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : String(error));
-    } finally {
-      setIsBusy(false);
-    }
-  };
-
-  const handleSave = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setIsBusy(true);
-    setErrorMessage('');
-    try {
-      const post = toEditableCard(values);
-      if (!post.title) throw new Error('Title is required.');
-      await onSave(post, editingPost?.id);
-      onCloseEditor();
-    } catch (error) {
+      await supabase.auth.signOut();
+    } catch (error: unknown) {
       setErrorMessage(error instanceof Error ? error.message : String(error));
     } finally {
       setIsBusy(false);
@@ -224,67 +119,64 @@ const CardAdmin: React.FC<CardAdminProps> = ({
     setErrorMessage('');
     try {
       await onSeed();
-    } catch (error) {
+    } catch (error: unknown) {
       setErrorMessage(error instanceof Error ? error.message : String(error));
     } finally {
       setIsBusy(false);
     }
   };
 
-  const updateField = <K extends keyof CardFormValues>(key: K, value: CardFormValues[K]) => {
-    setValues((current) => ({ ...current, [key]: value }));
-  };
+  // showAdminBtn이 false이고 로그인된 사용자가 없으면 영역 자체를 숨김
+  if (!showAdminBtn && !user) {
+    return null;
+  }
 
-  if (!isSupabaseConfigured) return null;
-
-return (
-    <section className="mb-5 flex flex-wrap items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3">
-      {/* 테스트용: yukina 조건 없이 무조건 로그인 버튼 노출 */}
-      <button
-        type="button"
-        onClick={() => {
-          setLoginOpen((open) => !open);
-          setErrorMessage('');
-        }}
-        className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700"
-      >
-        Administrator sign in
-      </button>
-
-      {loginOpen && (
-        <form onSubmit={handleSignIn} className="flex w-full flex-wrap items-end gap-3">
-          <label className={labelClassName}>
-            Email
-            <input
-              type="email"
-              required
-              autoComplete="username"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              className={inputClassName}
-            />
-          </label>
-          <label className={labelClassName}>
-            Password
-            <input
-              type="password"
-              required
-              autoComplete="current-password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              className={inputClassName}
-            />
-          </label>
-          <button
-            type="submit"
-            disabled={isBusy}
-            className="rounded-lg bg-[var(--brand-accent)] px-4 py-2 text-sm font-semibold text-white disabled:opacity-50"
-          >
-            {isBusy ? 'Signing in...' : 'Sign in'}
+  return (
+    <section className="mb-5 flex flex-wrap items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4 shadow-sm">
+      {isAdmin ? (
+        <>
+          <span className="text-sm font-semibold text-emerald-800">Administrator: {user?.email}</span>
+          {isDatabaseEmpty ? (
+            <button type="button" onClick={handleSeed} disabled={isBusy} className="rounded-lg bg-[var(--brand-accent)] px-4 py-2 text-sm font-semibold text-white disabled:opacity-50">
+              {isBusy ? 'Importing...' : 'Import existing cards into Supabase'}
+            </button>
+          ) : !isCardsLoaded || hasCardsError ? (
+            <span className="text-sm text-slate-600">Card editing is unavailable until the Supabase data loads successfully.</span>
+          ) : (
+            <button type="button" onClick={onCreate} disabled={isBusy} className="rounded-lg bg-[var(--brand-accent)] px-4 py-2 text-sm font-semibold text-white disabled:opacity-50">
+              Add card
+            </button>
+          )}
+          <button type="button" onClick={handleSignOut} disabled={isBusy} className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 disabled:opacity-50">
+            Sign out
           </button>
-        </form>
+        </>
+      ) : user ? (
+        <>
+          <span className="text-sm text-slate-600">Signed in as {user.email}; this account is not the configured administrator.</span>
+          <button type="button" onClick={handleSignOut} disabled={isBusy} className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 disabled:opacity-50">Sign out</button>
+        </>
+      ) : (
+        <div className="w-full">
+          <button type="button" onClick={() => { setLoginOpen((open) => !open); setErrorMessage(''); }} className="mb-3 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100">
+            Administrator sign in
+          </button>
+          {loginOpen && (
+            <form onSubmit={handleSignIn} className="flex w-full flex-wrap items-end gap-3">
+              <label className={labelClassName}>
+                Email
+                <input type="email" required autoComplete="username" value={email} onChange={(event) => setEmail(event.target.value)} className={inputClassName} />
+              </label>
+              <label className={labelClassName}>
+                Password
+                <input type="password" required autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} className={inputClassName} />
+              </label>
+              <button type="submit" disabled={isBusy} className="rounded-lg bg-[var(--brand-accent)] px-4 py-2 text-sm font-semibold text-white disabled:opacity-50">{isBusy ? 'Signing in...' : 'Sign in'}</button>
+            </form>
+          )}
+        </div>
       )}
-
+      {isDatabaseEmpty && isAdmin && <p className="w-full text-sm text-slate-600">The Supabase table is empty. Import the current cards before editing them.</p>}
       {errorMessage && <p role="alert" className="w-full text-sm text-red-700">{errorMessage}</p>}
     </section>
   );
