@@ -239,52 +239,52 @@ const CardAdmin: React.FC<CardAdminProps> = ({
 
 return (
     <section className="mb-5 flex flex-wrap items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3">
-      {isAdmin ? (
-        <>
-          <span className="text-sm font-semibold text-emerald-800">Administrator: {user?.email}</span>
-          {isDatabaseEmpty ? (
-            <button type="button" onClick={handleSeed} disabled={isBusy} className="rounded-lg bg-[var(--brand-accent)] px-4 py-2 text-sm font-semibold text-white disabled:opacity-50">
-              {isBusy ? 'Importing...' : 'Import existing cards into Supabase'}
-            </button>
-          ) : !isCardsLoaded || hasCardsError ? (
-            <span className="text-sm text-slate-600">Card editing is unavailable until the Supabase data loads successfully.</span>
-          ) : (
-            <button type="button" onClick={onCreate} disabled={isBusy} className="rounded-lg bg-[var(--brand-accent)] px-4 py-2 text-sm font-semibold text-white disabled:opacity-50">
-              Add card
-            </button>
-          )}
-          <button type="button" onClick={handleSignOut} disabled={isBusy} className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 disabled:opacity-50">
-            Sign out
+      {/* 테스트용: yukina 조건 없이 무조건 로그인 버튼 노출 */}
+      <button
+        type="button"
+        onClick={() => {
+          setLoginOpen((open) => !open);
+          setErrorMessage('');
+        }}
+        className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700"
+      >
+        Administrator sign in
+      </button>
+
+      {loginOpen && (
+        <form onSubmit={handleSignIn} className="flex w-full flex-wrap items-end gap-3">
+          <label className={labelClassName}>
+            Email
+            <input
+              type="email"
+              required
+              autoComplete="username"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              className={inputClassName}
+            />
+          </label>
+          <label className={labelClassName}>
+            Password
+            <input
+              type="password"
+              required
+              autoComplete="current-password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              className={inputClassName}
+            />
+          </label>
+          <button
+            type="submit"
+            disabled={isBusy}
+            className="rounded-lg bg-[var(--brand-accent)] px-4 py-2 text-sm font-semibold text-white disabled:opacity-50"
+          >
+            {isBusy ? 'Signing in...' : 'Sign in'}
           </button>
-        </>
-      ) : user ? (
-        <>
-          <span className="text-sm text-slate-600">Signed in as {user.email}; this account is not the configured administrator.</span>
-          <button type="button" onClick={handleSignOut} disabled={isBusy} className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 disabled:opacity-50">Sign out</button>
-        </>
-      ) : (
-        showAdminBtn && (
-          <>
-            <button type="button" onClick={() => { setLoginOpen((open) => !open); setErrorMessage(''); }} className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700">
-              Administrator sign in
-            </button>
-            {loginOpen && (
-              <form onSubmit={handleSignIn} className="flex w-full flex-wrap items-end gap-3">
-                <label className={labelClassName}>
-                  Email
-                  <input type="email" required autoComplete="username" value={email} onChange={(event) => setEmail(event.target.value)} className={inputClassName} />
-                </label>
-                <label className={labelClassName}>
-                  Password
-                  <input type="password" required autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} className={inputClassName} />
-                </label>
-                <button type="submit" disabled={isBusy} className="rounded-lg bg-[var(--brand-accent)] px-4 py-2 text-sm font-semibold text-white disabled:opacity-50">{isBusy ? 'Signing in...' : 'Sign in'}</button>
-              </form>
-            )}
-          </>
-        )
+        </form>
       )}
-      {isDatabaseEmpty && isAdmin && <p className="w-full text-sm text-slate-600">The Supabase table is empty. Import the current cards before editing them.</p>}
+
       {errorMessage && <p role="alert" className="w-full text-sm text-red-700">{errorMessage}</p>}
     </section>
   );
