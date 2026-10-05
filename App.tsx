@@ -164,7 +164,7 @@ const App: React.FC = () => {
   const tabs = getCategories();
 
   return (
-    <div className="theme-accent min-h-screen w-full font-sans bg-white text-slate-900">
+    <div className={`theme-accent w-full font-sans bg-white text-slate-900 ${isAdminRoute ? 'flex h-dvh flex-col overflow-hidden' : 'min-h-screen'}`}>
       <Header
         currentView={currentView}
         onNavigate={handleNavigate}
@@ -184,7 +184,7 @@ const App: React.FC = () => {
         </SupabaseAdminGate>
       )}
 
-      <main className="min-h-[calc(100vh-4rem)] w-full px-4 py-4 sm:px-6 md:py-6 xl:px-8">
+      <main className={`${isAdminRoute ? 'hidden' : 'min-h-[calc(100vh-4rem)]'} w-full px-4 py-4 sm:px-6 md:py-6 xl:px-8`}>
           <section className="min-w-0">
                 {error && (
                   <p role="alert" className="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
@@ -244,7 +244,7 @@ const App: React.FC = () => {
               </section>
       </main>
 
-        <footer className="border-t border-slate-200 px-4 py-6 text-center text-xs leading-relaxed text-slate-500 sm:px-6 xl:px-8">
+        <footer className={`${isAdminRoute ? 'hidden' : ''} border-t border-slate-200 px-4 py-6 text-center text-xs leading-relaxed text-slate-500 sm:px-6 xl:px-8`}>
           <p>WakaMoe is a non-profit database.</p>
           <p>All content belongs to the original rights holders.</p>
         </footer>

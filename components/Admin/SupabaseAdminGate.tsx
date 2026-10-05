@@ -212,15 +212,15 @@ const SupabaseAdminGate: React.FC<SupabaseAdminGateProps> = ({ children }) => {
   }
 
   return (
-    <>
-      <div className="flex justify-end px-4 pt-3 sm:px-6 xl:px-8">
+    <div className="flex min-h-0 flex-1 flex-col">
+      <div className="flex shrink-0 justify-end px-4 pt-3 sm:px-6 xl:px-8">
         <button type="button" onClick={handleSignOut} className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100">
           Log Out
         </button>
       </div>
-      {message && <p role="alert" className="mx-4 mt-2 text-right text-sm text-red-700 sm:mx-6 xl:mx-8">{message}</p>}
-      {children}
-    </>
+      {message && <p role="alert" className="mx-4 mt-2 shrink-0 text-right text-sm text-red-700 sm:mx-6 xl:mx-8">{message}</p>}
+      <div className="min-h-0 flex-1">{children}</div>
+    </div>
   );
 };
 

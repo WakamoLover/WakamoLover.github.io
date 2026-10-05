@@ -341,9 +341,9 @@ const SupabaseCardAdmin: React.FC<SupabaseCardAdminProps> = ({ posts, isLoading,
   };
 
   return (
-    <section className="px-4 py-4 sm:px-6 xl:px-8">
-      <div className="mx-auto max-w-7xl space-y-5">
-        <header>
+    <section className="h-full min-h-0 px-4 pb-4 sm:px-6 xl:px-8">
+      <div className="mx-auto flex h-full min-h-0 max-w-7xl flex-col gap-3">
+        <header className="shrink-0 pt-2">
           <h1 className="text-2xl font-bold text-slate-900">Card Admin</h1>
           <p className="mt-1 text-sm text-slate-600">Cards are stored in Supabase and changes are reflected in real time.</p>
         </header>
@@ -351,14 +351,14 @@ const SupabaseCardAdmin: React.FC<SupabaseCardAdminProps> = ({ posts, isLoading,
         {(error || message) && (
           <p
             role={error ? 'alert' : 'status'}
-            className={`rounded-lg border px-4 py-3 text-sm ${error ? 'border-red-200 bg-red-50 text-red-800' : 'border-emerald-200 bg-emerald-50 text-emerald-800'}`}
+            className={`shrink-0 rounded-lg border px-4 py-3 text-sm ${error ? 'border-red-200 bg-red-50 text-red-800' : 'border-emerald-200 bg-emerald-50 text-emerald-800'}`}
           >
             {error || message}
           </p>
         )}
 
-        <div className="grid items-start gap-5 xl:grid-cols-[minmax(20rem,0.85fr)_minmax(0,1.15fr)]">
-          <form onSubmit={handleSubmit} className="space-y-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+        <div className="grid min-h-0 flex-1 grid-cols-1 grid-rows-[minmax(0,1fr)_minmax(0,1fr)] gap-3 xl:grid-cols-[2fr_3fr] xl:grid-rows-1 xl:gap-5">
+          <form onSubmit={handleSubmit} className="min-h-0 overflow-y-auto overscroll-contain rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
             <div className="flex items-center justify-between gap-3">
               <h2 className="text-lg font-bold text-slate-900">{editingId ? 'Edit Card' : 'Add New Card'}</h2>
               {editingId && (
@@ -519,7 +519,7 @@ const SupabaseCardAdmin: React.FC<SupabaseCardAdminProps> = ({ posts, isLoading,
             </button>
           </form>
 
-          <section className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+          <section className="flex min-h-0 min-w-0 flex-col overflow-hidden rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <h2 className="text-lg font-bold text-slate-900">Cards ({filteredPosts.length} of {posts.length})</h2>
               <input
@@ -532,7 +532,7 @@ const SupabaseCardAdmin: React.FC<SupabaseCardAdminProps> = ({ posts, isLoading,
               />
             </div>
 
-            <nav aria-label="Filter cards by type" className="mt-4 flex gap-2 overflow-x-auto border-b border-slate-200 pb-3">
+            <nav aria-label="Filter cards by type" className="mt-4 flex shrink-0 gap-2 overflow-x-auto border-b border-slate-200 pb-3">
               {ADMIN_TYPE_TABS.map((tab) => (
                 <button
                   key={tab.type}
@@ -546,14 +546,15 @@ const SupabaseCardAdmin: React.FC<SupabaseCardAdminProps> = ({ posts, isLoading,
               ))}
             </nav>
 
-            {isLoading ? (
-              <p role="status" className="py-8 text-center text-sm text-slate-500">Loading cards...</p>
-            ) : filteredPosts.length === 0 ? (
-              <p className="py-8 text-center text-sm text-slate-500">
-                {posts.length === 0 ? 'No cards have been added yet.' : 'No cards match this type and search.'}
-              </p>
-            ) : (
-              <ul className="mt-4 divide-y divide-slate-200">
+            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
+              {isLoading ? (
+                <p role="status" className="py-8 text-center text-sm text-slate-500">Loading cards...</p>
+              ) : filteredPosts.length === 0 ? (
+                <p className="py-8 text-center text-sm text-slate-500">
+                  {posts.length === 0 ? 'No cards have been added yet.' : 'No cards match this type and search.'}
+                </p>
+              ) : (
+                <ul className="mt-4 divide-y divide-slate-200">
                 {filteredPosts.map((post) => (
                   <li key={post.id} className="flex flex-col gap-3 py-3 sm:flex-row sm:items-center sm:justify-between">
                     <div className="min-w-0">
@@ -586,8 +587,9 @@ const SupabaseCardAdmin: React.FC<SupabaseCardAdminProps> = ({ posts, isLoading,
                     </div>
                   </li>
                 ))}
-              </ul>
-            )}
+                </ul>
+              )}
+            </div>
           </section>
         </div>
       </div>
