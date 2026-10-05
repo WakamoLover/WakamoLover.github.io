@@ -128,6 +128,7 @@ const CardAdmin: React.FC<CardAdminProps> = ({
     const params = new URLSearchParams(window.location.search);
     if (params.has('yukina')) {
       setShowAdminBtn(true);
+      setLoginOpen(true);
     }
   }, []);
   
@@ -266,25 +267,25 @@ const CardAdmin: React.FC<CardAdminProps> = ({
         ) : (
           <>
             {showAdminBtn && (
-              <button type="button" onClick={() => { setLoginOpen((open) => !open); setErrorMessage(''); }} className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700">
-                Administrator sign in
-              </button>
+              <>
+                <button type="button" onClick={() => { setLoginOpen((open) => !open); setErrorMessage(''); }} className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700">
+                  Administrator sign in
+                </button>
+                {loginOpen && (
+                  <form onSubmit={handleSignIn} className="flex w-full flex-wrap items-end gap-3">
+                    <label className={labelClassName}>
+                      Email
+                      <input type="email" required autoComplete="username" value={email} onChange={(event) => setEmail(event.target.value)} className={inputClassName} />
+                    </label>
+                    <label className={labelClassName}>
+                      Password
+                      <input type="password" required autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} className={inputClassName} />
+                    </label>
+                    <button type="submit" disabled={isBusy} className="rounded-lg bg-[var(--brand-accent)] px-4 py-2 text-sm font-semibold text-white disabled:opacity-50">{isBusy ? 'Signing in...' : 'Sign in'}</button>
+                  </form>
+                )}
+              </>
             )}
-            {loginOpen && (
-              <form onSubmit={handleSignIn} className="flex w-full flex-wrap items-end gap-3">
-                <label className={labelClassName}>
-                  Email
-                  <input type="email" required autoComplete="username" value={email} onChange={(event) => setEmail(event.target.value)} className={inputClassName} />
-                </label>
-                <label className={labelClassName}>
-                  Password
-                  <input type="password" required autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} className={inputClassName} />
-                </label>
-                <button type="submit" disabled={isBusy} className="rounded-lg bg-[var(--brand-accent)] px-4 py-2 text-sm font-semibold text-white disabled:opacity-50">{isBusy ? 'Signing in…' : 'Sign in'}</button>
-              </form>
-            )}
-          </>
-        )}
         {isDatabaseEmpty && isAdmin && <p className="w-full text-sm text-slate-600">The Supabase table is empty. Import the current cards before editing them.</p>}
         {errorMessage && <p role="alert" className="w-full text-sm text-red-700">{errorMessage}</p>}
       </section>
