@@ -1,0 +1,113 @@
+.interactive-background {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 18% 12%, rgba(227, 235, 255, 0.5), transparent 52%),
+    linear-gradient(135deg, #f8f9ff 0%, #f4f7ff 48%, #fbf8ff 100%);
+  isolation: isolate;
+}
+
+html.dark .interactive-background {
+  background:
+    radial-gradient(ellipse at 18% 12%, rgba(42, 58, 104, 0.2), transparent 54%),
+    linear-gradient(135deg, #05070c 0%, #080a11 52%, #09070d 100%);
+}
+
+.interactive-background__ambient-layer {
+  position: absolute;
+  inset: 0;
+}
+
+.interactive-background__blob {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(520px, 72vw);
+  height: min(520px, 72vw);
+  opacity: 0.78;
+  transform: translate(-50%, -50%);
+  transition: none;
+  will-change: transform;
+}
+
+.interactive-background__blob-shape {
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  filter: blur(120px);
+  animation: cloud-drift 20s ease-in-out infinite alternate;
+}
+
+.interactive-background__blob-shape--blue {
+  background: radial-gradient(circle, rgba(43, 112, 255, 0.44) 0%, rgba(69, 139, 255, 0.27) 38%, rgba(108, 165, 255, 0.11) 58%, transparent 76%);
+}
+
+html.dark .interactive-background__blob-shape--blue {
+  background: radial-gradient(circle, rgba(49, 105, 255, 0.34) 0%, rgba(69, 139, 255, 0.2) 38%, rgba(108, 165, 255, 0.08) 58%, transparent 76%);
+}
+
+.interactive-background__blob:nth-child(2) {
+  width: min(470px, 64vw);
+  height: min(470px, 64vw);
+}
+
+.interactive-background__blob-shape--violet {
+  opacity: 0.82;
+  background: radial-gradient(circle, rgba(142, 83, 245, 0.38) 0%, rgba(169, 112, 248, 0.23) 40%, rgba(197, 156, 250, 0.1) 60%, transparent 78%);
+  animation-duration: 24s;
+  animation-delay: -7s;
+}
+
+html.dark .interactive-background__blob-shape--violet {
+  background: radial-gradient(circle, rgba(142, 83, 245, 0.22) 0%, rgba(169, 112, 248, 0.13) 40%, rgba(197, 156, 250, 0.05) 60%, transparent 78%);
+}
+
+.interactive-background__blob:nth-child(3) {
+  width: min(410px, 56vw);
+  height: min(410px, 56vw);
+}
+
+.interactive-background__blob-shape--cyan {
+  opacity: 0.76;
+  background: radial-gradient(circle, rgba(49, 190, 224, 0.36) 0%, rgba(83, 204, 231, 0.22) 42%, rgba(131, 222, 239, 0.1) 62%, transparent 78%);
+  animation-duration: 22s;
+  animation-delay: -11s;
+}
+
+html.dark .interactive-background__blob-shape--cyan {
+  background: radial-gradient(circle, rgba(49, 190, 224, 0.28) 0%, rgba(83, 204, 231, 0.16) 42%, rgba(131, 222, 239, 0.07) 62%, transparent 78%);
+}
+
+@keyframes cloud-drift {
+  from {
+    transform: scale(0.97) rotate(-3deg);
+  }
+  to {
+    transform: scale(1.03) rotate(3deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .interactive-background__blob-shape {
+    animation: none;
+  }
+
+  .interactive-background__blob {
+    transition: none;
+    will-change: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce), (pointer: coarse) {
+  .interactive-background__blob-shape {
+    animation: none;
+  }
+
+  .interactive-background__blob {
+    transition: none;
+    will-change: auto;
+  }
+}

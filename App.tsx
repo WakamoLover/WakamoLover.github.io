@@ -4,6 +4,7 @@ import PostCard from './components/Content/PostCard';
 import ImageModal from './components/Content/ImageModal';
 import SupabaseAdminGate from './components/Admin/SupabaseAdminGate';
 import SupabaseCardAdmin from './components/Admin/SupabaseCardAdmin';
+import InteractiveBackground from './components/Background/InteractiveBackground';
 import { CATEGORY_TABS } from './constants/categories';
 import { useRealtimePosts } from './src/hooks/useRealtimePosts';
 import { ContentType } from './types';
@@ -164,7 +165,8 @@ const App: React.FC = () => {
   const tabs = getCategories();
 
   return (
-    <div className={`theme-accent w-full font-sans bg-white text-slate-900 ${isAdminRoute ? 'flex h-dvh flex-col overflow-hidden' : 'min-h-screen'}`}>
+    <div className={`theme-accent relative isolate w-full font-sans bg-transparent text-slate-900 ${isAdminRoute ? 'flex h-dvh flex-col overflow-hidden' : 'min-h-screen'}`}>
+      <InteractiveBackground />
       <Header
         currentView={currentView}
         onNavigate={handleNavigate}
@@ -184,7 +186,7 @@ const App: React.FC = () => {
         </SupabaseAdminGate>
       )}
 
-      <main className={`${isAdminRoute ? 'hidden' : 'min-h-[calc(100vh-4rem)]'} w-full px-4 py-4 sm:px-6 md:py-6 xl:px-8`}>
+      <main className={`${isAdminRoute ? 'hidden' : 'min-h-[calc(100vh-4rem)]'} w-full px-4 pb-4 pt-5 sm:px-6 md:pb-6 xl:px-8`}>
           <section className="min-w-0">
                 {error && (
                   <p role="alert" className="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
@@ -192,14 +194,14 @@ const App: React.FC = () => {
                   </p>
                 )}
                 {tabs.length > 0 && !searchTerm && (
-                  <nav aria-label="Categories" className="scrollbar-hide mb-5 flex gap-2 overflow-x-auto border-b border-slate-200 pb-3">
+                  <nav aria-label="Categories" className="category-tabs no-invert scrollbar-hide mb-5 mt-8 flex gap-2 overflow-x-auto border-b border-slate-200 pb-3">
                     {tabs.map(tab => (
                       <button
                         key={tab}
                         type="button"
                         onClick={() => handleCategorySelect(tab)}
                         aria-pressed={currentCategory === tab}
-                        className={`shrink-0 rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${currentCategory === tab ? 'bg-[var(--brand-accent)] text-white' : 'bg-slate-100 text-slate-800 hover:bg-slate-200'}`}
+                        className="category-tab shrink-0 rounded-lg border px-4 py-2 text-sm font-semibold transition-colors duration-200"
                       >
                         {tab}
                       </button>

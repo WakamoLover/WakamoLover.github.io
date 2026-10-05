@@ -161,8 +161,8 @@ const displayImage = optimizeImageUrl(formatImagePath(rawImage));
 
     return (
       <div
-        className={`group flex h-[140px] flex-row gap-4 overflow-hidden rounded-2xl border bg-white p-4 transition-all sm:h-36 ${
-          isGame ? '' : 'cursor-pointer hover:border-slate-400 hover:bg-slate-50'
+        className={`glass-card group flex h-[140px] flex-row gap-4 overflow-hidden rounded-2xl p-4 sm:h-36 ${
+          isGame ? '' : 'cursor-pointer'
         }`}
         onClick={isGame ? undefined : handleCardClick}
       >
@@ -230,7 +230,7 @@ const displayImage = optimizeImageUrl(formatImagePath(rawImage));
         : [];
 
     return (
-      <article className="group flex min-h-44 gap-3 rounded-xl bg-slate-50 p-4 transition-colors hover:bg-slate-100 sm:gap-4">
+      <article className="glass-card group flex min-h-44 gap-3 rounded-xl p-4 sm:gap-4">
         <div className="h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-white sm:h-[72px] sm:w-[72px]">
           <ResolutionLimitedImage
             src={imageSource}
@@ -269,52 +269,68 @@ const displayImage = optimizeImageUrl(formatImagePath(rawImage));
   }
 
   if (isVisualGrid) {
+    const creatorCategories = Array.isArray(post.category)
+      ? post.category
+      : post.category
+        ? [post.category]
+        : [];
+
     return (
       <div
-        className="group relative aspect-square overflow-hidden rounded-xl bg-slate-100 cursor-pointer"
+        className="glass-card group relative flex aspect-square cursor-pointer flex-col overflow-hidden rounded-xl"
         onClick={() => {
           if (contentUrl && contentUrl !== '#') {
             window.open(contentUrl, '_blank', 'noopener,noreferrer');
           }
         }}
       >
-        <ResolutionLimitedImage
-          src={imageSource}
-          alt={post.title}
-          referrerPolicy="no-referrer"
-          onError={handleImageError}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
+        <div className="relative min-h-0 flex-1 overflow-hidden">
+          <ResolutionLimitedImage
+            src={imageSource}
+            alt={post.title}
+            referrerPolicy="no-referrer"
+            onError={handleImageError}
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
 
-        {hasPlatformIcon && (
-          <div className="absolute right-2.5 top-2.5 flex h-7 w-7 items-center justify-center rounded-full bg-black/35 text-white backdrop-blur-sm">
-            <PlatformIcon category={post.category} iconImage={post.iconImage} />
+          {hasPlatformIcon && (
+            <div className="absolute right-2.5 top-2.5 flex h-7 w-7 items-center justify-center rounded-full bg-black/35 text-white backdrop-blur-sm">
+              <PlatformIcon category={post.category} iconImage={post.iconImage} />
+            </div>
+          )}
+        </div>
+
+        <div className="creator-glass-bar no-invert z-10 flex flex-col gap-1.5 p-3 text-slate-900">
+          <div className="min-w-0">
+            <h3 className="line-clamp-1 text-sm font-semibold leading-tight">
+              {post.title || 'Untitled'}
+            </h3>
+            {post.subtitle && (
+              <p className="mt-0.5 truncate text-xs leading-snug text-slate-500">
+                {post.subtitle}
+              </p>
+            )}
           </div>
-        )}
-
-        <div className="absolute inset-x-0 bottom-0 p-3 text-white">
-          {viewMode === 'CREATOR' ? (
-            <>
-              {post.description && (
-                <p className="mb-1 text-[11px] leading-snug text-white/75 line-clamp-1">
-                  {post.description}
-                </p>
-              )}
-              <div className="flex items-end justify-between gap-2">
-                <h3 className="flex min-w-0 items-baseline gap-1.5 font-semibold text-sm leading-tight drop-shadow-sm">
-                  <span className="line-clamp-2">{post.title || 'Untitled'}</span>
-                  {post.subtitle && <span className="card-subtitle card-subtitle-on-image shrink-0">{post.subtitle}</span>}
-                </h3>
+          {post.description && (
+            <p className="line-clamp-1 text-[11px] leading-snug text-slate-600">
+              {post.description}
+            </p>
+          )}
+          {(creatorCategories.length > 0 || post.type) && (
+            <div className="mt-1 flex min-w-0 items-center justify-between gap-2 border-t border-slate-400/15 pt-1.5 text-xs text-gray-500">
+              <div className="flex min-w-0 flex-wrap gap-x-2 gap-y-1">
+                {creatorCategories.map((category: string) => (
+                  <span key={category} className="truncate">
+                    {category}
+                  </span>
+                ))}
               </div>
-            </>
-          ) : (
-            <>
-              <h3 className="flex min-w-0 items-baseline gap-1.5 font-semibold text-sm leading-tight drop-shadow-sm">
-                <span className="line-clamp-2">{post.title || 'Untitled'}</span>
-                {post.subtitle && <span className="card-subtitle card-subtitle-on-image shrink-0">{post.subtitle}</span>}
-              </h3>
-            </>
+              {post.type && (
+                <span className="shrink-0 capitalize">
+                  {String(post.type).toLowerCase()}
+                </span>
+              )}
+            </div>
           )}
         </div>
       </div>
@@ -323,7 +339,7 @@ const displayImage = optimizeImageUrl(formatImagePath(rawImage));
 
   return (
     <div
-      className="transition-all duration-300 transform group flex flex-col h-full border rounded-2xl overflow-hidden bg-white border-slate-200 hover:border-slate-400 cursor-pointer"
+      className="glass-card group flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl"
       onClick={() => {
         if (contentUrl && contentUrl !== '#') {
           window.open(contentUrl, '_blank', 'noopener,noreferrer');

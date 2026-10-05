@@ -1,8 +1,259 @@
 .theme-accent {
   --brand-accent: #881188;
-  --brand-accent-hover: #6f0f6f;
+  --brand-accent-hover: #741374;
   --brand-accent-tint: #f7eaf7;
   --brand-accent-border: #e8cbe8;
+}
+
+.floating-glass-header {
+  border: 1px solid rgb(255 255 255 / 0.38);
+  border-radius: 1rem;
+  background: rgb(255 255 255 / 0.4);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  box-shadow:
+    0 12px 36px rgb(35 48 80 / 0.1),
+    inset 0 1px 0 rgb(255 255 255 / 0.62);
+}
+
+html.dark .floating-glass-header {
+  border-color: rgb(255 255 255 / 0.2);
+  background: rgb(8 10 16 / 0.88);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  backdrop-filter: blur(20px) saturate(150%);
+  box-shadow:
+    0 12px 36px rgb(0 0 0 / 0.42),
+    inset 0 1px 0 rgb(255 255 255 / 0.16);
+}
+
+html.dark .header-brand,
+html.dark .header-nav-link[aria-current="page"] {
+  color: #e5a6ed;
+}
+
+html.dark .header-nav-link:hover {
+  color: #f0c4f4;
+}
+
+html.dark .header-nav-indicator {
+  background: #c75bd3;
+}
+
+.header-brand {
+  color: var(--brand-accent);
+}
+
+.header-search {
+  border-color: rgb(148 163 184 / 0.32);
+  background: rgb(255 255 255 / 0.58);
+  color: #475569;
+}
+
+.header-search:focus-within {
+  border-color: rgb(136 17 136 / 0.48);
+  background: rgb(255 255 255 / 0.82);
+}
+
+.header-search__input {
+  color: #0f172a;
+}
+
+.header-search__input::placeholder,
+.header-search__clear {
+  color: #64748b;
+}
+
+.header-search__clear:hover {
+  color: #0f172a;
+}
+
+.header-theme-toggle {
+  color: #334155;
+}
+
+.header-theme-toggle:hover {
+  background: rgb(136 17 136 / 0.08);
+  color: var(--brand-accent);
+}
+
+html.dark .header-search {
+  border-color: rgb(255 255 255 / 0.18);
+  background: rgb(255 255 255 / 0.08);
+  color: #cbd5e1;
+}
+
+html.dark .header-search:focus-within {
+  border-color: rgb(190 96 190 / 0.66);
+  background: rgb(255 255 255 / 0.12);
+}
+
+html.dark .header-search__input {
+  color: #f1f5f9;
+}
+
+html.dark .header-search__input::placeholder,
+html.dark .header-search__clear {
+  color: #cbd5e1;
+}
+
+html.dark .header-search__clear:hover {
+  color: #ffffff;
+}
+
+html.dark .header-theme-toggle {
+  color: #e2e8f0;
+}
+
+html.dark .header-theme-toggle:hover {
+  background: rgb(190 96 190 / 0.16);
+  color: #d8a0d8;
+}
+
+.category-tab {
+  border-color: transparent;
+  background: rgb(255 255 255 / 0.55);
+  color: #334155;
+}
+
+.category-tab:hover {
+  border-color: rgb(136 17 136 / 0.18);
+  background: rgb(136 17 136 / 0.08);
+  color: var(--brand-accent);
+}
+
+.category-tab[aria-pressed="true"] {
+  border-color: rgb(136 17 136 / 0.8);
+  background: var(--brand-accent);
+  color: white;
+  box-shadow: 0 3px 12px rgb(136 17 136 / 0.18);
+}
+
+html.dark .category-tabs {
+  border-bottom-color: rgb(255 255 255 / 0.14);
+}
+
+html.dark .category-tab {
+  border-color: rgb(255 255 255 / 0.12);
+  background: rgb(255 255 255 / 0.07);
+  color: #e2e8f0;
+}
+
+html.dark .category-tab:hover {
+  border-color: rgb(190 96 190 / 0.3);
+  background: rgb(190 96 190 / 0.14);
+  color: #e3b5e3;
+}
+
+html.dark .category-tab[aria-pressed="true"] {
+  border-color: rgb(190 96 190 / 0.8);
+  background: #881188;
+  color: #ffffff;
+  box-shadow: 0 3px 14px rgb(136 17 136 / 0.28);
+}
+
+.glass-card {
+  position: relative;
+  border: 1px solid rgb(255 255 255 / 0.25);
+  background: rgb(255 255 255 / 0.3);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  backdrop-filter: blur(16px) saturate(180%);
+  box-shadow:
+    0 8px 32px rgb(0 0 0 / 0.1),
+    inset 0 1px 0 rgb(255 255 255 / 0.38);
+  transition:
+    transform 400ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 400ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 400ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html.dark body {
+  background-color: #faf8f3;
+}
+
+.glass-card:hover {
+  transform: translate3d(0, -4px, 0) scale(1.015);
+  will-change: transform;
+  border-color: rgb(136 17 136 / 0.36);
+  background-color: rgb(255 255 255 / 0.38);
+  box-shadow:
+    0 20px 40px rgb(136 17 136 / 0.1),
+    inset 0 1px 0 rgb(255 255 255 / 0.75);
+}
+
+.glass-card:hover .creator-glass-bar {
+  background-color: rgb(255 255 255 / 0.38);
+}
+
+.creator-glass-bar {
+  position: relative;
+  flex: none;
+  border-top: 1px solid rgb(255 255 255 / 0.48);
+  background: rgb(255 255 255 / 0.3);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.35),
+    0 -8px 24px rgb(255 255 255 / 0.08);
+}
+
+.creator-glass-bar::before {
+  position: absolute;
+  top: 0;
+  left: 8%;
+  width: 34%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.9), transparent);
+  content: "";
+}
+
+.creator-glass-tag {
+  border: 1px solid rgb(255 255 255 / 0.42);
+  background: rgb(255 255 255 / 0.28);
+  color: rgb(51 65 85 / 0.86);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+html.dark .creator-glass-bar {
+  border-top-color: rgb(157 34 157 / 0.48);
+  background: rgb(20 24 33 / 0.4);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.12),
+    0 -8px 24px rgb(157 34 157 / 0.12);
+}
+
+html.dark .creator-glass-bar h3,
+html.dark .creator-glass-bar p {
+  color: #e2e8f0;
+}
+
+html.dark .creator-glass-bar .card-subtitle {
+  color: #aeb9c9;
+}
+
+html.dark .creator-glass-bar .text-gray-500 {
+  color: #aeb9c9;
+}
+
+html.dark .creator-glass-bar .border-slate-400\/15 {
+  border-color: rgb(255 255 255 / 0.14);
+}
+
+html.dark .glass-card:hover .creator-glass-bar {
+  background-color: rgb(20 24 33 / 0.72);
+}
+
+html.dark .creator-glass-tag {
+  border-color: rgb(255 255 255 / 0.18);
+  background: rgb(15 15 15 / 0.28);
+  color: rgb(255 255 255 / 0.84);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-card {
+    transition: none;
+  }
 }
 
 .scrollbar-hide {
@@ -72,7 +323,8 @@ body {
   min-height: 100%;
   background-color: #ffffff;
   color: #0f172a;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: "Inter", "Noto Sans KR", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  letter-spacing: -0.01em;
 }
 
 html.dark {
@@ -132,7 +384,7 @@ html {
 
 .card-subtitle {
   color: #94a3b8;
-  font-family: "Noto Sans JP", "Yu Gothic UI", Meiryo, sans-serif;
+  font-family: "Inter", "Noto Sans KR", ui-sans-serif, system-ui, sans-serif;
   font-size: 0.6875rem;
   font-weight: 400;
   line-height: 1.2;
