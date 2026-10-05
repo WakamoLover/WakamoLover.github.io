@@ -72,14 +72,20 @@ const App: React.FC = () => {
   }, []);
 
   const handleSaveCard = async (post: EditableCard, id?: string) => {
-    setAdminError('');
+  setAdminError('');
+  try {
     const savedCard = id ? await updateCard(id, post) : await insertCard(post);
-    setCards((currentCards) => id
-      ? currentCards.map((card) => card.id === id ? savedCard : card)
-      : [...currentCards, savedCard]);
+    setCards((currentCards) => 
+      id 
+        ? currentCards.map((card) => (card.id === id ? savedCard : card))
+        : [...currentCards, savedCard]
+    );
     setIsDatabaseEmpty(false);
     setVisibleCount(24);
-  };
+  } catch (error) {
+    setAdminError(error instanceof Error ? error.message : String(error));
+  }
+};
 
   const handleDeleteCard = async (post: Post) => {
     if (!window.confirm(`Delete “${post.title}”?`)) return;

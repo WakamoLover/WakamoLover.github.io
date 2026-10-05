@@ -5,7 +5,7 @@ import { EditableCard } from '../../lib/cards';
 interface CardEditorModalProps {
   post: Post | null;
   onClose: () => void;
-  onSave: (cardData: EditableCard) => Promise<void>;
+  onSave: (cardData: EditableCard, id?: string) => Promise<void>;
 }
 
 export const CardEditorModal: React.FC<CardEditorModalProps> = ({ post, onClose, onSave }) => {
@@ -21,10 +21,11 @@ export const CardEditorModal: React.FC<CardEditorModalProps> = ({ post, onClose,
   const [saving, setSaving] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSaving(true);
-    try {
-      await onSave({
+  e.preventDefault();
+  setSaving(true);
+  try {
+    await onSave(
+      {
         title,
         subtitle: subtitle || undefined,
         description,
@@ -34,15 +35,17 @@ export const CardEditorModal: React.FC<CardEditorModalProps> = ({ post, onClose,
         videoUrl: videoUrl || undefined,
         externalLink: externalLink || undefined,
         tags: tags ? tags.split(',').map((t) => t.trim()).filter(Boolean) : [],
-      });
-      onClose();
-    } catch (error) {
-      console.error('Failed to save card:', error);
-      alert('failed to save card. Please check the console for details.');
-    } finally {
-      setSaving(false);
-    }
-  };
+      },
+      post?.id
+    );
+    onClose();
+  } catch (error) {
+    console.error('Failed to save card:', error);
+    alert('저장 중 오류가 발생했습니다.');
+  } finally {
+    setSaving(false);
+  }
+};
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
