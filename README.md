@@ -22,14 +22,13 @@ query sorts posts by `id`.
 
 Run [`supabase/posts-rls.sql`](./supabase/posts-rls.sql) in the Supabase SQL Editor.
 It enables RLS, permits public reads, and permits writes only to authenticated users
-listed in `public.admin_users`. Create the administrator's account in Supabase Auth,
-then run the commented `INSERT ... SELECT` statement in that SQL file with the
-administrator's email to grant access. Do not grant administrator membership through
-client-side code. The script replaces all existing RLS policies on `public.posts` so
-older permissive policies cannot override these rules.
+whose `public.admin_users.is_admin` value is `true`. The admin client can read only
+the signed-in user's own admin status; admin membership must be managed in SQL and
+never from client-side code. The script replaces all existing RLS policies on
+`public.posts` so older permissive policies cannot override these rules.
 
 When `?yukina` is present, the admin panel requires a persisted Supabase Auth session
-and checks the account against `public.is_admin()` before showing the panel. The
+and checks the session user's `user_id` and `is_admin` fields before showing the panel. The
 Supabase client stores the session in the browser and refreshes tokens automatically.
 
 ### Managing cards

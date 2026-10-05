@@ -2,11 +2,37 @@
 -- separately after their Auth accounts have been created.
 
 create table if not exists public.admin_users (
-  user_id uuid primary key references auth.users (id) on delete cascade
+  user_id uuid primary key references auth.users (id) on delete cascade,
+  is_admin boolean not null default false
 );
+
+alter table public.admin_users
+  add column if not exists is_admin boolean not null default false;
 
 alter table public.admin_users enable row level security;
 revoke all on table public.admin_users from public, anon, authenticated;
+grant select on table public.admin_users to authenticated;
+
+do $$
+declare
+  existing_policy record;
+begin
+  for existing_policy in
+    select policyname
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'admin_users'
+  loop
+    execute format('drop policy %I on public.admin_users', existing_policy.policyname);
+  end loop;
+end;
+$$;
+
+create policy "Users can read their own admin status"
+  on public.admin_users
+  for select
+  to authenticated
+  using (user_id = (select auth.uid()));
 
 create or replace function public.is_admin()
 returns boolean
@@ -19,6 +45,7 @@ as $$
     select 1
     from public.admin_users
     where user_id = (select auth.uid())
+      and is_admin is true
   );
 $$;
 
@@ -71,7 +98,7 @@ create policy "Admins can delete posts"
   to authenticated
   using ((select public.is_admin()));
 
--- After creating an administrator in Supabase Auth, grant access with:
--- insert into public.admin_users (user_id)
--- select id from auth.users where email = 'admin@example.com'
--- on conflict (user_id) do nothing;
+-- To explicitly grant administrator access to an existing Auth account:
+-- insert into public.admin_users (user_id, is_admin)
+-- select id, true from auth.users where email = 'admin@example.com'
+-- on conflict (user_id) do update set is_admin = excluded.is_admin;

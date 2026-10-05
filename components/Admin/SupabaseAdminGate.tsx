@@ -27,18 +27,11 @@ const SupabaseAdminGate: React.FC<SupabaseAdminGateProps> = ({ children }) => {
 
     let isCurrent = true;
     let hasAuthEvent = false;
-    const sessionTimeout = window.setTimeout(() => {
-      if (!isCurrent || sessionReady) return;
-      setMessage('세션 확인 시간이 초과되었습니다. 페이지를 새로고침하거나 다시 로그인해 주세요.');
-      setSessionReady(true);
-    }, 10000);
-
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, nextSession) => {
       hasAuthEvent = true;
       setSession(nextSession);
       setSessionReady(true);
       setMessage('');
-      window.clearTimeout(sessionTimeout);
     });
 
     void supabase.auth.getSession().then(({ data, error }) => {
@@ -57,13 +50,10 @@ const SupabaseAdminGate: React.FC<SupabaseAdminGateProps> = ({ children }) => {
       setSession(null);
       setAuthorization('denied');
       setSessionReady(true);
-    }).finally(() => {
-      window.clearTimeout(sessionTimeout);
     });
 
     return () => {
       isCurrent = false;
-      window.clearTimeout(sessionTimeout);
       subscription.unsubscribe();
     };
   }, []);
@@ -76,34 +66,30 @@ const SupabaseAdminGate: React.FC<SupabaseAdminGateProps> = ({ children }) => {
 
     let isCurrent = true;
     setAuthorization('checking');
-    const authorizationTimeout = window.setTimeout(() => {
-      if (!isCurrent) return;
-      setMessage('관리자 권한 확인 시간이 초과되었습니다. Supabase 연결과 is_admin 정책을 확인해 주세요.');
-      setAuthorization('error');
-    }, 10000);
 
     void (async () => {
       try {
-        const { data, error } = await supabase.rpc('is_admin');
+        const { data, error } = await supabase
+          .from('admin_users')
+          .select('is_admin')
+          .eq('user_id', session.user.id)
+          .maybeSingle();
         if (!isCurrent) return;
         if (error) {
           setMessage(`관리자 권한을 확인하지 못했습니다: ${error.message}`);
           setAuthorization('error');
         } else {
-          setAuthorization(data === true ? 'admin' : 'denied');
+          setAuthorization(data?.is_admin === true ? 'admin' : 'denied');
         }
       } catch (error: unknown) {
         if (!isCurrent) return;
         setMessage(`관리자 권한을 확인하지 못했습니다: ${error instanceof Error ? error.message : String(error)}`);
         setAuthorization('error');
-      } finally {
-        window.clearTimeout(authorizationTimeout);
       }
-    });
+    })();
 
     return () => {
       isCurrent = false;
-      window.clearTimeout(authorizationTimeout);
     };
   }, [session?.user.id]);
 
