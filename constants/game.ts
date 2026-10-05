@@ -274,7 +274,7 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
     "title": "Aether Gazer",
     "subtitle": "深空之眼",
     "description": "",
-    "coverImage": "game/ag.webp",
+    "coverImage": "game/game_100001.webp",
     type: ContentType.GAME,
     "category": "Others",
     "gameLinks": [
@@ -286,7 +286,8 @@ export const GAME_ITEMS: Omit<Post, 'id'>[] = [
         "label": "Google Drive Archive",
         "url": "https://drive.google.com/drive/folders/1QGX6ISyrUHQWZHAKtyWNFU8APgRKhnEK"
       }
-    ]
+    ],
+    "tags": []
   },
   {
     "title": "Epic Seven",
