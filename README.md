@@ -37,9 +37,16 @@ Open `?yukina` and sign in with an account listed in `public.admin_users`. The
 dashboard reads the cards from Supabase and inserts, updates, or deletes rows directly
 in `public.posts`. Standard card fields use table columns; optional type-specific
 links, tags, and other card metadata are stored in the `metadata` JSONB column.
-Supabase Realtime updates the public card list after successful changes. The existing
-constants data is only needed for the one-time migration and is no longer the admin
-write path.
+Supabase Realtime updates the public card list after successful changes. Cover images
+are uploaded to the public `card-images` Storage bucket. Run
+[`supabase/card-images-storage.sql`](./supabase/card-images-storage.sql) in the SQL
+Editor to allow only authenticated admins to upload files.
+
+For the one-time migration of local cover files that already have matching
+`coverImage` paths, preview with `npx tsx utils/storageMigrate.ts --dry-run`, then
+apply with `npx tsx utils/storageMigrate.ts`. The script uses `SUPABASE_SERVICE_ROLE_KEY`
+from the ignored local `.env`, uploads only files whose exact local path exists under
+`public/media`, and leaves remote URLs, blank covers, and unmatched files unchanged.
 ### Local to Git
 ```bash
 git add .
