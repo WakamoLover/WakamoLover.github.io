@@ -1,38 +1,29 @@
-import React, { useState } from 'react';
-import { Moon, Search, Sun, X } from 'lucide-react';
+import React from 'react';
+import { Search, X } from 'lucide-react';
+import { PageId } from '../../types';
 
 const AREA_TABS = [
-  { id: 'GAME', label: 'Game' },
-  { id: 'CREATOR', label: 'Creator' },
-  { id: 'MEDIA', label: 'Media' },
-  { id: 'REF', label: 'Reference' },
+  { id: PageId.PAGE1, label: 'Game' },
+  { id: PageId.PAGE2, label: 'Creator' },
+  { id: PageId.PAGE3, label: 'Media' },
+  { id: PageId.PAGE4, label: 'Reference' },
 ];
 
 interface HeaderProps {
-  currentView: string;
-  onNavigate: (view: string) => void;
+  currentView: PageId;
+  onNavigate: (view: PageId) => void;
   searchTerm: string;
   onSearchChange: (term: string) => void;
 }
 
 const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, searchTerm, onSearchChange }) => {
-  const [isDark, setIsDark] = useState(() => document.documentElement.classList.contains('dark'));
-
-  const toggleTheme = () => {
-    setIsDark((previous) => {
-      const next = !previous;
-      document.documentElement.classList.toggle('dark', next);
-      return next;
-    });
-  };
-
   return (
     <header className="floating-glass-header no-invert sticky top-3 z-50 mx-3 sm:mx-5 lg:mx-8">
-      <div className="relative grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 gap-y-2 px-4 py-2 sm:px-6 2xl:min-h-16 2xl:grid-cols-[minmax(0,1fr)_minmax(12rem,20rem)_auto] 2xl:gap-6 2xl:px-8 2xl:py-0">
+      <div className="relative grid grid-cols-1 items-center gap-x-3 gap-y-2 px-4 py-2 sm:px-6 2xl:min-h-16 2xl:grid-cols-[minmax(0,1fr)_minmax(12rem,20rem)] 2xl:gap-6 2xl:px-8 2xl:py-0">
         <div className="flex min-w-0 items-center gap-3 2xl:gap-7">
           <button
             type="button"
-            onClick={() => onNavigate('GAME')}
+            onClick={() => onNavigate(PageId.PAGE1)}
             className="header-brand flex shrink-0 items-center gap-2 text-left"
             aria-label="WakaMoe Game"
           >
@@ -50,13 +41,7 @@ const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, searchTerm, on
                   onClick={() => onNavigate(id)}
                   aria-current={isActive ? 'page' : undefined}
                   className={`header-nav-link relative flex h-12 shrink-0 items-center px-0.5 text-xs font-bold transition-colors sm:text-sm 2xl:h-16 ${
-                    isDark
-                      ? isActive
-                        ? 'header-nav-link--active-dark text-white'
-                        : 'text-slate-100 hover:text-white'
-                      : isActive
-                        ? 'text-[var(--brand-accent)]'
-                        : 'text-slate-800 hover:text-[var(--brand-accent)]'
+                    isActive ? 'header-nav-link--active-dark text-white' : 'text-slate-100 hover:text-white'
                   }`}
                 >
                   {label}
@@ -67,7 +52,7 @@ const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, searchTerm, on
           </nav>
         </div>
 
-        <label className="header-search col-span-2 col-start-1 row-start-2 flex h-10 w-full min-w-0 max-w-xs justify-self-end items-center gap-2 rounded-full border px-3 transition-colors 2xl:col-span-1 2xl:col-start-2 2xl:row-start-1 2xl:w-full 2xl:max-w-xs 2xl:px-4">
+        <label className="header-search col-span-1 col-start-1 row-start-2 flex h-10 w-full min-w-0 max-w-xs justify-self-end items-center gap-2 rounded-full border px-3 transition-colors 2xl:col-start-2 2xl:row-start-1 2xl:w-full 2xl:max-w-xs 2xl:px-4">
           <Search size={18} className="shrink-0" />
           <input
             type="search"
@@ -84,15 +69,6 @@ const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, searchTerm, on
           )}
         </label>
 
-        <button
-          type="button"
-          onClick={toggleTheme}
-          title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-          aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-          className={`header-theme-toggle col-start-2 row-start-1 flex h-10 w-10 items-center justify-center justify-self-end rounded-full transition-colors 2xl:col-start-3 ${isDark ? 'header-theme-toggle--dark' : ''}`}
-        >
-          {isDark ? <Moon size={20} /> : <Sun size={20} />}
-        </button>
       </div>
     </header>
   );

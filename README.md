@@ -6,6 +6,14 @@ npm run dev
 npm run build
 ```
 
+### Page identifiers
+
+Internal page IDs and canonical routes are `page1` (`/page1`, Game), `page2`
+(`/page2`, Creator), `page3` (`/page3`, Media), and `page4` (`/page4`, Reference).
+The visible labels and existing Supabase post type values (`GAME`, `CREATOR`,
+`MEDIA`, `REF`) remain unchanged. Previous routes are accepted and redirected to
+their matching canonical page route.
+
 ### Live Supabase posts
 
 The site reads `posts` from Supabase and refreshes the displayed cards when rows are
@@ -38,15 +46,11 @@ dashboard reads the cards from Supabase and inserts, updates, or deletes rows di
 in `public.posts`. Standard card fields use table columns; optional type-specific
 links, tags, and other card metadata are stored in the `metadata` JSONB column.
 Supabase Realtime updates the public card list after successful changes. Cover images
-are uploaded to the public `card-images` Storage bucket. Run
-[`supabase/card-images-storage.sql`](./supabase/card-images-storage.sql) in the SQL
-Editor to allow only authenticated admins to upload files.
-
-For the one-time migration of local cover files that already have matching
-`coverImage` paths, preview with `npx tsx utils/storageMigrate.ts --dry-run`, then
-apply with `npx tsx utils/storageMigrate.ts`. The script uses `SUPABASE_SERVICE_ROLE_KEY`
-from the ignored local `.env`, uploads only files whose exact local path exists under
-`public/media`, and leaves remote URLs, blank covers, and unmatched files unchanged.
+are uploaded to the public `game`, `ref`, or `media` Storage bucket according to card
+type. Run [`supabase/card-images-storage.sql`](./supabase/card-images-storage.sql) in
+the SQL Editor to create/configure these buckets and allow only authenticated admins
+to upload files. The game and reference thumbnails are stored in Supabase; their
+former local image folders are no longer required.
 ### Local to Git
 ```bash
 git add .

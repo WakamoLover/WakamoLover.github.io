@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ContentType } from '../../types';
+import { ContentType, PageId } from '../../types';
 import { ExternalLink, Play, Youtube } from 'lucide-react';
 import CardScrollArea from './CardScrollArea';
 import ResolutionLimitedImage from './ResolutionLimitedImage';
@@ -7,7 +7,7 @@ import { optimizeImageUrl } from '../../utils/optimizeImageUrl';
 
 interface PostCardProps {
   post: any;
-  viewMode: string;
+  viewMode: PageId;
   onImageClick?: (url: string) => void;
 }
 
@@ -74,7 +74,6 @@ const PlatformIcon: React.FC<{ category?: string | string[]; iconImage?: string 
 
 const PostCard: React.FC<PostCardProps> = ({ post, viewMode, onImageClick }) => {
   const [imageError, setImageError] = useState(false);
-  const [usingIndexedFallback, setUsingIndexedFallback] = useState(false);
 
   const rawImage = 
     post.thumbnail || 
@@ -93,64 +92,33 @@ const PostCard: React.FC<PostCardProps> = ({ post, viewMode, onImageClick }) => 
 const displayImage = optimizeImageUrl(formatImagePath(rawImage));
   useEffect(() => {
     setImageError(false);
-    setUsingIndexedFallback(false);
   }, [post.id, rawImage]);
-
-  const getIndexedFallback = (sourceKey?: string): string | undefined => {
-    const match = sourceKey?.match(/^(game|ref):(\d+)$/);
-    if (!match) return undefined;
-
-    const [, type, rawIndex] = match;
-    const sourceIndex = Number(rawIndex);
-    if (!Number.isInteger(sourceIndex) || sourceIndex < 0) return undefined;
-
-    if (type === 'game') {
-      return `/media/game/game_${100001 + sourceIndex}.webp`;
-    }
-
-    const referenceImageIndexes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 20, 21, 22, 23, 26, 27, 30, 31, 32, 34, 35, 37];
-    const assetIndex = referenceImageIndexes.indexOf(sourceIndex);
-    return assetIndex === -1 ? undefined : `/media/ref/ref_${100001 + assetIndex}.webp`;
-  };
-
-  const indexedFallback = getIndexedFallback(post.sourceKey);
-  const imageSource = imageError
-    ? 'https://placehold.co/400x225?text=Image+Failed'
-    : usingIndexedFallback && indexedFallback
-      ? indexedFallback
-      : displayImage;
-  const handleImageError = () => {
-    if (!usingIndexedFallback && indexedFallback && indexedFallback !== displayImage) {
-      setUsingIndexedFallback(true);
-    } else {
-      setImageError(true);
-    }
-  };
+  const imageSource = imageError ? 'https://placehold.co/400x225?text=Image+Failed' : displayImage;
   
   let contentUrl = '';
-  if (post.type === ContentType.MEDIA) {
+  if (post.type === ContentType.PAGE3) {
     contentUrl = post.externalLink || post.channelUrl || post.videoUrl || post.originalUrl || '';
-  } else if (post.type === ContentType.REF || post.type === ContentType.CREATOR) {
+  } else if (post.type === ContentType.PAGE4 || post.type === ContentType.PAGE2) {
     contentUrl = post.externalLink || post.originalUrl || '';
-  } else if (post.type === ContentType.GAME) {
+  } else if (post.type === ContentType.PAGE1) {
     contentUrl = '';
   } else {
     contentUrl = post.originalUrl || post.externalLink || post.channelUrl || post.videoUrl || post.link || post.url || '';
   }
   
-  const isVideo = post.type === ContentType.MEDIA;
-  const isArtist = viewMode === 'CREATOR' || post.type === ContentType.CREATOR;
-  const isMediaOrReference = viewMode === 'MEDIA' || viewMode === 'REF';
-  const isVisualGrid = viewMode === 'CREATOR';
+  const isVideo = post.type === ContentType.PAGE3;
+  const isArtist = viewMode === PageId.PAGE2 || post.type === ContentType.PAGE2;
+  const isMediaOrReference = viewMode === PageId.PAGE3 || viewMode === PageId.PAGE4;
+  const isVisualGrid = viewMode === PageId.PAGE2;
   const hasDescription = typeof post.description === 'string' && post.description.trim().length > 0;
   const categoryLabel = Array.isArray(post.category) ? post.category[0] : post.category;
   const hasPlatformIcon = Boolean(
     post.iconImage || /youtube|bilibili|pixiv|twitter/i.test(categoryLabel || '') || categoryLabel?.toLowerCase() === 'x'
   );
 
-  if (viewMode === 'GAME') {
-    const isRef = post.type === ContentType.REF;
-    const isGame = post.type === ContentType.GAME;
+  if (viewMode === PageId.PAGE1) {
+    const isRef = post.type === ContentType.PAGE4;
+    const isGame = post.type === ContentType.PAGE1;
     const useSquareImage = isGame || isRef;
 
     const handleCardClick = () => {
@@ -185,7 +153,7 @@ const displayImage = optimizeImageUrl(formatImagePath(rawImage));
             src={imageSource}
             alt={post.title}
             referrerPolicy="no-referrer"
-            onError={handleImageError}
+            onError={() => setImageError(true)}
             className="w-full h-full object-cover transition-transform duration-500 transform-gpu will-change-transform group-hover:scale-105"
           />
         </div>
@@ -236,7 +204,7 @@ const displayImage = optimizeImageUrl(formatImagePath(rawImage));
             src={imageSource}
             alt={post.title}
             referrerPolicy="no-referrer"
-            onError={handleImageError}
+            onError={() => setImageError(true)}
             className="h-full w-full object-cover transition-transform duration-300 transform-gpu group-hover:scale-110"
           />
         </div>
@@ -289,7 +257,7 @@ const displayImage = optimizeImageUrl(formatImagePath(rawImage));
             src={imageSource}
             alt={post.title}
             referrerPolicy="no-referrer"
-            onError={handleImageError}
+            onError={() => setImageError(true)}
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
 
@@ -353,7 +321,7 @@ const displayImage = optimizeImageUrl(formatImagePath(rawImage));
           src={imageSource}
           alt={post.title}
           referrerPolicy="no-referrer"
-          onError={handleImageError}
+          onError={() => setImageError(true)}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 transform-gpu will-change-transform"
         />
 

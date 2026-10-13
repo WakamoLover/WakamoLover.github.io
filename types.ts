@@ -1,8 +1,15 @@
 export enum ContentType {
-  CREATOR = 'CREATOR',
-  MEDIA = 'MEDIA',
-  REF = 'REF',
-  GAME = 'GAME'
+  PAGE1 = 'GAME',
+  PAGE2 = 'CREATOR',
+  PAGE3 = 'MEDIA',
+  PAGE4 = 'REF',
+}
+
+export enum PageId {
+  PAGE1 = 'page1',
+  PAGE2 = 'page2',
+  PAGE3 = 'page3',
+  PAGE4 = 'page4',
 }
 
 export interface GameLink {

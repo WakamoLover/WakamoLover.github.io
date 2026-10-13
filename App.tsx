@@ -7,18 +7,26 @@ import SupabaseCardAdmin from './components/Admin/SupabaseCardAdmin';
 import InteractiveBackground from './components/Background/InteractiveBackground';
 import { CATEGORY_TABS } from './constants/categories';
 import { useRealtimePosts } from './src/hooks/useRealtimePosts';
-import { ContentType } from './types';
+import { ContentType, PageId } from './types';
 
-const VIEW_PATHS: Record<string, string> = {
-  CREATOR: '/creator',
-  MEDIA: '/media',
-  GAME: '/game',
-  REF: '/reference',
+const VIEW_PATHS: Record<PageId, string> = {
+  [PageId.PAGE1]: '/page1',
+  [PageId.PAGE2]: '/page2',
+  [PageId.PAGE3]: '/page3',
+  [PageId.PAGE4]: '/page4',
 };
 
-const getViewFromPath = () => {
+const LEGACY_VIEW_PATHS: Record<string, PageId> = {
+  '/game': PageId.PAGE1,
+  '/creator': PageId.PAGE2,
+  '/media': PageId.PAGE3,
+  '/reference': PageId.PAGE4,
+};
+
+const getViewFromPath = (): PageId => {
   const pathname = window.location.pathname.replace(/\/+$/, '') || '/';
-  return Object.entries(VIEW_PATHS).find(([, path]) => path === pathname)?.[0] || 'GAME';
+  const matchingView = Object.values(PageId).find((view) => VIEW_PATHS[view] === pathname);
+  return matchingView ?? LEGACY_VIEW_PATHS[pathname] ?? PageId.PAGE1;
 };
 
 const hasAdminQuery = () => new URLSearchParams(window.location.search).has('yukina');
@@ -43,8 +51,8 @@ const App: React.FC = () => {
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [currentImageUrl, setCurrentImageUrl] = useState('');
 
-  const handleNavigate = (view: string) => {
-    const nextView = VIEW_PATHS[view] ? view : 'GAME';
+  const handleNavigate = (view: PageId) => {
+    const nextView = VIEW_PATHS[view] ? view : PageId.PAGE1;
     const nextPath = VIEW_PATHS[nextView];
     if (window.location.pathname !== nextPath) {
       window.history.pushState({ view: nextView }, '', nextPath);
@@ -84,8 +92,7 @@ const App: React.FC = () => {
   };
 
   const getCategories = (): string[] => {
-    const viewKey = currentView as keyof typeof CATEGORY_TABS;
-    const categories = CATEGORY_TABS[viewKey] || [];
+    const categories = CATEGORY_TABS[currentView] || [];
 
     const withoutAll = categories.filter(category => category !== 'All');
     const others = withoutAll.filter(category => category === 'Others');
@@ -97,9 +104,9 @@ const App: React.FC = () => {
   const allFilteredPosts = useMemo(() => {
     let result = posts.map((post) => {
       let url = '';
-      if (post.type === ContentType.MEDIA) {
+      if (post.type === ContentType.PAGE3) {
         url = post.externalLink || post.channelUrl || post.videoUrl || '';
-      } else if (post.type === ContentType.GAME) {
+      } else if (post.type === ContentType.PAGE1) {
         url = '';
       } else {
         url = post.externalLink || post.channelUrl || post.videoUrl || '';
@@ -114,10 +121,13 @@ const App: React.FC = () => {
       };
     });
 
-    const typeMap: Record<string, ContentType> = {
-      GAME: ContentType.GAME, REF: ContentType.REF, MEDIA: ContentType.MEDIA, CREATOR: ContentType.CREATOR,
+    const typeMap: Record<PageId, ContentType> = {
+      [PageId.PAGE1]: ContentType.PAGE1,
+      [PageId.PAGE2]: ContentType.PAGE2,
+      [PageId.PAGE3]: ContentType.PAGE3,
+      [PageId.PAGE4]: ContentType.PAGE4,
     };
-    const selectedType = typeMap[currentView.toUpperCase()];
+    const selectedType = typeMap[currentView];
     if (selectedType) {
       result = result.filter(p => p.type.trim().toUpperCase() === selectedType);
     }
@@ -213,14 +223,14 @@ const App: React.FC = () => {
                     {isLoading ? (
                       <p role="status" className="py-32 text-center text-sm text-slate-500">Loading posts...</p>
                     ) : visiblePosts.length > 0 ? (
-                      <div className={`grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 ${currentView === 'MEDIA' || currentView === 'REF' ? 'xl:grid-cols-5' : 'xl:grid-cols-4'}`}>
+                      <div className={`grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 ${currentView === PageId.PAGE3 || currentView === PageId.PAGE4 ? 'xl:grid-cols-5' : 'xl:grid-cols-4'}`}>
                         {visiblePosts.map((post) => (
                           <div key={post.id} className="min-w-0">
                             <PostCard
                               post={post}
                               viewMode={currentView}
                               onImageClick={(imgUrl: string) => {
-                                if (post.type === ContentType.CREATOR && post.originalUrl.includes('x.com')) {
+                                if (post.type === ContentType.PAGE2 && post.originalUrl.includes('x.com')) {
                                   window.open(post.originalUrl, '_blank');
                                 } else {
                                   setCurrentImageUrl(imgUrl);

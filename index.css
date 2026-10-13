@@ -67,15 +67,6 @@ html.dark .header-nav-indicator {
   color: #0f172a;
 }
 
-.header-theme-toggle {
-  color: #334155;
-}
-
-.header-theme-toggle:hover {
-  background: rgb(136 17 136 / 0.08);
-  color: var(--brand-accent);
-}
-
 html.dark .header-search {
   border-color: rgb(255 255 255 / 0.18);
   background: rgb(255 255 255 / 0.08);
@@ -98,15 +89,6 @@ html.dark .header-search__clear {
 
 html.dark .header-search__clear:hover {
   color: #ffffff;
-}
-
-html.dark .header-theme-toggle {
-  color: #e2e8f0;
-}
-
-html.dark .header-theme-toggle:hover {
-  background: rgb(190 96 190 / 0.16);
-  color: #d8a0d8;
 }
 
 .category-tab {

@@ -33,7 +33,7 @@ const emptyForm = (): CardForm => ({
   subtitle: '',
   description: '',
   coverImage: '',
-  type: ContentType.CREATOR,
+  type: ContentType.PAGE2,
   category: '',
   externalLink: '',
   channelUrl: '',
@@ -60,24 +60,30 @@ const formFromPost = (post: Post): CardForm => ({
 
 const fieldClassName = 'w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900';
 const labelClassName = 'flex flex-col gap-1 text-xs font-semibold text-slate-700';
-const STORAGE_BUCKET = 'card-images';
+type StorageBucket = 'game' | 'ref' | 'media';
+
+const getStorageBucket = (type: ContentType): StorageBucket => {
+  if (type === ContentType.PAGE1) return 'game';
+  if (type === ContentType.PAGE4) return 'ref';
+  return 'media';
+};
+
 const ADMIN_TYPE_TABS: { type: ContentType; label: string }[] = [
-  { type: ContentType.GAME, label: 'Game' },
-  { type: ContentType.CREATOR, label: 'Creator' },
-  { type: ContentType.MEDIA, label: 'Media' },
-  { type: ContentType.REF, label: 'Reference' },
+  { type: ContentType.PAGE1, label: 'Game' },
+  { type: ContentType.PAGE2, label: 'Creator' },
+  { type: ContentType.PAGE3, label: 'Media' },
+  { type: ContentType.PAGE4, label: 'Reference' },
 ];
 
-const getImagePreviewUrl = (coverImage: string): string => {
+const getImagePreviewUrl = (coverImage: string, bucket: StorageBucket): string => {
   const source = coverImage.trim();
   if (!source) return '';
   if (/^(https?:|data:|blob:)/i.test(source)) return source;
   if (source.startsWith('//')) return `https:${source}`;
   if (source.startsWith('/media/')) return source;
   if (source.startsWith('media/')) return `/${source}`;
-  if (/^(game|ref)\//i.test(source)) return `/media/${source}`;
   if (source.startsWith('/')) return source;
-  return supabase?.storage.from(STORAGE_BUCKET).getPublicUrl(source).data.publicUrl || source;
+  return supabase?.storage.from(bucket).getPublicUrl(source).data.publicUrl || source;
 };
 
 const makeStorageFileName = (file: File): string => {
@@ -147,7 +153,7 @@ const buildPayload = (form: CardForm, existing?: Post): CardPayload => {
 const SupabaseCardAdmin: React.FC<SupabaseCardAdminProps> = ({ posts, isLoading, onPostsChange }) => {
   const [form, setForm] = useState<CardForm>(emptyForm);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [selectedType, setSelectedType] = useState<ContentType>(ContentType.GAME);
+  const [selectedType, setSelectedType] = useState<ContentType>(ContentType.PAGE1);
   const [search, setSearch] = useState('');
   const [isSaving, setIsSaving] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
@@ -204,9 +210,10 @@ const SupabaseCardAdmin: React.FC<SupabaseCardAdminProps> = ({ posts, isLoading,
     setLocalImagePreview(localPreviewUrl);
     setIsUploadingImage(true);
     try {
+      const bucket = getStorageBucket(form.type);
       const filePath = makeStorageFileName(file);
       const { error: uploadError } = await supabase.storage
-        .from(STORAGE_BUCKET)
+        .from(bucket)
         .upload(filePath, file, {
           cacheControl: '3600',
           contentType: file.type,
@@ -214,7 +221,7 @@ const SupabaseCardAdmin: React.FC<SupabaseCardAdminProps> = ({ posts, isLoading,
         });
       if (uploadError) throw uploadError;
 
-      const { data } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(filePath);
+      const { data } = supabase.storage.from(bucket).getPublicUrl(filePath);
       if (!data.publicUrl) throw new Error('The upload completed, but no public URL was returned.');
 
       setForm((previous) => ({ ...previous, coverImage: data.publicUrl }));
@@ -340,6 +347,13 @@ const SupabaseCardAdmin: React.FC<SupabaseCardAdminProps> = ({ posts, isLoading,
     updateField('coverImage', value);
   };
 
+  const startEditing = (post: Post) => {
+    setForm(formFromPost(post));
+    setEditingId(post.id);
+    setError('');
+    setMessage('');
+  };
+
   return (
     <section className="h-full min-h-0 px-4 pb-4 sm:px-6 xl:px-8">
       <div className="mx-auto flex h-full min-h-0 max-w-7xl flex-col gap-3">
@@ -360,13 +374,18 @@ const SupabaseCardAdmin: React.FC<SupabaseCardAdminProps> = ({ posts, isLoading,
         <div className="grid min-h-0 flex-1 grid-cols-1 grid-rows-[minmax(0,1fr)_minmax(0,1fr)] gap-3 xl:grid-cols-[2fr_3fr] xl:grid-rows-1 xl:gap-5">
           <form onSubmit={handleSubmit} className="min-h-0 overflow-y-auto overscroll-contain rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
             <div className="flex items-center justify-between gap-3">
-              <h2 className="text-lg font-bold text-slate-900">{editingId ? 'Edit Card' : 'Add New Card'}</h2>
+              <h2 className="text-lg font-bold text-slate-900">{editingId ? 'Edit Post' : 'Add New Post'}</h2>
               {editingId && (
                 <button type="button" onClick={resetForm} className="text-sm font-semibold text-slate-600 underline">
-                  Cancel
+                  Cancel editing
                 </button>
               )}
             </div>
+            {editingId && (
+              <p className="mt-1 truncate text-sm text-slate-500">
+                Editing: {posts.find((post) => post.id === editingId)?.title || form.title}
+              </p>
+            )}
 
             <label className={labelClassName}>
               Title
@@ -392,7 +411,7 @@ const SupabaseCardAdmin: React.FC<SupabaseCardAdminProps> = ({ posts, isLoading,
                   type="text"
                   value={form.coverImage}
                   disabled={isUploadingImage}
-                  placeholder="Paste a public URL or enter a Storage filename"
+                  placeholder={`Paste a public URL or enter a filename in the ${getStorageBucket(form.type)} bucket`}
                   onChange={(event) => handleCoverImageChange(event.target.value)}
                 />
               </label>
@@ -433,7 +452,7 @@ const SupabaseCardAdmin: React.FC<SupabaseCardAdminProps> = ({ posts, isLoading,
                 <div className="flex flex-col items-center gap-3 text-center sm:flex-row sm:text-left">
                   {(localImagePreview || form.coverImage) ? (
                     <img
-                      src={localImagePreview || optimizeImageUrl(getImagePreviewUrl(form.coverImage))}
+                      src={localImagePreview || optimizeImageUrl(getImagePreviewUrl(form.coverImage, getStorageBucket(form.type)))}
                       alt="Cover image preview"
                       className="aspect-square w-28 shrink-0 rounded-lg bg-white object-cover"
                     />
@@ -447,7 +466,7 @@ const SupabaseCardAdmin: React.FC<SupabaseCardAdminProps> = ({ posts, isLoading,
                       {isUploadingImage ? 'Uploading to Supabase Storage...' : 'Drop an image here or click to browse'}
                     </p>
                     <p className="mt-1 text-xs text-slate-500">
-                      Uploads to the public `card-images` bucket.
+                      Uploads to the public `{getStorageBucket(form.type)}` bucket for this card type.
                     </p>
                     {form.coverImage && (
                       <p className="mt-2 break-all text-xs text-slate-500">{form.coverImage}</p>
@@ -556,22 +575,47 @@ const SupabaseCardAdmin: React.FC<SupabaseCardAdminProps> = ({ posts, isLoading,
               ) : (
                 <ul className="mt-4 divide-y divide-slate-200">
                 {filteredPosts.map((post) => (
-                  <li key={post.id} className="flex flex-col gap-3 py-3 sm:flex-row sm:items-center sm:justify-between">
-                    <div className="min-w-0">
-                      <p className="truncate font-semibold text-slate-900">{post.title}</p>
-                      <p className="mt-1 truncate text-xs text-slate-500">
-                        {post.type}{post.category ? ` · ${post.category}` : ''}
-                      </p>
-                    </div>
+                  <li
+                    key={post.id}
+                    className={`flex items-center gap-3 rounded-lg border-b border-slate-200 px-2 py-3 ${editingId === post.id ? 'bg-blue-50 ring-1 ring-inset ring-blue-200' : ''}`}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => startEditing(post)}
+                      aria-label={`Edit ${post.title}`}
+                      aria-pressed={editingId === post.id}
+                      className="flex min-w-0 flex-1 items-center gap-3 rounded-md text-left"
+                    >
+                      <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-md bg-slate-100">
+                        {post.coverImage ? (
+                          <>
+                            <div className="absolute inset-0 flex items-center justify-center text-[10px] text-slate-400">No image</div>
+                            <img
+                              src={optimizeImageUrl(getImagePreviewUrl(post.coverImage, getStorageBucket(post.type)))}
+                              alt={`${post.title} thumbnail`}
+                              loading="lazy"
+                              className="relative h-full w-full object-cover"
+                              onError={(event) => { event.currentTarget.style.display = 'none'; }}
+                            />
+                          </>
+                        ) : (
+                          <div className="flex h-full items-center justify-center text-[10px] text-slate-400">No image</div>
+                        )}
+                      </div>
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate font-semibold text-slate-900">{post.title}</span>
+                        <span className="mt-1 block truncate text-xs text-slate-500">
+                          {post.type}{post.category ? ` · ${post.category}` : ''}
+                        </span>
+                        {editingId === post.id && (
+                          <span className="mt-1 block text-xs font-semibold text-blue-700">Currently editing</span>
+                        )}
+                      </span>
+                    </button>
                     <div className="flex shrink-0 gap-2">
                       <button
                         type="button"
-                        onClick={() => {
-                          setForm(formFromPost(post));
-                          setEditingId(post.id);
-                          setError('');
-                          setMessage('');
-                        }}
+                        onClick={() => startEditing(post)}
                         className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100"
                       >
                         Edit
