@@ -6,6 +6,7 @@ npm run dev
 npm run build
 ```
 
+<<<<<<< HEAD
 ### Page identifiers
 
 Internal page IDs and canonical routes are `page1` (`/page1`, Game), `page2`
@@ -51,6 +52,8 @@ type. Run [`supabase/card-images-storage.sql`](./supabase/card-images-storage.sq
 the SQL Editor to create/configure these buckets and allow only authenticated admins
 to upload files. The game and reference thumbnails are stored in Supabase; their
 former local image folders are no longer required.
+=======
+>>>>>>> 2496c242e0a2386b685058e9100549ba7217345c
 ### Local to Git
 ```bash
 git add .
